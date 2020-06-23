@@ -1,0 +1,10 @@
+docker:
+  path: .
+id: 19580110-9ffd-49aa-8c4f-385e16ccf2bf
+name: openaq-pyspark
+resources:
+  path: resources
+template: pyspark
+version: "0.2"
+workflows:
+  path: dags

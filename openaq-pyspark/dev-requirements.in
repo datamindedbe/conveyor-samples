@@ -1,0 +1,6 @@
+pyspark==2.4.4
+pandas==0.25
+pytest
+pytest-cov
+black
+flake8
