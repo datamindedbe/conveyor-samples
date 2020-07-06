@@ -1,0 +1,10 @@
+default:
+  target: demo
+  outputs:
+    demo:
+      type: athena
+      database: awsdatacatalog
+      schema: datafy_glue
+      region_name: eu-west-1
+      threads: 1
+      s3_staging_dir: s3://datafy-demo-query-results/athena/openaqdbt/

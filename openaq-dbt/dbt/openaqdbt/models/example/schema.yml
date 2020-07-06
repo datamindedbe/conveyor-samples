@@ -1,0 +1,19 @@
+
+version: 2
+
+models:
+    - name: daily_city_air_quality_stats
+      description: "Air quality stats per city"
+      columns:
+          - name: ds
+            description: "The datestamp of the measurements"
+            tests:
+                - not_null
+          - name: city
+            description: "The city in which the measurement took place"
+            tests:
+              - not_null
+          - name: parmaeter
+            description: "The parameter that is being measured"
+            tests:
+              - not_null

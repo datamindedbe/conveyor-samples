@@ -1,0 +1,10 @@
+docker:
+  path: .
+id: ce49cf73-a258-46ba-b864-91461540a85d
+name: openaq-dbt
+resources:
+  path: resources
+template: python
+version: "0.2"
+workflows:
+  path: dags
