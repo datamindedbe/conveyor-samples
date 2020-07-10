@@ -13,7 +13,7 @@ models:
             description: "The city in which the measurement took place"
             tests:
               - not_null
-          - name: parmaeter
+          - name: parameter
             description: "The parameter that is being measured"
             tests:
               - not_null

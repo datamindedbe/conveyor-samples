@@ -1,10 +1,18 @@
 default:
-  target: demo
+  target: dev
   outputs:
-    demo:
+    dev:
       type: athena
       database: awsdatacatalog
       schema: datafy_glue
       region_name: eu-west-1
       threads: 1
-      s3_staging_dir: s3://datafy-demo-query-results/athena/openaqdbt/
+      s3_staging_dir: s3://datafy-training/openaq_dbt/
+    test:
+      type: athena
+      database: awsdatacatalog
+      schema: datafy_glue
+      region_name: eu-west-1
+      threads: 1
+      s3_staging_dir: s3://datafy-training/openaq_dbt/
+

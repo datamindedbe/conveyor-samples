@@ -1,7 +1,7 @@
-from airflow import DAG
-from airflow.operators.datafy_container_plugin import DatafyContainerOperator
 from datetime import datetime, timedelta
 
+from airflow import DAG
+from airflow.operators.datafy_container_plugin import DatafyContainerOperator
 
 default_args = {
     "owner": "Datafy",
@@ -14,18 +14,50 @@ default_args = {
     "retry_delay": timedelta(minutes=5),
 }
 
-
 image = "{{ macros.image('openaq-dbt') }}"
 
 dag = DAG(
     "openaq-dbt", default_args=default_args, schedule_interval="@daily", max_active_runs=1
 )
 
-DatafyContainerOperator(
+run = DatafyContainerOperator(
     dag=dag,
-    task_id="sample",
-    name="sample",
+    task_id="run_dbt_models",
+    name="run_dbt_models",
     image=image,
-    arguments=["--date", "{{ ds }}", "--jobs", "sample", "--env", "{{ macros.env() }}"],
-    service_account_name="openaq-dbt"
+    env_vars={
+        'TARGET': "{{ macros.env() }}",
+        'DATE': "{{ ds }}"
+    },
+    service_account_name="openaq-dbt",
+    cmds=["dbt"],
+        arguments=[
+            "run",
+            "--target",
+            "{{ macros.env() }}",
+            "--profiles-dir",
+            "."
+        ],
 )
+
+test = DatafyContainerOperator(
+    dag=dag,
+    task_id="test_dbt_models",
+    name="test_dbt_models",
+    image=image,
+    env_vars={
+        'TARGET': "{{ macros.env() }}",
+        'DATE': "{{ ds }}"
+    },
+    service_account_name="openaq-dbt",
+    cmds=["dbt"],
+        arguments=[
+            "test",
+            "--target",
+            "{{ macros.env() }}",
+            "--profiles-dir",
+            "."
+        ],
+)
+
+run >> test
