@@ -42,7 +42,7 @@ def transform_data(data: DataFrame, date: str) -> DataFrame:
     return data.transform(add_ds(date)).transform(filter_by_country("BE"))
 
 
-def load_data(spark: SparkSession, data: DataFrame):
+def load_data(spark: SparkSession, data: DataFrame, database=f"datafy_glue"):
     """Writes the output dataset to some destination
 
     :param spark: the spark session
@@ -50,12 +50,12 @@ def load_data(spark: SparkSession, data: DataFrame):
     :param data: DataFrame to write.
     :return: None
     """
-    # Uncomment the following block to write to a compatible catalog
-    spark.catalog.setCurrentDatabase(f"datafy_glue")
+    spark.catalog.setCurrentDatabase(database)
     (
         data.coalesce(1)
-        .write.partitionBy("ds")
+        .write
         .mode("overwrite")
         .format("parquet")
-        .saveAsTable("openaq_pyspark")
+        .partitionBy("ds")
+        .saveAsTable("openaq_pyspark", path='openaq_pyspark/')
     )

@@ -32,6 +32,7 @@ executor_memory = "1G"
 sample_task = DatafySparkSubmitOperator(
     dag=dag,
     task_id="sample",
+    depends_on_past=True,
     num_executors="1",
     executor_memory=executor_memory,
     driver_memory="512M",
@@ -42,6 +43,7 @@ sample_task = DatafySparkSubmitOperator(
         "spark.kubernetes.driver.annotation.iam.amazonaws.com/role": role,
         "spark.kubernetes.executor.annotation.iam.amazonaws.com/role": role,
         "spark.hadoop.hive.metastore.client.factory.class": hive_factory_class,
+        "spark.sql.sources.partitionOverwriteMode": "dynamic"
     },
     application="/app/src/openaq/app.py",
     application_args=["--date {{ ds }}", "--jobs sample", "--env {{ macros.env() }}"],
