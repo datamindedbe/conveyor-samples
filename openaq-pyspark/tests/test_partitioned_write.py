@@ -1,3 +1,4 @@
+import tempfile
 from datetime import datetime
 
 from openaq.jobs.sample import load_data
@@ -19,7 +20,8 @@ def test_partitioned_write():
         [("issue3", "high", date2), ("issue4", "low", date2)], ["issue", "prio", "ds"]
     )
     expected = date1_df.union(date2_df)
-    load_data(spark, date1_df, database="default")
-    load_data(spark, date2_df, database="default")
+    temppath = tempfile.TemporaryDirectory()
+    load_data(spark, date1_df, database="default", path=temppath)
+    load_data(spark, date2_df, database="default", path=temppath)
     result = spark.read.table("openaq_pyspark")
     assert_frame_equal_with_sort(result, expected)

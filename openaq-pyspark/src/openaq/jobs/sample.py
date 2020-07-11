@@ -42,12 +42,14 @@ def transform_data(data: DataFrame, date: str) -> DataFrame:
     return data.transform(add_ds(date)).transform(filter_by_country("BE"))
 
 
-def load_data(spark: SparkSession, data: DataFrame, database=f"datafy_glue"):
+def load_data(spark: SparkSession, data: DataFrame, database=f"datafy_glue", path='s3a://datafy-training/opanq_pyspark/'):
     """Writes the output dataset to some destination
 
     :param spark: the spark session
     :param environment: the environment
     :param data: DataFrame to write.
+    :param database: The hive database to use.
+    :param database: The path to write to.
     :return: None
     """
     spark.catalog.setCurrentDatabase(database)
@@ -57,5 +59,5 @@ def load_data(spark: SparkSession, data: DataFrame, database=f"datafy_glue"):
         .mode("overwrite")
         .format("parquet")
         .partitionBy("ds")
-        .saveAsTable("openaq_pyspark", path='openaq_pyspark/')
+        .saveAsTable("openaq_pyspark", path=path)
     )

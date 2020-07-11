@@ -29,10 +29,9 @@ dag = DAG(
 )
 
 executor_memory = "1G"
-sample_task = DatafySparkSubmitOperator(
+load_openaq_data_task = DatafySparkSubmitOperator(
     dag=dag,
-    task_id="sample",
-    depends_on_past=True,
+    task_id="load_openaq_data",
     num_executors="1",
     executor_memory=executor_memory,
     driver_memory="512M",
