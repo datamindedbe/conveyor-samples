@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 
 from airflow import DAG
 from airflow.operators.datafy_container_plugin import DatafyContainerOperator
+from airflow.operators.sensors import ExternalTaskSensor
 
 default_args = {
     "owner": "Datafy",
@@ -18,6 +19,13 @@ image = "{{ macros.image('openaq-dbt') }}"
 
 dag = DAG(
     "openaq-dbt", default_args=default_args, schedule_interval="@daily", max_active_runs=1
+)
+
+wait_for_openaq_data = ExternalTaskSensor(
+    dag=dag,
+    task_id='wait_for_openaq_data',
+    external_dag_id='openaq-pyspark',
+    external_task_id='load_openaq_data'
 )
 
 run = DatafyContainerOperator(
@@ -60,4 +68,4 @@ test = DatafyContainerOperator(
         ],
 )
 
-run >> test
+wait_for_openaq_data >> run >> test
