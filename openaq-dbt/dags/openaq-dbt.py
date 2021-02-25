@@ -1,13 +1,14 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from airflow import DAG
 from airflow.operators.datafy_container_plugin import DatafyContainerOperator
 from airflow.operators.sensors import ExternalTaskSensor
+from airflow.utils.dates import days_ago
 
 default_args = {
     "owner": "Datafy",
     "depends_on_past": False,
-    "start_date": datetime(year=2020, month=7, day=5),
+    "start_date": days_ago(2),
     "email": [],
     "email_on_failure": False,
     "email_on_retry": False,
@@ -37,15 +38,16 @@ run = DatafyContainerOperator(
         'TARGET': "{{ macros.env() }}",
         'DATE': "{{ ds }}"
     },
+    instance_type='mx_micro',
     service_account_name="openaq-dbt",
     cmds=["dbt"],
-        arguments=[
-            "run",
-            "--target",
-            "{{ macros.env() }}",
-            "--profiles-dir",
-            "."
-        ],
+    arguments=[
+        "run",
+        "--target",
+        "dev",
+        "--profiles-dir",
+        "."
+    ],
 )
 
 test = DatafyContainerOperator(
@@ -57,15 +59,16 @@ test = DatafyContainerOperator(
         'TARGET': "{{ macros.env() }}",
         'DATE': "{{ ds }}"
     },
+    instance_type='mx_micro',
     service_account_name="openaq-dbt",
     cmds=["dbt"],
-        arguments=[
-            "test",
-            "--target",
-            "{{ macros.env() }}",
-            "--profiles-dir",
-            "."
-        ],
+    arguments=[
+        "test",
+        "--target",
+        "{{ macros.env() }}",
+        "--profiles-dir",
+        "."
+    ],
 )
 
 wait_for_openaq_data >> run >> test

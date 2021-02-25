@@ -75,16 +75,6 @@ class ClosableSparkSession:
         # create the actual session
         self._spark_session = spark_builder.getOrCreate()
 
-        # enable glue support
-        if self._enable_glue:
-            sc = self._spark_session.sparkContext
-            java_import(sc._jvm, "org.apache.spark.util.Utils")
-            print(
-                sc._jvm.Utils.classForName(
-                    "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory"
-                )
-            )
-
         return self._spark_session
 
     def __exit__(self, exc_type, exc_val, exc_tb):
