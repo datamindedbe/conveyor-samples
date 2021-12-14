@@ -1,4 +1,4 @@
-FROM datamindedbe/spark-k8s-glue:v3.0.1-hadoop-3.3.0
+FROM public.ecr.aws/dataminded/spark-k8s-glue:v3.2.0-hadoop-3.3.1
 
 WORKDIR /opt/spark/work-dir
 USER 0

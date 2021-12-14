@@ -1,10 +1,13 @@
 docker:
   path: .
-id: 19580110-9ffd-49aa-8c4f-385e16ccf2bf
-name: openaq-pyspark
+id: 43847ed8-30df-4bd8-8f5c-8a8dcbf0250c
+name: openaq_pyspark
 resources:
   path: resources
-template: pyspark
-version: "0.2"
+streaming:
+  filename: streaming.yaml
+template: ""
+version: "0.3"
 workflows:
   path: dags
+  version: "2"

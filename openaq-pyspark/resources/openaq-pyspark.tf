@@ -1,19 +1,27 @@
+locals {
+  project_name = "openaq_pyspark"
+}
+
 resource "aws_iam_role" "openaq-pyspark" {
   name               = "openaq-pyspark-${var.env_name}"
-  path               = "/datafy-dp-${var.env_name}/"
   assume_role_policy = data.aws_iam_policy_document.openaq-pyspark-assume-role.json
 }
 
 data "aws_iam_policy_document" "openaq-pyspark-assume-role" {
   statement {
-    actions = [
-      "sts:AssumeRole"
-    ]
-    principals {
-      type        = "AWS"
-      identifiers = [var.env_worker_role]
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+    effect  = "Allow"
+
+    condition {
+      test     = "StringLike"
+      variable = "${replace(var.aws_iam_openid_connect_provider_url, "https://", "")}:sub"
+      values   = ["system:serviceaccount:${var.env_name}:${replace(local.project_name, "_", ".")}-*"]
     }
-    effect = "Allow"
+
+    principals {
+      identifiers = [var.aws_iam_openid_connect_provider_arn]
+      type        = "Federated"
+    }
   }
 }
 
@@ -24,6 +32,12 @@ resource "aws_iam_role_policy" "openaq-pyspark" {
 }
 
 data "aws_iam_policy_document" "openaq-pyspark" {
+
+  statement {
+    actions = ["s3:ListAllMyBuckets"]
+    resources = ["*"]
+  }
+
   statement {
     actions = [
       "s3:*"

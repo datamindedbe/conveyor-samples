@@ -1,14 +1,14 @@
+import argparse
+
 from pyspark.sql import SparkSession
 from pyspark.sql.dataframe import DataFrame
 
-from openaq.jobs import entrypoint
-from openaq.common.spark import transform, SparkLogger
+from openaq.common.spark import transform, SparkLogger, ClosableSparkSession
 from openaq.transformations.shared import add_ds, filter_by_country
 
 DataFrame.transform = transform
 
 
-@entrypoint("sample")
 def run(spark: SparkSession, environment: str, date: str):
     """Main ETL script definition.
 
@@ -61,3 +61,16 @@ def load_data(spark: SparkSession, data: DataFrame, database=f"datafy_glue", pat
         .partitionBy("ds")
         .saveAsTable("openaq_pyspark", path=path)
     )
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="openaq-pyspark")
+    parser.add_argument(
+        "-d", "--date", dest="date", help="date in format YYYY-mm-dd", required=True
+    )
+    parser.add_argument(
+        "-e", "--env", dest="env", help="environment we are executing in", required=True
+    )
+    args = parser.parse_args()
+    with ClosableSparkSession("openaq-pyspark") as session:
+        run(session, args.env, args.date)

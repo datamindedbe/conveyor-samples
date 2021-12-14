@@ -1,6 +1,5 @@
 import logging
 
-from py4j.java_gateway import java_import
 from pyspark.sql import SparkSession
 
 

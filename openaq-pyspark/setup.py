@@ -10,7 +10,7 @@ setup(
     name="openaq",
     version="0.0.1",
     description="pyspark sample template",
-    python_requires=">=3.6, <3.8",
+    python_requires=">=3.6, <3.10",
     packages=find_packages("src"),
     package_dir={"": "src"},
     py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],

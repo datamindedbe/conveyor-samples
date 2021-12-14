@@ -1,5 +1,5 @@
 from airflow import DAG
-from airflow.operators.datafy_spark_plugin import DatafySparkSubmitOperator
+from datafy.operators import DatafySparkSubmitOperatorV2
 from datetime import timedelta
 from airflow.utils.dates import days_ago
 
@@ -15,9 +15,7 @@ default_args = {
     "retry_delay": timedelta(minutes=5),
 }
 
-
-image = "{{ macros.image('openaq-pyspark') }}"
-role = "datafy-dp-{{ macros.env() }}/openaq-pyspark-{{ macros.env() }}"
+role = "openaq-pyspark-{{ macros.datafy.env() }}"
 
 dag = DAG(
     "openaq-pyspark",
@@ -26,20 +24,16 @@ dag = DAG(
     max_active_runs=1,
 )
 
-load_openaq_data_task = DatafySparkSubmitOperator(
+load_openaq_data_task = DatafySparkSubmitOperatorV2(
     dag=dag,
     task_id="load_openaq_data",
     num_executors="1",
-    driver_instance_type='mx_micro',
-    executor_instance_type='mx_micro',
+    executor_instance_type='mx_medium',
     spark_main_version=3,
-    env_vars={"AWS_REGION": "eu-west-1"},
+    aws_role=role,
     conf={
-        "spark.kubernetes.container.image": image,
-        "spark.kubernetes.driver.annotation.iam.amazonaws.com/role": role,
-        "spark.kubernetes.executor.annotation.iam.amazonaws.com/role": role,
         "spark.sql.sources.partitionOverwriteMode": "dynamic"
     },
-    application="local:///opt/spark/work-dir/src/openaq/app.py",
-    application_args=["--date", "{{ ds }}", "--jobs", "sample", "--env", "{{ macros.env() }}"],
+    application="local:///opt/spark/work-dir/src/openaq/sample.py",
+    application_args=["--date", "{{ ds }}", "--env", "{{ macros.datafy.env() }}"],
 )
