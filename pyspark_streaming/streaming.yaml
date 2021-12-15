@@ -1,0 +1,10 @@
+streamingApplications:
+- name: console
+  sparkSpec:
+    numberOfExecutors: 1
+    driverInstanceType: mx.micro
+    executorInstanceType: mx.micro
+    application: "local:///opt/spark/work-dir/src/pysparkstreaming/streaming_app.py"
+    applicationArgs:
+      - --env
+      - "{{ .Env }}"
