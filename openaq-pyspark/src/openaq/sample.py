@@ -32,6 +32,11 @@ def extract_data(spark: SparkSession, date: str) -> DataFrame:
     return spark.read.json(f"s3://openaq-fetches/realtime-gzipped/{date}")
 
 
+def read_loaded_data(spark: SparkSession) -> DataFrame:
+    return spark.read.parquet(f"s3://datafy-training/opanq_pyspark")
+
+
+
 def transform_data(data: DataFrame, date: str) -> DataFrame:
     """Transform original dataset.
 
