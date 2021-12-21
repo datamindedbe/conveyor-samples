@@ -27,6 +27,7 @@ def run(spark: SparkSession, environment: str):
         spark.readStream.format("rate")
             .option("rowsPerSecond", "10")
             .load()
+            #.map(...)
             .writeStream
             #In Production it is highly recommended to set a checkpoint location for your query
             #See Spark Structured Streaming documentation: https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html#recovering-from-failures-with-checkpointing
