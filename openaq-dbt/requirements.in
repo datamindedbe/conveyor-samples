@@ -1,4 +1,0 @@
-requests
-boto3
-dbt==0.16.1
-git+https://github.com/Dandandan/dbt-athena.git
