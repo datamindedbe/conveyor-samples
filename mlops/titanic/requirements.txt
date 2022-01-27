@@ -72,7 +72,7 @@ multiprocess==0.70.12.2
     # via pathos
 mypy-extensions==0.4.3
     # via typing-inspect
-numpy==1.19.5
+numpy==1.21.0
     # via
     #   awswrangler
     #   matplotlib
