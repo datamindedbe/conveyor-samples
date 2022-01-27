@@ -94,6 +94,7 @@ The different workflow tasks in `dags/titanic.py` are wired together. We are rea
 
 #### Cleanup
 
+1. `datafy notebook delete --env samples`
 1. `datafy project delete`
 
 
