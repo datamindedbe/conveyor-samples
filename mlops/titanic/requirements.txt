@@ -187,7 +187,7 @@ typing-extensions==4.0.1
     # via typing-inspect
 typing-inspect==0.7.1
     # via pandera
-urllib3==1.26.3
+urllib3==1.26.5
     # via
     #   botocore
     #   opensearch-py
