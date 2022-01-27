@@ -1,0 +1,11 @@
+notebooks:
+- name: default
+  mode: web-ui
+  maxIdleTime: 60
+  pythonSpec:
+    pythonVersion: "3.9"
+    awsRole: datafy-samples
+    instanceType: mx.medium
+    instanceLifeCycle: on-demand
+  notebooksDir: notebooks
+  srcDir: src
