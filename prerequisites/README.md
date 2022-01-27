@@ -20,7 +20,6 @@ When running in Gitpod, the AWS CLI will already be installed. You will still ne
 Follow the instructions to install and configure the AWS CLI on your machine: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html. 
 
 
-
 ## AWS infrastructure
 
 We will use cloudformation to setup some additonal infrastructure.
