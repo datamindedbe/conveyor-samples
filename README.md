@@ -7,7 +7,7 @@ This repository contains a number of sample projects for Datafy
 
 1. Clone this repostitory
 1. Verify you have Datafy CLI installed by executing `datafy doctor`
-1. Autheticat the Datafy CLI `datafy auth login` or `datafy auth --no-browser`(gitpod)
+1. Authenticate the Datafy CLI `datafy auth login`
 1. Create an new datafy environment `datafy environment create --name samples`
 1. Execute the additional steps listed in the prerequisites folder
 
