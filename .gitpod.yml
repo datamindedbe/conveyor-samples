@@ -1,5 +1,7 @@
 # List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
 tasks:
+  - name: Uninstall lynx
+    init: sudo apt-get remove lynx -y
   - name: Install AWS CLI
     init: |
       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"

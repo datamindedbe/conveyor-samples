@@ -27,7 +27,7 @@ in VSCode
 
 #### Data analysis
 
-First we explore and analyse the data. To do this we use the notebook feature of datafy. Execute `datafy notebook create --env samples` or `datafy notebook create --env samples --no-browser`(gitpod).
+First we explore and analyse the data. To do this we use the notebook feature of datafy. Execute `datafy notebook create --env samples`.
 This will package the code, publish it and start a new Jupyter notebook that will open in your browser window. This might take a while the first time. In Jupyter, open `notebooks/exploration.ipynb`. Execute the cells in the notebook and see how we used this to gain a better understanding of the data.
 
 We don't take credit for this effort. All thanks goes to https://medium.com/analytics-vidhya/exploratory-data-analysis-of-titanic-survival-problem-e3af0fb1f276.
