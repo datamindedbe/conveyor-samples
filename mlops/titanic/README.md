@@ -26,7 +26,7 @@ aws s3 cp test.csv s3://datafy-samples-*/titanic/raw/train.csv
 1. Deploy the project to the samples environment: `datafy deploy --env samples --wait`
 1. Run the created workflow:
     1. Navigate to `https://app.datafy.cloud/environments` and select the `samples` environment
-    1. Press the play button next to the `samples_titanic` dag in airflow to manually trigger the pipeline
+    1. Press the play button next to the `samples_titanic_training` dag in airflow to manually trigger the pipeline
 
 
 ## Walkthrough
@@ -100,7 +100,7 @@ The different workflow tasks in `dags/titanic.py` are wired together. We are rea
 1. `datafy build`
 1. `datafy deploy --env samples --wait`
 1. Navigate to `https://app.datafy.cloud/environments` and select the `samples` environment
-1. Press the play button next to the `samples_titanic` dag in airflow to manually trigger the pipeline
+1. Press the play button next to the `samples_titanic_training` dag in airflow to manually trigger the pipeline
 
 
 #### Logs and metrics
