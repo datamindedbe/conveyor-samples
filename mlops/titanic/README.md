@@ -18,9 +18,20 @@ aws s3 cp test.csv s3://datafy-samples-*/titanic/raw/test.csv
 aws s3 cp test.csv s3://datafy-samples-*/titanic/raw/train.csv
 ```
 
-## Getting started 
 
-Navigate to this folder and initialize it as a datafy project `datafy project create --name samples-titanic`. Next we recommend opening the folder
+## Quickstart
+
+1. Initialize this folder as a project: `datafy project create --name samples_titanic`
+1. Build the project: `datafy build`
+1. Deploy the project to the samples environment: `datafy deploy --env samples --wait`
+1. Run the created workflow:
+    1. Navigate to `https://app.datafy.cloud/environments` and select the `samples` environment
+    1. Press the play button next to the `samples_titanic_training` dag in airflow to manually trigger the pipeline
+
+
+## Walkthrough
+
+Navigate to this folder and initialize it as a datafy project `datafy project create --name samples_titanic`. Next we recommend opening the folder
 in VSCode 
 
 ### Experiment
@@ -89,7 +100,16 @@ The different workflow tasks in `dags/titanic.py` are wired together. We are rea
 1. `datafy build`
 1. `datafy deploy --env samples --wait`
 1. Navigate to `https://app.datafy.cloud/environments` and select the `samples` environment
-1. Press the play button next to the `titanic-training` dag in airflow to manually trigger the pipeline
+1. Press the play button next to the `samples_titanic_training` dag in airflow to manually trigger the pipeline
+
+
+#### Logs and metrics
+
+Once your workflow was triggered you can inspect the logs and metrics of each task. 
+
+1. Navigate to `https://app.datafy.cloud/environments` and select the `samples` environment
+1. Select `Task executions`
+1. Select any task to inspect the logs and metrics
 
 
 #### Cleanup
@@ -100,7 +120,4 @@ The different workflow tasks in `dags/titanic.py` are wired together. We are rea
 
 ### Conclusion
 
-In this sample we have seen how we can use the notebook feature to analyse and experiment with data. We also covered the basics of 
-building and deploying a ML pipeline.
-
-
+In this sample we have seen how we can use the notebook feature to analyse and experiment with data. Next we learned how to industrialize our code by creation small modular functions and integrating with the Airflow workflow manager. Last we covered the basics of building, deploying and running a project in an environment.
