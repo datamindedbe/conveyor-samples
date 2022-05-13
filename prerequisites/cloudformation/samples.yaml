@@ -9,7 +9,7 @@ Resources:
         Properties:
             BucketName: !Join
                 - "-"
-                - - "datafy-samples"
+                - - "conveyor-samples"
                   - !Select
                         - 0
                         - !Split
@@ -29,13 +29,13 @@ Resources:
         Type: AWS::SSM::Parameter
         Properties: 
             Description: "Parameter containing the name of the s3 bucket"
-            Name: "/datafy-samples/bucket/name"
+            Name: "/conveyor-samples/bucket/name"
             Type: String
             Value: !Ref SampleBucket
     SampleTaskRole:
         Type: 'AWS::IAM::Role'
         Properties:
-            RoleName: "datafy-samples"
+            RoleName: "conveyor-samples"
             Path: /
             AssumeRolePolicyDocument:
                 Version: "2012-10-17"
@@ -72,4 +72,4 @@ Resources:
                                   - !Ref "AWS::Region" 
                                   - ':'
                                   - !Ref "AWS::AccountId" 
-                                  - ':parameter/datafy-samples/*'
+                                  - ':parameter/conveyor-samples/*'

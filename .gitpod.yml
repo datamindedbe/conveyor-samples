@@ -11,22 +11,22 @@ tasks:
       rm -rf ./aws
     command: aws --version
 
-  - name: Install Datafy CLI
+  - name: Install Conveyor CLI
     init: |
-      wget https://app.datafy.cloud/api/info/cli/location/linux/amd64 -O datafy_linux_amd64.tar.gz
-      tar -zxvf datafy_linux_amd64.tar.gz
-      chmod +x bin/linux/amd64/datafy
-      sudo cp bin/linux/amd64/datafy /usr/local/bin/datafy
-      rm datafy_linux_amd64.tar.gz
+      wget https://app.conveyordata.com/api/info/cli/location/linux/amd64 -O conveyor_linux_amd64.tar.gz
+      tar -zxvf conveyor_linux_amd64.tar.gz
+      chmod +x bin/linux/amd64/conveyor
+      sudo cp bin/linux/amd64/conveyor /usr/local/bin/conveyor
+      rm conveyor_linux_amd64.tar.gz
       rm -rf ./bin
-    command: datafy --version
+    command: conveyor --version
 
 
 # Prebuild settings
 github:
   prebuilds:
     # enable for the default branch (defaults to true)
-    master: false
+    main: false
     # enable for all branches in this repo (defaults to false)
     branches: false
     # enable for pull requests coming from this repo (defaults to true)
