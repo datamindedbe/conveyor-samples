@@ -8,7 +8,7 @@ import pandas as pd
 
 def get_bucket() -> str:
     ssm = boto3.client('ssm')
-    parameter = ssm.get_parameter(Name='/datafy-samples/bucket/name')
+    parameter = ssm.get_parameter(Name='/conveyor-samples/bucket/name')
     logging.info(f"Using bucket {parameter['Parameter']['Value']}")
     return parameter['Parameter']['Value']
 

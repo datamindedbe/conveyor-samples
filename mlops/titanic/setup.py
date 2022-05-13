@@ -15,7 +15,7 @@ setup(
     package_dir={"": "src"},
     py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
     include_package_data=True,
-    author="datafy",
+    author="conveyor",
     zip_safe=False,
     keywords="data pipelines, data engineering, machine learning",
     extras_require={},

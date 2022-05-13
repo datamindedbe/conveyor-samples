@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 
 default_args = {
-    "owner": "Datafy",
+    "owner": "Conveyor",
     "depends_on_past": False,
     "start_date": datetime(year=2022, month=1, day=1),
     "email": [],
@@ -17,7 +17,7 @@ default_args = {
 dag = DAG(
     "samples_titanic_training", default_args=default_args, schedule_interval=None, max_active_runs=1, is_paused_upon_creation=False
 )
-role = "datafy-samples"
+role = "conveyor-samples"
 
 validate_task = DatafyContainerOperatorV2(
     dag=dag,
