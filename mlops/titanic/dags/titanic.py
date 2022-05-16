@@ -1,5 +1,5 @@
 from airflow import DAG
-from datafy.operators import DatafyContainerOperatorV2
+from conveyor.operators import ConveyorContainerOperatorV2
 from datetime import datetime, timedelta
 
 
@@ -19,7 +19,7 @@ dag = DAG(
 )
 role = "conveyor-samples"
 
-validate_task = DatafyContainerOperatorV2(
+validate_task = ConveyorContainerOperatorV2(
     dag=dag,
     task_id="validate_data",
     instance_type='mx_nano',
@@ -31,7 +31,7 @@ validate_task = DatafyContainerOperatorV2(
     aws_role=role,
 )
 
-prepare_task = DatafyContainerOperatorV2(
+prepare_task = ConveyorContainerOperatorV2(
     dag=dag,
     task_id="prepare_data",
     instance_type='mx_nano',
@@ -43,7 +43,7 @@ prepare_task = DatafyContainerOperatorV2(
     aws_role=role,
 )
 
-train_task = DatafyContainerOperatorV2(
+train_task = ConveyorContainerOperatorV2(
     dag=dag,
     task_id="train",
     instance_type='mx_nano',
@@ -54,7 +54,7 @@ train_task = DatafyContainerOperatorV2(
     aws_role=role,
 )
 
-evaluate_task = DatafyContainerOperatorV2(
+evaluate_task = ConveyorContainerOperatorV2(
     dag=dag,
     task_id="evaluate",
     instance_type='mx_nano',
