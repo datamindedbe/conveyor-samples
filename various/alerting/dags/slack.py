@@ -30,7 +30,7 @@ def slack_failed_dag_notification(context):
 default_args = {
     "owner": "Conveyor",
     "depends_on_past": False,
-    "start_date": datetime(year=2022, month=5, day=19),
+    "start_date": datetime(year=2022, month=1, day=1),
     "email": [],
     "email_on_failure": False,
     "email_on_retry": False,
@@ -42,6 +42,7 @@ dag_failed = DAG(
     "samples_alerting_slack",
     default_args=default_args,
     schedule_interval="@daily",
+    catchup=False,
     max_active_runs=1,
     on_failure_callback=slack_failed_dag_notification
 )
@@ -92,6 +93,7 @@ dag_sla = DAG(
     "samples_alerting_slack_sla",
     default_args={**default_args, 'sla': timedelta(seconds=30)},
     schedule_interval="@daily",
+    catchup=False,
     max_active_runs=1,
     sla_miss_callback=slack_sla_notification
 )
