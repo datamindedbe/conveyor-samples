@@ -16,4 +16,7 @@ This repository contains a number of sample projects for Conveyor
 ### MLOps
 
 - titanic: we use the dataset from [Kaggle](https://www.kaggle.com/c/titanic) to build a ml pipeline that will output a model that can be used to predict survival.
-- housing: we use the dataset from [Kaggle](https://www.kaggle.com/c/house-prices-advanced-regression-techniques) to build a ml pipeline to output a model and another pipeline that will use this model to make predictions on a daily basis.
+
+### Various
+
+- alerting: we use native airflow features to send notifications to Slack.
