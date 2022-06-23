@@ -1,0 +1,13 @@
+docker:
+    path: .
+id: a75ea415-dac4-4f28-8b56-7549d9e24b31
+name: pidemo
+resources:
+    path: resources
+streaming:
+    filename: streaming.yaml
+template: pyspark
+version: "0.3"
+workflows:
+    path: dags
+    version: "2"
