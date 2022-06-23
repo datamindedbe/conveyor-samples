@@ -1,26 +1,38 @@
 # List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
 tasks:
-  - name: Uninstall lynx
-    init: sudo apt-get remove lynx -y
-  - name: Install AWS CLI
+  - name: Gitpod config (browser open, workspace bin path)
     init: |
-      curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-      unzip awscliv2.zip
-      sudo ./aws/install
-      rm awscliv2.zip
-      rm -rf ./aws
-    command: aws --version
-
-  - name: Install Conveyor CLI
+      mkdir -p /workspace/bin
+      cat > /workspace/bin/open.sh <<EOF
+      #!/bin/bash
+      exec gp preview --external "$@"
+      EOF
+      chmod +x /workspace/bin/open.sh
+    command: |
+      sudo update-alternatives --install /usr/bin/www-browser www-browser /workspace/bin/open.sh 100
+      echo "export PATH=\"/workspace/bin:\$PATH\"" >> ~/.bashrc
+      exit
+  - name: Install conveyor
     init: |
+      tmpdir="$(mktemp -d)"
+      cd $tmpdir
       wget https://app.conveyordata.com/api/info/cli/location/linux/amd64 -O conveyor_linux_amd64.tar.gz
       tar -zxvf conveyor_linux_amd64.tar.gz
       chmod +x bin/linux/amd64/conveyor
-      sudo cp bin/linux/amd64/conveyor /usr/local/bin/conveyor
-      rm conveyor_linux_amd64.tar.gz
-      rm -rf ./bin
-    command: conveyor --version
-
+      mkdir -p /workspace/bin
+      sudo install bin/linux/amd64/conveyor /workspace/bin/conveyor
+      cd && rm -r $tmpdir
+    command: exit
+  - name: Install AWS CLI
+    init: |
+      tmpdir="$(mktemp -d)"
+      cd $tmpdir
+      wget "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -O "awscliv2.zip"
+      unzip awscliv2.zip
+      mkdir -p /workspace/aws-cli
+      ./aws/install --install-dir /workspace/aws-cli --bin-dir /workspace/bin
+      cd && rm -r $tmpdir
+    command: exit
 
 # Prebuild settings
 github:
