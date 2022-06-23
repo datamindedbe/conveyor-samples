@@ -26,11 +26,11 @@ dag = DAG(
 sample_task = ConveyorSparkSubmitOperatorV2(
     dag=dag,
     task_id="sample",
-    num_executors="4",
-    driver_instance_type="mx.small",
+    num_executors="8",
+    driver_instance_type="mx.medium",
     executor_instance_type="mx.medium",
     aws_role="pidemo-{{ macros.conveyor.env() }}",
     spark_main_version=3,
     application="local:///opt/spark/work-dir/src/pidemo/app.py",
-    application_args=["--date", "{{ ds }}", "--env", "{{ macros.conveyor.env() }}", "--partitions", "2000"],
+    application_args=["--date", "{{ ds }}", "--env", "{{ macros.conveyor.env() }}", "--partitions", "20000"],
 )
