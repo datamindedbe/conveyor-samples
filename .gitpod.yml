@@ -3,7 +3,7 @@ tasks:
   - name: Gitpod config (browser open, workspace bin path)
     init: |
       mkdir -p /workspace/bin
-      cat > /workspace/bin/open.sh <<EOF
+      cat > /workspace/bin/open.sh <<'EOF'
       #!/bin/bash
       exec gp preview --external "$@"
       EOF
