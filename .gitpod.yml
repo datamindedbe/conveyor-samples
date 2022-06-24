@@ -12,18 +12,18 @@ tasks:
       sudo update-alternatives --install /usr/bin/www-browser www-browser /workspace/bin/open.sh 100
       echo "export PATH=\"/workspace/bin:\$PATH\"" >> ~/.bashrc
       exit
-  - name: Install conveyor
-    init: |
+  - name: Install conveyor (at startup)
+    command: |
       tmpdir="$(mktemp -d)"
       cd $tmpdir
       wget https://app.conveyordata.com/api/info/cli/location/linux/amd64 -O conveyor_linux_amd64.tar.gz
       tar -zxvf conveyor_linux_amd64.tar.gz
       chmod +x bin/linux/amd64/conveyor
       mkdir -p /workspace/bin
-      sudo install bin/linux/amd64/conveyor /workspace/bin/conveyor
+      sudo install bin/linux/amd64/conveyor /usr/local/bin/conveyor
       cd && rm -r $tmpdir
-    command: exit
-  - name: Install AWS CLI
+      exit
+  - name: Install AWS CLI (during prebuild)
     init: |
       tmpdir="$(mktemp -d)"
       cd $tmpdir
