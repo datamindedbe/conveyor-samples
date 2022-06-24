@@ -14,12 +14,12 @@ This repository contains a number of sample projects for Conveyor
 ## Samples
 
 ### Basic 
-- pi_spark: we use Apache Spark to calculate pi.
+- pi_spark: use Apache Spark to calculate pi.
 
 ### MLOps
 
-- titanic: we use the dataset from [Kaggle](https://www.kaggle.com/c/titanic) to build a ml pipeline that will output a model that can be used to predict survival.
+- titanic: use the dataset from [Kaggle](https://www.kaggle.com/c/titanic) to build a ml pipeline that will output a model that can be used to predict survival.
 
 ### Various
 
-- alerting: we use native airflow features to send notifications to Slack.
+- alerting: use native airflow features to send notifications to Slack.
