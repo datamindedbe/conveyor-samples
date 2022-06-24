@@ -1,0 +1,4 @@
+- [ ] Updated the root `README.md` and sample `README.md`
+- [ ] Using the `conveyor-samples` aws role
+- [ ] Airflow dags are prefixed with `samples_`
+- [ ] No `.conveyor` folder checked-in by mistake 
