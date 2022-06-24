@@ -38,6 +38,8 @@ default_args = {
     "retry_delay": timedelta(minutes=5),
 }
 
+role = "conveyor-samples"
+
 dag_failed = DAG(
     "samples_alerting_slack",
     default_args=default_args,
@@ -53,7 +55,7 @@ ConveyorContainerOperatorV2(
     cmds=["python"],
     arguments=["-m", "alerting.sample_fail", "--date", "{{ ds }}", "--env", "{{ macros.conveyor.env() }}"],
     instance_type="mx.micro",
-    aws_role="samples_slack-{{ macros.conveyor.env() }}",
+    aws_role=role,
 )
 
 ConveyorContainerOperatorV2(
@@ -62,7 +64,7 @@ ConveyorContainerOperatorV2(
     cmds=["python"],
     arguments=["-m", "alerting.sample_fail", "--date", "{{ ds }}", "--env", "{{ macros.conveyor.env() }}"],
     instance_type="mx.micro",
-    aws_role="samples_slack-{{ macros.conveyor.env() }}",
+    aws_role=role,
 )
 
 def slack_sla_notification(dag, task_list, blocking_task_list, slas, blocking_tis, *args, **kwargs):
@@ -104,7 +106,7 @@ sample_sla = ConveyorContainerOperatorV2(
     cmds=["python"],
     arguments=["-m", "alerting.sample_sla", "--date", "{{ ds }}", "--env", "{{ macros.conveyor.env() }}"],
     instance_type="mx.micro",
-    aws_role="samples_slack-{{ macros.conveyor.env() }}",
+    aws_role=role,
 )
 
 sample_sla_2 = ConveyorContainerOperatorV2(
@@ -113,7 +115,7 @@ sample_sla_2 = ConveyorContainerOperatorV2(
     cmds=["python"],
     arguments=["-m", "alerting.sample_sla", "--date", "{{ ds }}", "--env", "{{ macros.conveyor.env() }}"],
     instance_type="mx.micro",
-    aws_role="samples_slack-{{ macros.conveyor.env() }}",
+    aws_role=role,
 )
 
 sample_sla >> sample_sla_2

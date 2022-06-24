@@ -17,21 +17,22 @@ default_args = {
 
 
 dag = DAG(
-    "pidemo",
+    "samples_pi_spark",
     default_args=default_args,
     schedule_interval="@daily",
     max_active_runs=1,
 )
+role = "conveyor-samples"
 
 sample_task = ConveyorSparkSubmitOperatorV2(
     dag=dag,
-    task_id="sample",
+    task_id="calculate_pi",
     num_executors="4",
     driver_instance_type="mx.medium",
     executor_instance_type="mx.medium",
-    aws_role="pidemo-{{ macros.conveyor.env() }}",
+    aws_role=role,
     spark_main_version=3,
-    application="local:///opt/spark/work-dir/src/pidemo/app.py",
+    application="local:///opt/spark/work-dir/src/pi_spark/app.py",
     application_args=[
         "--date", "{{ ds }}", "--env", 
         "{{ macros.conveyor.env() }}", 

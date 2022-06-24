@@ -8,15 +8,14 @@ from pyspark.sql import SparkSession
 from pyspark.sql import Row
 from pyspark.sql.dataframe import DataFrame
 
-from pidemo.common.spark import ClosableSparkSession, transform, SparkLogger
-from pidemo.transformations.shared import add_ds
+from pi_spark.common.spark import ClosableSparkSession, transform, SparkLogger
 
 
 DataFrame.transform = transform
 
 
 def main():
-    parser = argparse.ArgumentParser(description="pidemo")
+    parser = argparse.ArgumentParser(description="pi_spark")
     parser.add_argument(
         "-d", "--date", dest="date", help="date in format YYYY-mm-dd", required=True
     )
@@ -28,7 +27,7 @@ def main():
     )
     args = parser.parse_args()
 
-    with ClosableSparkSession("pidemo") as session:        
+    with ClosableSparkSession("pi_spark") as session:        
         run(session, args.env, args.date, int(args.partitions))
 
 
