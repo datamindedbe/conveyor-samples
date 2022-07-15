@@ -13,7 +13,9 @@ tasks:
       exit
   - name: Install conveyor 
     init: curl -s https://datafy-cp-artifacts.s3.eu-west-1.amazonaws.com/cli-install/install.sh | bash
-    command: curl -s https://datafy-cp-artifacts.s3.eu-west-1.amazonaws.com/cli-install/update.sh | bash
+    command: |
+      curl -s https://datafy-cp-artifacts.s3.eu-west-1.amazonaws.com/cli-install/update.sh | bash
+      exit
   - name: Install AWS CLI (during prebuild)
     init: |
       tmpdir="$(mktemp -d)"
