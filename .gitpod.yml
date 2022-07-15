@@ -10,7 +10,6 @@ tasks:
       chmod +x /workspace/bin/open.sh
     command: |
       sudo update-alternatives --install /usr/bin/www-browser www-browser /workspace/bin/open.sh 100
-      echo "export PATH=\"/workspace/bin:\$PATH\"" >> ~/.bashrc
       exit
   - name: Install conveyor 
     init: curl -s https://datafy-cp-artifacts.s3.eu-west-1.amazonaws.com/cli-install/install.sh | bash
