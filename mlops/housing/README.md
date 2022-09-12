@@ -1,0 +1,118 @@
+# Housing
+
+In this example we use the dataset from [Kaggle](https://www.kaggle.com/c/house-prices-advanced-regression-techniques) to build a ml model that can be used to predict sales prices. We move from experiment to industrialization and cover the steps of data analysis, data preparation, model training, model evaluation, model validation and daily batch inference. 
+
+## Prerequisites
+
+### Data
+
+Before you can start this sample, you need to copy the data from Kaggle to the s3 bucket created as a prerequisite.
+
+1. Open https://www.kaggle.com/ and login or register (it's free)
+1. Navigate to https://www.kaggle.com/c/house-prices-advanced-regression-techniques and download the `test.csv` and `train.csv` in the data tab
+1. Copy both files to the `conveyor-samples-*` s3 bucket under `housing/raw`. You can use either the AWS Console or the AWS CLI.
+
+```bash
+aws s3 cp test.csv s3://conveyor-samples-*/housing/raw/test.csv
+aws s3 cp test.csv s3://conveyor-samples-*/housing/raw/train.csv
+```
+
+### Model metastore
+
+To make the example more real, we will track our model metadata in a model store. We will be using an individual account of [Neptune](https://neptune.ai/). 
+
+1. Open https://neptune.ai/ and login or register (it's free for individuals)
+1. Create a new project named `housing`
+1. Copy both the project name `john.doe/housing` and your API token (top right, under your profile) to an SSM parameter.
+
+```bash
+aws ssm put-parameter--name "/conveyor-samples/sample-housing/neptune/project" --type "String" --value "john.doe/housing"
+aws ssm put-parameter--name "/conveyor-samples/sample-housing/neptune/token" --type "SecureString" --value "eyJhcGlfYWRk ..."
+```
+
+## Getting started 
+
+Navigate to this folder and initialize it as a conveyor project `conveyor project create --name samples-housing`. Next we recommend opening the folder
+in VSCode 
+
+### Experiment
+
+#### Data analysis
+
+First we explore and analyse the data. To do this we use the notebook feature of conveyor. Execute `conveyor notebook create --env samples` or `conveyor notebook create --env samples --no-browser`(gitpod).
+This will package the code, publish it and start a new Jupyter notebook that will open in your browser window. This might take a while the first time. In Jupyter, open `notebooks/exploration.ipynb`. Execute the cells in the notebook and see how we used this to gain a better understanding of the data.
+
+We don't take credit for this effort. All thanks goes to https://medium.com/analytics-vidhya/exploratory-data-analysis-of-iowa-housing-price-prediction-problem-3d50a016797a.
+
+#### Building a first model
+
+The next step is to find a first suitable model. In Jupyter, open `notebooks/model.ipynb`. Execute the cells in the notebook and see how we use our understanding of the data done in the previous step, to build features, evaluate their importance and try a number of models. 
+
+Once we find a model, that is good enough, we can start the automation process.
+
+### Industrialization
+
+As described by Google as [MLOps](https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning) we will automate a pipeline that consists of: 
+
+1. data validation
+1. data preparation
+1. model training
+1. model evalution
+
+For simplicity sake, we will not cover the step of model validation in this sample. 
+
+#### Data validation
+
+In this step we will use the [pandera](https://pandera.readthedocs.io/en/stable/) library to validate our data. To iterate quickly we do this
+first in notebook. In Jupyter, open `notebooks/validation.ipynb` and have a look at the validation put in place. We leave it up to the user to 
+experiment and add some additional validation.
+
+We will use the code of the notebook to write our first job. In VSCode or Jupyter, open `src/titanic/jobs/validate.py`. We have taken the code 
+from our notebook, validated the schema and stored the output as a [parquet](https://parquet.apache.org/) file. Open `dags/titanic.py` and have a 
+look at the `validate_task`. This describes how the code is called. 
+
+You can test the code remotely by running `conveyor run --env samples` and selecting the `validate_data` task. Another approach of testing and debugging the code is to call the code directly from the notebook. In Jupyter, open `notebooks/debug.ipynb` and run the the first few cells and
+call the `run` function of the validate task.
+
+#### Data preparation
+
+Next, we will use the code from the `notebooks/model.ipynb` to create separate testable functions for each of the features we want to use. When you place close attention, you would see that the notebook is in fact already using the functions from the task we have created in `src/titanic/jobs/prepare.py`. After creating the features we split the dataset in a training and an evaluation set and store those for later use. Have a look at `dags/titanic.py` and the corresponding workflow task. 
+
+To test the code we can run `conveyor run --env samples` and select `prepare_data` or run the corresponding cells in `notebooks/debug.ipynb`. 
+
+#### Model training
+
+In this step we will use the output of the data preparation to train our model and store it so it can be used later on for model evaluation, model validation and inference. We used the model training code from `notebooks/model.ipynb` to create the task `src/titanic/jobs/training.py` with additional logic to load data and store the resulting model. We added a task to the workflow file `dags/titanic.py`.
+
+To test the code we can run `conveyor run --env samples` and select `train` or run the corresponding cells in `notebooks/debug.ipynb`. 
+
+
+#### Model evalution
+
+The last step we will cover in this ML pipeline is the evaluation. After loading the model and the evaluation data, we compare the predictions with the actuals and calculate the accuracy. We leave it up to the user to have a look at the corresponding files.
+
+To test the code we can run `conveyor run --env samples` and select `evaluate` or run the corresponding cells in `notebooks/debug.ipynb`.
+
+
+#### Deployement
+
+The different workflow tasks in `dags/titanic.py` are wired together. We are ready to deploy our pipeline:
+
+1. `conveyor build`
+1. `conveyor deploy --env samples --wait`
+1. Navigate to `https://app.conveyor.cloud/environments` and select the `samples` environment
+1. Press the play button next to the `titanic-training` dag in airflow to manually trigger the pipeline
+
+
+#### Cleanup
+
+1. `conveyor notebook delete --env samples`
+1. `conveyor project delete`
+
+
+### Conclusion
+
+In this sample we have seen how we can use the notebook feature to analyse and experiment with data. We also covered the basics of 
+building and deploying a ML pipeline.
+
+
