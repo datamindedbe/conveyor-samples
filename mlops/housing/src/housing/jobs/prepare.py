@@ -14,78 +14,56 @@ def run(config: Config):
     df = datalake.load_parquet("valid", config.date, "data")
 
     features_df = df.copy()
-    add_gender_feature(features_df)
-    add_age_feature(features_df)
-    add_family_size_feature(features_df)
-    add_has_cabin_feature(features_df)
-    add_categorical_fare_feature(features_df)
-    add_title_feature(features_df)
+    fill_missing_string_values_none(features_df)
+    fill_missing_float_values_zero(features_df)
+    fill_missing_int_values_zero(features_df)
+    fill_columns_most_common_value(features_df)
+    fill_functional_column(features_df)
+    add_total_area(features_df)
     features_df = features_df.drop(
-        ['Name', 'Sex', 'Ticket', 'Cabin', 'Embarked', 'SibSp', 'Parch'], axis=1
+        ['Utilities'], axis=1
     )
     if config.asset == "train":
-        features_df = features_df.drop(['PassengerId'], axis=1)
         training_features, test_features = train_test_split(features_df, test_size=0.2)
         datalake.write_parquet(training_features, "features/training", config.date, "data")
         datalake.write_parquet(test_features, "features/testing", config.date, "data")
     else:
-        features_df = features_df.drop(['Survived'], axis=1)
+        features_df = features_df.drop(['SalePrice'], axis=1)
         datalake.write_parquet(features_df, "features/predictions", config.date, "data")
     logging.info(f"Done extracting features.")
 
 
-def add_has_cabin_feature(df: pd.DataFrame):
-    # if NA => 0 else 1
-    def _is_nan(x):
-        if isinstance(x, type(np.nan)):
-            return 0
-        return 1
-    df['HasCabin'] = df['Cabin'].apply(_is_nan)
+def fill_missing_string_values_none(df: pd.DataFrame):
+    for col in ('GarageType', 'GarageFinish', 'GarageQual', 'GarageCond', 'PoolQC', 'MiscFeature', 'Alley', 'Fence', 'FireplaceQu', 'BsmtQual', 'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinType2', 'MasVnrType', 'MSSubClass'):
+        df[col] = df[col].fillna('None')
 
 
-def add_categorical_fare_feature(df: pd.DataFrame):
-    df['Fare'] = df['Fare']. \
-        groupby([df['SexNumerical'], df['Pclass']]). \
-        apply(lambda x: x.fillna(x.median()))
-    df['CategoricalFare'] = pd.qcut(df['Fare'], 4, labels = [0, 1, 2, 3]).astype(int)
-
-    
-def add_gender_feature(df: pd.DataFrame):
-    sexes = sorted(df['Sex'].unique())
-    genders_mapping = dict(zip(sexes, range(0, len(sexes) + 1)))
-    df['SexNumerical'] = df['Sex'].map(genders_mapping).astype(int)
+def fill_missing_float_values_zero(df: pd.DataFrame):
+    for col in ('BsmtFinSF1', 'BsmtFinSF2', 'BsmtUnfSF','TotalBsmtSF', 'BsmtFullBath', 'BsmtHalfBath', 'MasVnrArea'):
+        df[col] = df[col].fillna(0)
 
 
-def add_age_feature(df: pd.DataFrame):
-    df['Age'] = df['Age']. \
-        groupby([df['SexNumerical'], df['Pclass']]). \
-        apply(lambda x: x.fillna(x.median()))
+def fill_missing_int_values_zero(df: pd.DataFrame):
+    for col in ('GarageYrBlt', 'GarageArea', 'GarageCars'):
+        df[col] = df[col].fillna(0)
 
 
-def add_family_size_feature(df: pd.DataFrame):
-    df['FamilySize'] = df['SibSp'] + df['Parch']
-    
-    
-def add_title_feature(df: pd.DataFrame):
-    def find_title(x):
-        title_search = re.search(' ([A-Za-z]+)\.', x)
-        if title_search:
-            title = title_search.group(1)
-            if title in ['Mlle', 'Ms']:
-                return 'Miss'
+def fill_columns_most_common_value(df: pd.DataFrame):
+    df['MSZoning'] = df['MSZoning'].fillna(df['MSZoning'].mode()[0])
+    df['Electrical'] = df['Electrical'].fillna(df['Electrical'].mode()[0])
+    df['KitchenQual'] = df['KitchenQual'].fillna(df['KitchenQual'].mode()[0])
+    df['Exterior1st'] = df['Exterior1st'].fillna(df['Exterior1st'].mode()[0])
+    df['Exterior2nd'] = df['Exterior2nd'].fillna(df['Exterior2nd'].mode()[0])
+    df['SaleType'] = df['SaleType'].fillna(df['SaleType'].mode()[0])
 
-            elif title in ['Mme', 'Mrs']:
-                return 'Mrs'
-            elif title=='Mr':
-                return 'Mr'           
-            else:
-                return 'Rare'
-        return ""
-    
-    return_title= df['Name'].apply(find_title)
-    dict_title = {'Miss': 1, 'Mrs':2, 'Mr':3, 'Rare':4}
-    df['Title'] = return_title.replace(dict_title)
-    
+
+def fill_functional_column(df: pd.DataFrame):
+    df['Functional'] = df['Functional'].fillna('Typ')
+
+
+def add_total_area(df: pd.DataFrame):
+    df['TotalSF'] = df['TotalBsmtSF'] + df['1stFlrSF'] + df['2ndFlrSF']
+
 
 if __name__ == '__main__':
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
