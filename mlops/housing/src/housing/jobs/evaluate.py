@@ -1,6 +1,9 @@
-import titanic.datalake as datalake
-from titanic.config import Config, parse_args
+import housing.datalake as datalake
+from housing.config import Config, parse_args
+from sklearn.model_selection import cross_val_score, KFold
 
+import numpy as np
+import pandas as pd
 import sys
 import logging
 
@@ -13,15 +16,21 @@ def run(config: Config):
     features = [ col for col in df.columns if col != target ]
     x, y = df[features], df[target]
 
-    classifier = datalake.load_model(config.date, "classifier")
+    reg = datalake.load_model(config.date, "regression")
 
-    pred = classifier.predict(x)
+    pred = reg.predict(x)
     predictions_df = df.copy()
     predictions_df['Prediction'] = pred
 
     datalake.write_parquet(predictions_df, "evaluation", config.date, "data")
-    accuracy = 100. * (pred == y).mean()
-    logging.info(f"Prediction done with accuracy {accuracy}%.")
+    score = rmsle_cv(x, y, reg)
+    logging.info(f"Gboost score: {score.mean():.4f} ({score.std():.4f})")
+
+
+def rmsle_cv(features: pd.DataFrame, target: pd.DataFrame, model):
+    n_folds = 5
+    kf = KFold(n_folds, shuffle=True, random_state=42).get_n_splits(features.values)
+    return np.sqrt(-cross_val_score(model, features.values, target.values, scoring="neg_mean_squared_error", cv=kf))
 
 
 if __name__ == '__main__':

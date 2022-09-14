@@ -22,10 +22,13 @@ def run(config: Config):
     fill_missing_int_values_zero(features_df)
     fill_columns_most_common_value(features_df)
     fill_missing_values_functional_column(features_df)
+    fill_missing_lot_frontage(features_df)
 
     add_feature_total_area(features_df)
     features_df = features_df.drop(
-        ['Utilities'], axis=1
+        ['Utilities', 'MSZoning', 'LandContour','LotConfig','Neighborhood','Condition1','Condition2','BldgType',
+        'HouseStyle','RoofStyle','RoofMatl','Exterior1st','Exterior2nd','MasVnrType','Foundation', 'Heating',
+        'Electrical', 'GarageType', 'MiscFeature', 'SaleType', 'SaleCondition'], axis=1
     )
 
     features_df = log_transform_saleprice(features_df)
@@ -101,6 +104,12 @@ def label_encode_categorical_values(df: pd.DataFrame):
         lbl = LabelEncoder()
         lbl.fit(list(df[c].values))
         df[c] = lbl.transform(list(df[c].values))
+
+
+def fill_missing_lot_frontage(df: pd.DataFrame):
+    # Use the median of the neighbors to define the lot frontage.
+    df["LotFrontage"] = df.groupby("Neighborhood")["LotFrontage"].transform(
+        lambda x: x.fillna(x.median()))
 
 
 def correct_skewed_numerical_features(df: pd.DataFrame):

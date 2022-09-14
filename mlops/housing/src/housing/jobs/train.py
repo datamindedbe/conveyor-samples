@@ -1,4 +1,4 @@
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.ensemble import GradientBoostingRegressor
 
 import sys
 import logging
@@ -13,10 +13,13 @@ def run(config: Config):
     features = [ col for col in df.columns if col != target ]
     x, y = df[features], df[target]
 
-    clf = GradientBoostingClassifier(n_estimators=100, learning_rate=0.1, max_depth=3, random_state=2).fit(x, y)
-    score = clf.score(x, y)
-    logging.info(f"Score of model: {score}")
-    datalake.write_model(clf, config.date, "classifier")
+    reg = GradientBoostingRegressor(n_estimators=3000, learning_rate=0.05,
+                                       max_depth=3, max_features='sqrt',
+                                       min_samples_leaf=15, min_samples_split=10,
+                                       loss='huber', random_state =5)
+    reg.fit(x,y)
+    logging.info(f"Score of model: {reg.score(x, y)}")
+    datalake.write_model(reg, config.date, "regression")
     logging.info("Training done.")
 
 

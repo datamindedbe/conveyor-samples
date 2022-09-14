@@ -38,7 +38,7 @@ prepare_task = ConveyorContainerOperatorV2(
     arguments=[
         "/app/src/housing/jobs/prepare.py",
         "--asset", "train",
-        "--date", "2022-09-13",
+        "--date", "{{ ds }}",
     ],
     aws_role=role,
 )
@@ -49,7 +49,7 @@ train_task = ConveyorContainerOperatorV2(
     instance_type='mx_nano',
     arguments=[
         "/app/src/housing/jobs/train.py",
-        "--date", "2022-09-13",
+        "--date", "{{ ds }}",
     ],
     aws_role=role,
 )
