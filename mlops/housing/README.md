@@ -63,16 +63,12 @@ For simplicity sake, we will not cover the step of model validation in this samp
 
 #### Data validation
 
-In this step we will use the [pandera](https://pandera.readthedocs.io/en/stable/) library to validate our data. To iterate quickly we do this
-first in notebook. In Jupyter, open `notebooks/validation.ipynb` and have a look at the validation put in place. We leave it up to the user to 
-experiment and add some additional validation.
+In this step we will use the [pandera](https://pandera.readthedocs.io/en/stable/) library to validate our data. We can specify the datatype, whether or not the value is nullable and check conditions for the value.
 
-We will use the code of the notebook to write our first job. In VSCode or Jupyter, open `src/housing/jobs/validate.py`. We have taken the code 
-from our notebook, validated the schema and stored the output as a [parquet](https://parquet.apache.org/) file. Open `dags/housing.py` and have a 
+In VSCode or Jupyter, open `src/housing/jobs/validate.py`. Open `dags/housing.py` and have a 
 look at the `validate_task`. This describes how the code is called. 
 
-You can test the code remotely by running `conveyor run --env samples` and selecting the `validate_data` task. Another approach of testing and debugging the code is to call the code directly from the notebook. In Jupyter, open `notebooks/debug.ipynb` and run the the first few cells and
-call the `run` function of the validate task.
+You can test the code remotely by running `conveyor run --env samples` and selecting the `validate_data` task.
 
 #### Data preparation
 
