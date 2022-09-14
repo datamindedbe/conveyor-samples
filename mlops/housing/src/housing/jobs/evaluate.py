@@ -6,10 +6,10 @@ import logging
 
 
 def run(config: Config):
-    logging.info("Predicting titanic survival for test dataset.")
+    logging.info("Predicting housing sale price for test dataset.")
     
     df = datalake.load_parquet("features/testing", config.date, "data")
-    target = 'Survived'
+    target = 'SalePrice'
     features = [ col for col in df.columns if col != target ]
     x, y = df[features], df[target]
 
