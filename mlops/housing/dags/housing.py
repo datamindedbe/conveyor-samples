@@ -15,7 +15,7 @@ default_args = {
 }
 
 dag = DAG(
-    "housing-training", default_args=default_args, schedule_interval=None, max_active_runs=1, is_paused_upon_creation=False
+    "samples_housing_training", default_args=default_args, schedule_interval=None, max_active_runs=1, is_paused_upon_creation=False
 )
 role = "conveyor-samples"
 

@@ -67,8 +67,8 @@ In this step we will use the [pandera](https://pandera.readthedocs.io/en/stable/
 first in notebook. In Jupyter, open `notebooks/validation.ipynb` and have a look at the validation put in place. We leave it up to the user to 
 experiment and add some additional validation.
 
-We will use the code of the notebook to write our first job. In VSCode or Jupyter, open `src/titanic/jobs/validate.py`. We have taken the code 
-from our notebook, validated the schema and stored the output as a [parquet](https://parquet.apache.org/) file. Open `dags/titanic.py` and have a 
+We will use the code of the notebook to write our first job. In VSCode or Jupyter, open `src/housing/jobs/validate.py`. We have taken the code 
+from our notebook, validated the schema and stored the output as a [parquet](https://parquet.apache.org/) file. Open `dags/housing.py` and have a 
 look at the `validate_task`. This describes how the code is called. 
 
 You can test the code remotely by running `conveyor run --env samples` and selecting the `validate_data` task. Another approach of testing and debugging the code is to call the code directly from the notebook. In Jupyter, open `notebooks/debug.ipynb` and run the the first few cells and
@@ -76,13 +76,13 @@ call the `run` function of the validate task.
 
 #### Data preparation
 
-Next, we will use the code from the `notebooks/model.ipynb` to create separate testable functions for each of the features we want to use. When you place close attention, you would see that the notebook is in fact already using the functions from the task we have created in `src/titanic/jobs/prepare.py`. After creating the features we split the dataset in a training and an evaluation set and store those for later use. Have a look at `dags/titanic.py` and the corresponding workflow task. 
+Next, we will use the code from the `notebooks/model.ipynb` to create separate testable functions for each of the features we want to use. When you place close attention, you would see that the notebook is in fact already using the functions from the task we have created in `src/housing/jobs/prepare.py`. After creating the features we split the dataset in a training and an evaluation set and store those for later use. Have a look at `dags/housing.py` and the corresponding workflow task. 
 
 To test the code we can run `conveyor run --env samples` and select `prepare_data` or run the corresponding cells in `notebooks/debug.ipynb`. 
 
 #### Model training
 
-In this step we will use the output of the data preparation to train our model and store it so it can be used later on for model evaluation, model validation and inference. We used the model training code from `notebooks/model.ipynb` to create the task `src/titanic/jobs/training.py` with additional logic to load data and store the resulting model. We added a task to the workflow file `dags/titanic.py`.
+In this step we will use the output of the data preparation to train our model and store it so it can be used later on for model evaluation, model validation and inference. We used the model training code from `notebooks/model.ipynb` to create the task `src/housing/jobs/training.py` with additional logic to load data and store the resulting model. We added a task to the workflow file `dags/housing.py`.
 
 To test the code we can run `conveyor run --env samples` and select `train` or run the corresponding cells in `notebooks/debug.ipynb`. 
 
@@ -96,12 +96,12 @@ To test the code we can run `conveyor run --env samples` and select `evaluate` o
 
 #### Deployement
 
-The different workflow tasks in `dags/titanic.py` are wired together. We are ready to deploy our pipeline:
+The different workflow tasks in `dags/housing.py` are wired together. We are ready to deploy our pipeline:
 
 1. `conveyor build`
 1. `conveyor deploy --env samples --wait`
 1. Navigate to `https://app.conveyor.cloud/environments` and select the `samples` environment
-1. Press the play button next to the `titanic-training` dag in airflow to manually trigger the pipeline
+1. Press the play button next to the `housing-training` dag in airflow to manually trigger the pipeline
 
 
 #### Cleanup
