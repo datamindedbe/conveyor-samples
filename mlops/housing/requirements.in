@@ -1,0 +1,16 @@
+requests
+boto3
+argparse==1.4.0
+pandas==1.3.4
+awswrangler==2.12.1
+scikit-learn==1.0.1
+joblib==1.1.0
+scipy==1.9.1
+xgboost
+lightgbm
+matplotlib
+seaborn
+statsmodels
+sagemaker
+pandera
+pandera[io]

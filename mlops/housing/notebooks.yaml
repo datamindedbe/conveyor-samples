@@ -1,0 +1,21 @@
+notebooks:
+- name: default
+  mode: web-ui
+  maxIdleTime: 60
+  pythonSpec:
+    pythonVersion: "3.9"
+    awsRole: conveyor-samples
+    instanceType: mx.medium
+    instanceLifeCycle: on-demand
+  notebooksDir: notebooks
+  srcDir: src
+- name: housing
+  mode: web-ui
+  maxIdleTime: 60
+  pythonSpec:
+    pythonVersion: "3.9"
+    awsRole: conveyor-samples
+    instanceType: mx.medium
+    instanceLifeCycle: spot
+  notebooksDir: notebooks
+  srcDir: src
