@@ -24,7 +24,7 @@ schema = pa.DataFrameSchema({
 
 def run(config: Config):
     logging.info(f"Validating {config.asset} dataset for date {config.date}...")
-    df = datalake.load_csv(f"{config.asset}.csv")
+    df = datalake.load_csv(f"{config.asset}.csv", bucket="datafy-cp-artifacts")
     df = schema(df)
     datalake.write_parquet(df, "valid", config.date, "data")
     logging.info(f"Done validating.")
