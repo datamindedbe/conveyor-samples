@@ -4,7 +4,7 @@ notebooks:
   maxIdleTime: 60
   pythonSpec:
     pythonVersion: "3.9"
-    awsRole: conveyor-samples
+    awsRole: TitanicJob
     instanceType: mx.medium
     instanceLifeCycle: on-demand
   notebooksDir: notebooks

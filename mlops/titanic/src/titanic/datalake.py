@@ -1,5 +1,7 @@
 import logging
 import tempfile
+from typing import Optional
+
 import joblib
 import boto3
 import awswrangler as wr
@@ -17,8 +19,8 @@ def key_prefix() ->str:
     return "titanic"
 
 
-def load_csv(path: str) -> pd.DataFrame:
-    s3path = f's3://{get_bucket()}/{key_prefix()}/raw/{path}'
+def load_csv(path: str, bucket: Optional[str] = None) -> pd.DataFrame:
+    s3path = f's3://{get_bucket() if bucket is None else bucket}/{path}'
     logging.info(f"Loading csv data from {s3path}")
     return wr.s3.read_csv(path=s3path)
 

@@ -17,7 +17,7 @@ default_args = {
 dag = DAG(
     "samples_titanic_training", default_args=default_args, schedule_interval=None, max_active_runs=1, is_paused_upon_creation=False
 )
-role = "conveyor-samples"
+role = "TitanicJob"
 
 validate_task = ConveyorContainerOperatorV2(
     dag=dag,
@@ -25,7 +25,7 @@ validate_task = ConveyorContainerOperatorV2(
     instance_type='mx_nano',
     arguments=[
       "/app/src/titanic/jobs/validate.py",
-      "--asset", "train",
+      "--asset", "conveyor-samples/titanic/data/train",
       "--date", "{{ ds }}",
     ],
     aws_role=role,
