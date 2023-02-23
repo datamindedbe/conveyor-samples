@@ -1,0 +1,9 @@
+dbt-duckdb==1.4.0
+dbt-duckdb[glue]==1.4.0
+duckdb==0.6.1
+dbt-core==1.4.0
+boto3
+
+# extra features
+sqlfluff~=1.2.1
+
