@@ -15,6 +15,7 @@ This repository contains a number of sample projects for Conveyor
 
 ### Basic 
 - pi_spark: use Apache Spark to calculate pi.
+- coffee_shop_dbt: use Dbt and Duckdb for cleaning and transforming the coffee shop input data and writing the results to s3.
 
 ### MLOps
 
