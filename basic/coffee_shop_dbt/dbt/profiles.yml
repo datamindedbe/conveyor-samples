@@ -9,6 +9,15 @@ default:
         - parquet
       use_credential_provider: aws
       external_root: "s3://datafy-demo-data/coffee-data"
+    demoenv:
+      type: duckdb
+      path: /tmp/coffee_shop.duckdb
+      threads: 1
+      extensions:
+        - httpfs
+        - parquet
+      use_credential_provider: aws
+      external_root: "s3://datafy-demo-data/coffee-data"
     local:
       type: duckdb
       path: /workspace/coffee_shop.duckdb
