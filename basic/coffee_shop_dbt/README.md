@@ -24,7 +24,7 @@ aws s3 cp raw_supplies.csv s3://conveyor-samples-*/coffee-data/raw/raw_supplies.
 Update the following files to reflect the s3 bucket that you created:
 
 - `dbt/profiles.yml`: change the extenal_root property
-- `dbt/coffee_shop_dbt/models/staging/__sources.yml`: update the external location property of the source files
+- `dbt/coffee_shop_dbt/models/staging/sources.yml`: update the external location property of the source files
 - `resources/coffee_shop_dbt.tf`: Update the permissions of the iam role to read/write from the s3 bucket
 
 ## Project Structure
