@@ -25,14 +25,14 @@ staging = ConveyorContainerOperatorV2(
     dag=dag,
     task_id="staging",
     aws_role="conveyor-samples",
-    arguments=["run", "--target", "dev", "-s", "staging"],
+    arguments=["--no-use-colors", "run", "--target", "dev", "-s", "staging"],
 )
 
 marts = ConveyorContainerOperatorV2(
     dag=dag,
     task_id="marts",
     aws_role="conveyor-samples",
-    arguments=["run", "--target", "dev", "-s", "marts"],
+    arguments=["--no-use-colors", "run", "--target", "dev", "-s", "marts"],
 )
 
 staging >> marts
