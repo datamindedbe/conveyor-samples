@@ -1,7 +1,7 @@
 from airflow import DAG
 from conveyor.factories import ConveyorDbtTaskFactory
 from conveyor.operators import ConveyorContainerOperatorV2
-from datetime import datetime, timedelta
+from datetime import timedelta
 from airflow.utils import dates
 
 
@@ -18,7 +18,7 @@ default_args = {
 
 
 dag = DAG(
-    "samples_coffee_shop_dbt", default_args=default_args, schedule_interval="@daily", max_active_runs=1
+    "samples_coffee_shop_dbt", default_args=default_args, schedule_interval="@daily", max_active_runs=1,
 )
 
 staging = ConveyorContainerOperatorV2(
@@ -37,11 +37,10 @@ marts = ConveyorContainerOperatorV2(
 
 staging >> marts
 
-dag2 = DAG(
-    "samples_coffee_shop_dbt_factory", default_args=default_args, schedule_interval="@daily", max_active_runs=1
+dag_factory = DAG(
+    "samples_coffee_shop_dbt_factory", default_args=default_args, schedule_interval="@daily", max_active_runs=1,
 )
 
-factory = ConveyorDbtTaskFactory(task_aws_role="conveyor-samples",
-)
-start, end = factory.add_tasks_to_dag(dag=dag2)
+factory = ConveyorDbtTaskFactory(task_aws_role="conveyor-samples",)
+start, end = factory.add_tasks_to_dag(dag=dag_factory)
 
