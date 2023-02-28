@@ -12,3 +12,5 @@ RUN dbt deps
 
 ENV DBT_PROFILES_DIR="/app/dbt"
 ENV DBT_PROJECT_DIR="/app/dbt/coffee_shop_dbt"
+
+RUN dbt ls
