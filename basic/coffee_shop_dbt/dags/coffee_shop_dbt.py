@@ -17,7 +17,10 @@ default_args = {
 
 
 dag = DAG(
-    "samples_coffee_shop_dbt", default_args=default_args, schedule_interval="@daily", max_active_runs=1,
+    "samples_coffee_shop_dbt",
+    default_args=default_args,
+    schedule_interval="@daily",
+    max_active_runs=1,
 )
 
 staging = ConveyorContainerOperatorV2(
