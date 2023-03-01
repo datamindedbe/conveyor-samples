@@ -17,21 +17,32 @@ default_args = {
 
 
 dag = DAG(
-    "samples_coffee_shop_dbt", default_args=default_args, schedule_interval="@daily", max_active_runs=1,
+    "samples_coffee_shop_dbt",
+    default_args=default_args,
+    schedule_interval="@daily",
+    max_active_runs=1,
 )
 
 staging = ConveyorContainerOperatorV2(
     dag=dag,
     task_id="staging",
     aws_role="conveyor-samples",
-    arguments=["--no-use-colors", "run", "--target", "dev", "-s", "staging"],
+    arguments=[
+        "run",
+        "--target", "dev",
+        "--select", "staging",
+    ],
 )
 
 marts = ConveyorContainerOperatorV2(
     dag=dag,
     task_id="marts",
     aws_role="conveyor-samples",
-    arguments=["--no-use-colors", "run", "--target", "dev", "-s", "marts"],
+    arguments=[
+        "run",
+        "--target", "dev",
+        "--select", "marts",
+    ],
 )
 
 staging >> marts

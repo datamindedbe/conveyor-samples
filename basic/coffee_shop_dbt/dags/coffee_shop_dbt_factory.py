@@ -16,7 +16,10 @@ default_args = {
 }
 
 dag = DAG(
-    "samples_coffee_shop_dbt_factory", default_args=default_args, schedule_interval="@daily", max_active_runs=1,
+    "samples_coffee_shop_dbt_factory",
+    default_args=default_args,
+    schedule_interval="@daily",
+    max_active_runs=1,
 )
 
 factory = ConveyorDbtTaskFactory(task_aws_role="conveyor-samples")
