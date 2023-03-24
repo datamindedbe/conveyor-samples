@@ -24,4 +24,3 @@ dag = DAG(
 
 factory = ConveyorDbtTaskFactory(task_aws_role="conveyor-samples")
 start, end = factory.add_tasks_to_dag(dag=dag)
-
