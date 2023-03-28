@@ -1,5 +1,6 @@
 dbt-core==1.4.5
-dbt-duckdb[glue]==1.4.1
+# dbt-duckdb[glue]==1.4.2
+dbt-duckdb @ git+https://github.com/jwills/dbt-duckdb@d1034454f1ed7e71803cb73ef54f2f01101dbf03#dbt-duckdb[glue]
 duckdb==0.7.1
 boto3
 
