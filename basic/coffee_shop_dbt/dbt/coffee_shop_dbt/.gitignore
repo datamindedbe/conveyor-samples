@@ -1,4 +1,5 @@
 
-target/
 dbt_packages/
 logs/
+target/
+workspace/
