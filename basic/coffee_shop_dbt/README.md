@@ -45,12 +45,12 @@ root/
 Consult the following documentation regarding [best practices for project structure](https://discourse.getdbt.com/t/how-we-structure-our-dbt-projects/355).
 
 ## Commands
-Start a shell in a container with dbt installed and your local files mounted:
+Start a shell in a container with dbt installed, and your local files mounted:
 - `make env` to create a local `.env` file
 - `make shell` to start a new shell
 - `exit` to terminate the container shell
 
-For some of the most used dbt commands a makefile has been added to the project that passes the correct flags to dbt. 
+For some of the most used dbt commands, a makefile has been added to the project that passes the correct flags to dbt. 
 These commands assume they are executed in the shell container.
 - `make manifest` executes dbt build and copies the `manifest.json` to your dags folder 
 - `make run` executes dbt run
