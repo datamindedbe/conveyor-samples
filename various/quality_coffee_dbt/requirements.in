@@ -1,0 +1,6 @@
+# Data processing
+dbt-core~=1.3.0
+dbt-duckdb[glue]~=1.3.0
+
+# Data quality
+soda-core-dbt>=3.0

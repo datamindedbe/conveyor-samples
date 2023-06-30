@@ -23,10 +23,12 @@ This repository contains a number of sample projects for Conveyor
 ### MLOps
 
 - titanic: use the dataset from [Kaggle](https://www.kaggle.com/c/titanic) 
-  to build a ML pipeline that will produce a model to predict survival.
+  to build an ML pipeline that will produce a model to predict survival.
 - housing: use the dataset from [Kaggle](https://www.kaggle.com/c/house-prices-advanced-regression-techniques) 
-  to build a ML pipeline that will produce a model to predict the housing prices.
+  to build an ML pipeline that will produce a model to predict the housing prices.
 
 ### Various
 
 - alerting: use native [Apache Airflow](https://github.com/apache/airflow) features to send notifications to Slack.
+- quality_coffee_dbt: an opinionated extension of the coffee_shop_dbt project which adds data quality checks
+  using native [dbt](https://github.com/dbt-labs/dbt-core) features and [soda-core](https://github.com/sodadata/soda-core).

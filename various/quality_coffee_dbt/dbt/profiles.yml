@@ -1,0 +1,21 @@
+default:
+  outputs:
+    dev:
+      type: duckdb
+      path: /tmp/coffee_shop.duckdb
+      threads: 1
+      extensions:
+        - httpfs
+        - parquet
+      use_credential_provider: aws
+      external_root: "s3://conveyor-samples-b9a6edf0/coffee-data"
+    local:
+      type: duckdb
+      path: "workspace/coffee_shop.duckdb"
+      threads: 4
+      extensions:
+        - httpfs
+        - parquet
+      use_credential_provider: aws
+      external_root: "workspace/parquet"
+  target: local
