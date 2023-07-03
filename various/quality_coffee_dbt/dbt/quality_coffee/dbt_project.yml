@@ -37,7 +37,7 @@ on-run-start:
 # as tables. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 models:
-  coffee_shop_dbt:
+  quality_coffee:
     # Config indicated by + applies to all files under models/example/
     staging:
       +materialized: table

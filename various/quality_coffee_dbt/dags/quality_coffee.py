@@ -1,10 +1,12 @@
 from datetime import timedelta
 
 from airflow import DAG
+from airflow.models import Variable
 from airflow.utils import dates
 
 from conveyor.operators import ConveyorContainerOperatorV2
 
+in_production = "prd" in Variable.get("environment")
 
 default_args = {
     "owner": "Conveyor",
@@ -48,3 +50,7 @@ marts = ConveyorContainerOperatorV2(
 )
 
 staging >> marts
+
+if in_production:
+    # Tasks that should only be present in production
+    pass
