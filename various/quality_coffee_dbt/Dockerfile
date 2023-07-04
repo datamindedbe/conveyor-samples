@@ -11,10 +11,6 @@ COPY dbt .
 # Set environment variables
 ENV DBT_USE_COLORS="false"
 
-ENV POSTGRES_USERNAME="postgres"
-ENV POSTGRES_HOST="dataquality-webinar.cpktidvmhbdw.eu-west-1.rds.amazonaws.com"
-ENV POSTGRES_PORT=5432
-
 # Install dependencies
 RUN dbt deps
 
