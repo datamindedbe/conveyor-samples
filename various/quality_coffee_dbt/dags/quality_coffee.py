@@ -39,10 +39,24 @@ def dbt_task(*, task_id: str, arguments: list[str]) -> ConveyorContainerOperator
         arguments=arguments,
     )
 
+def soda_task(*, task_id: str) -> ConveyorContainerOperatorV2:
+    return ConveyorContainerOperatorV2(
+        dag=dag,
+        task_id=task_id,
+        aws_role="conveyor-samples",
+        env_vars={
+            "POSTGRES_HOST": AWSParameterStoreValue(name="/conveyor-samples/postgres_host"),
+            "POSTGRES_PASSWORD": AWSParameterStoreValue(name="/conveyor-samples/postgres_password"),
+        },
+        cmds=["bash"],
+        arguments=["soda/run_soda.sh"],
+    )
+
 staging = dbt_task(task_id="staging", arguments=["run", "--select", "staging"])
 marts = dbt_task(task_id="marts", arguments=["run", "--select", "marts"])
+soda = soda_task(task_id="soda")
 
-staging >> marts
+staging >> marts >> soda
 
 if not in_production:
     # Tasks that should not be present in production
