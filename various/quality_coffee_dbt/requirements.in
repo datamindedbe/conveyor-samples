@@ -1,2 +1,2 @@
-# Data processing
-dbt-duckdb[glue]==1.5.2
+dbt-postgres==1.5.2
+soda-core-postgres>=3.0

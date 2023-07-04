@@ -6,16 +6,16 @@
 #
 agate==1.7.0
     # via dbt-core
+annotated-types==0.5.0
+    # via pydantic
+antlr4-python3-runtime==4.11.1
+    # via soda-core
 attrs==23.1.0
     # via jsonschema
 babel==2.12.1
     # via agate
-boto3==1.26.165
-    # via dbt-duckdb
-botocore==1.29.165
-    # via
-    #   boto3
-    #   s3transfer
+backoff==2.2.1
+    # via opentelemetry-exporter-otlp-proto-http
 certifi==2023.5.7
     # via requests
 cffi==1.15.1
@@ -23,44 +23,49 @@ cffi==1.15.1
 charset-normalizer==3.1.0
     # via requests
 click==8.1.3
-    # via dbt-core
+    # via
+    #   dbt-core
+    #   soda-core
 colorama==0.4.6
     # via dbt-core
 dbt-core==1.5.2
-    # via dbt-duckdb
-dbt-duckdb[glue]==1.5.2
-    # via -r requirements.in
+    # via dbt-postgres
 dbt-extractor==0.4.1
     # via dbt-core
-duckdb==0.8.1
-    # via dbt-duckdb
+dbt-postgres==1.5.2
+    # via -r requirements.in
+deprecated==1.2.14
+    # via opentelemetry-api
 future==0.18.3
     # via parsedatetime
+googleapis-common-protos==1.59.1
+    # via opentelemetry-exporter-otlp-proto-http
 hologram==0.0.16
     # via dbt-core
 idna==3.4
     # via
     #   dbt-core
     #   requests
+inflect==6.2.0
+    # via soda-core
 isodate==0.6.1
     # via
     #   agate
     #   dbt-core
 jinja2==3.1.2
-    # via dbt-core
-jmespath==1.0.1
     # via
-    #   boto3
-    #   botocore
+    #   dbt-core
+    #   soda-core
 jsonschema==4.17.3
     # via hologram
 leather==0.3.4
     # via agate
 logbook==1.5.3
     # via dbt-core
-markupsafe==2.1.3
+markupsafe==2.1.1
     # via
     #   jinja2
+    #   soda-core
     #   werkzeug
 mashumaro[msgpack]==3.6
     # via dbt-core
@@ -68,10 +73,21 @@ minimal-snowplow-tracker==0.0.2
     # via dbt-core
 msgpack==1.0.5
     # via mashumaro
-mypy-boto3-glue==1.26.164
-    # via dbt-duckdb
 networkx==2.8.8
     # via dbt-core
+opentelemetry-api==1.16.0
+    # via
+    #   opentelemetry-exporter-otlp-proto-http
+    #   opentelemetry-sdk
+    #   soda-core
+opentelemetry-exporter-otlp-proto-http==1.16.0
+    # via soda-core
+opentelemetry-proto==1.16.0
+    # via opentelemetry-exporter-otlp-proto-http
+opentelemetry-sdk==1.16.0
+    # via opentelemetry-exporter-otlp-proto-http
+opentelemetry-semantic-conventions==0.37b0
+    # via opentelemetry-sdk
 packaging==23.1
     # via dbt-core
 parsedatetime==2.4
@@ -79,15 +95,24 @@ parsedatetime==2.4
 pathspec==0.11.1
     # via dbt-core
 protobuf==4.23.3
-    # via dbt-core
+    # via
+    #   dbt-core
+    #   googleapis-common-protos
+    #   opentelemetry-proto
+psycopg2-binary==2.9.6
+    # via
+    #   dbt-postgres
+    #   soda-core-postgres
 pycparser==2.21
     # via cffi
+pydantic==2.0
+    # via inflect
+pydantic-core==2.0.1
+    # via pydantic
 pyrsistent==0.19.3
     # via jsonschema
 python-dateutil==2.8.2
-    # via
-    #   botocore
-    #   hologram
+    # via hologram
 python-slugify==8.0.1
     # via agate
 pytimeparse==1.1.8
@@ -100,25 +125,42 @@ requests==2.31.0
     # via
     #   dbt-core
     #   minimal-snowplow-tracker
-s3transfer==0.6.1
-    # via boto3
+    #   opentelemetry-exporter-otlp-proto-http
+    #   soda-core
+ruamel-yaml==0.17.32
+    # via soda-core
+ruamel-yaml-clib==0.2.7
+    # via ruamel-yaml
 six==1.16.0
     # via
     #   isodate
     #   leather
     #   minimal-snowplow-tracker
     #   python-dateutil
+soda-core==3.0.42
+    # via soda-core-postgres
+soda-core-postgres==3.0.42
+    # via -r requirements.in
 sqlparse==0.4.3
-    # via dbt-core
+    # via
+    #   dbt-core
+    #   soda-core
 text-unidecode==1.3
     # via python-slugify
 typing-extensions==4.7.1
     # via
     #   dbt-core
+    #   inflect
     #   mashumaro
+    #   opentelemetry-sdk
+    #   pydantic
+    #   pydantic-core
 urllib3==1.26.16
-    # via
-    #   botocore
-    #   requests
+    # via requests
 werkzeug==2.3.6
     # via dbt-core
+wrapt==1.15.0
+    # via deprecated
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools
