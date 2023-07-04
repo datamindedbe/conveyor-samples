@@ -1,0 +1,2 @@
+checks for some_table:
+- duplicate_count(some_table_id) = 0
