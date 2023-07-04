@@ -8,15 +8,14 @@ RUN python -m pip install --no-cache -r requirements.txt
 WORKDIR /app
 COPY dbt .
 
-ENV DBT_PROFILES_DIR="/app"
-ENV DBT_PROJECT_DIR="/app/quality_coffee"
+# Set environment variables
 ENV DBT_USE_COLORS="false"
 
+ENV POSTGRES_USERNAME="postgres"
 ENV POSTGRES_HOST="dataquality-webinar.cpktidvmhbdw.eu-west-1.rds.amazonaws.com"
-ENV POSTGRES_USER="postgres"
+ENV POSTGRES_PORT=5432
 
 # Install dependencies
-WORKDIR /app/quality_coffee
 RUN dbt deps
 
 # Generate dbt manifest

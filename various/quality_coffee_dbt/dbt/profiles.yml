@@ -4,8 +4,18 @@ default:
     cloud:
       type: postgres
       host: "{{ env_var('POSTGRES_HOST') }}"
-      user: "{{ env_var('POSTGRES_USER') }}"
-      password: "{{ env_var('POSTGRES_PASS') }}"
+      user: "{{ env_var('POSTGRES_USERNAME') }}"
+      password: "{{ env_var('POSTGRES_PASSWORD') }}"
       port: 5432
       database: "webinar"
       schema: "quality_coffee"
+
+    conveyor:
+      type: conveyor
+      envVariables:
+        POSTGRES_HOST:
+          awsSSMParameterStore:
+            name: "/conveyor-samples/postgres_host"
+        POSTGRES_PASSWORD:
+          awsSSMParameterStore:
+            name: "/conveyor-samples/postgres_password"
