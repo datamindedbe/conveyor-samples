@@ -126,3 +126,4 @@ dmypy.json
 
 # dbt
 .user.yml
+.vscode/
