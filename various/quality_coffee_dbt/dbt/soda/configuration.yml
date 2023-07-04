@@ -5,5 +5,5 @@ data_source quality_coffee:
     port: 5432
     username: postgres
     password: ${POSTGRES_PASSWORD}
-    catalog: webinar 
+    database: webinar
     schema: quality_coffee

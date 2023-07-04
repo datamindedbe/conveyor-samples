@@ -1,2 +1,4 @@
-checks for some_table:
-- duplicate_count(some_table_id) = 0
+checks for customers:
+- duplicate_count(customer_id) = 0
+checks for orders:
+- duplicate_count(order_id) = 0
