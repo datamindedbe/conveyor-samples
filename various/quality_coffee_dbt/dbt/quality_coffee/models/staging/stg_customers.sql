@@ -1,10 +1,8 @@
-{{ config(materialized='external') }}
-
 with
 
 source as (
 
-    select * from {{ source('ecom', 'raw_customers') }}
+    select * from {{ source('coffee', 'raw_customers') }}
 
 ),
 

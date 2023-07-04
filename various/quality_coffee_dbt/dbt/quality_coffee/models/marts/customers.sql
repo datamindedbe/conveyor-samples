@@ -1,10 +1,3 @@
-{{
-    config(
-        materialized='external',
-    )
-
-}}
-
 with
 
 customers as (

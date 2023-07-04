@@ -1,9 +1,3 @@
-{{
-    config(
-        materialized = 'external',
-    )
-}}
-
 with
 
 orders_set as (

@@ -13,4 +13,4 @@ aws cloudformation create-stack --stack-name conveyor-samples \
 echo "Cloudformation stack created following the rollout until success"
 aws cloudformation wait stack-create-complete --stack-name conveyor-samples
 
-echo "The cloudformation stack got succesfully created"
+echo "The cloudformation stack got successfully created"

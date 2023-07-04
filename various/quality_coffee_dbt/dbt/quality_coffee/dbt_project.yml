@@ -27,9 +27,6 @@ clean-targets:         # directories to be removed by `dbt clean`
 vars:
   truncate_timespan_to: "{{ current_timestamp() }}"
 
-on-run-start:
-  - "{{ register_upstream_external_models() }}"
-
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 

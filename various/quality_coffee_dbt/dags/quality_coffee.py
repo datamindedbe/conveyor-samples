@@ -5,6 +5,7 @@ from airflow.models import Variable
 from airflow.utils import dates
 
 from conveyor.operators import ConveyorContainerOperatorV2
+from conveyor.secrets import AWSParameterStoreValue
 
 in_production = "prd" in Variable.get("environment")
 
@@ -27,13 +28,23 @@ dag = DAG(
     max_active_runs=1,
 )
 
+seed = ConveyorContainerOperatorV2(
+    dag=dag,
+    task_id="seed",
+    aws_role="conveyor-samples",
+    env_vars={"POSTGRES_PASS": AWSParameterStoreValue(name="/conveyor-samples/postgres_password")},
+    arguments=[
+        "seed",
+    ],
+)
+
 staging = ConveyorContainerOperatorV2(
     dag=dag,
     task_id="staging",
     aws_role="conveyor-samples",
+    env_vars={"POSTGRES_PASS": AWSParameterStoreValue(name="/conveyor-samples/postgres_password")},
     arguments=[
         "run",
-        "--target", "dev",
         "--select", "staging",
     ],
 )
@@ -42,14 +53,14 @@ marts = ConveyorContainerOperatorV2(
     dag=dag,
     task_id="marts",
     aws_role="conveyor-samples",
+    env_vars={"POSTGRES_PASS": AWSParameterStoreValue(name="/conveyor-samples/postgres_password")},
     arguments=[
         "run",
-        "--target", "dev",
         "--select", "marts",
     ],
 )
 
-staging >> marts
+seed >> staging >> marts
 
 if in_production:
     # Tasks that should only be present in production
