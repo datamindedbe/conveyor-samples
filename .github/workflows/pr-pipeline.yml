@@ -22,14 +22,14 @@ jobs:
     - name: Setup
       run: |
         ls
-        cd /various/quality_coffee_dbt/infra
+        cd ~/various/quality_coffee_dbt/infra
         docker-compose up -d
     #docker run -d --name db -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres:15  
     
     - name: Install dbt
       run: |
         pip install dbt-core dbt-postgres
-        cd /various/quality_coffee_dbt/dbt
+        cd ~/various/quality_coffee_dbt/dbt
         dbt deps
 
     - name: Run dbt tests
