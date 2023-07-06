@@ -30,7 +30,7 @@ jobs:
         docker-compose up -d
     
     - name: Install dbt
-      working-directory: various/quality_coffee_dbt
+      working-directory: various/quality_coffee_dbt/dbt
       run: |
         pip install dbt-core dbt-postgres
         dbt deps
