@@ -15,6 +15,9 @@ models:
       - name: order_id
         description: The unique key of the orders mart.
         data_type: varchar
+        constraints:
+          - type: not_null
+          - type: primary_key
         tests:
           - not_null
           - unique

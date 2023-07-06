@@ -1,23 +1,21 @@
+{{ config(contract={"enabled": true}) }}
 with
 
-source as (
+    source as (select * from {{ source("coffee", "raw_customers") }}),
 
-    select * from {{ source('coffee', 'raw_customers') }}
+    renamed as (
 
-),
+        select
 
-renamed as (
+            -- --------  ids
+            id as customer_id,
 
-    select
+            -- -------- properties
+            name as customer_name
 
-        ----------  ids
-        id as customer_id,
+        from source
 
-        ---------- properties
-        name as customer_name
+    )
 
-    from source
-
-)
-
-select * from renamed
+select *
+from renamed

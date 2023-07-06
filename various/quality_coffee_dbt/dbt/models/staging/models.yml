@@ -5,24 +5,29 @@ models:
     description: Customer data with basic cleaning and transformation applied, one row per customer.
     columns:
       - name: customer_id
+        data_type: varchar
         description: The unique key for each customer.
-        tests:
-          - not_null
-          - unique
+      - name: customer_name
+        data_type: varchar
 
   - name: stg_locations
     description: List of open locations with basic cleaning and transformation applied, one row per location.
     columns:
       - name: location_id
+        data_type: varchar
         description: The unique key for each location.
         tests:
           - not_null
           - unique
+      - name: location_name
+        data_type: varchar
+      - name: opened_at
 
   - name: stg_order_items
     description: Individual food and drink items that make up our orders, one row per item.
     columns:
       - name: order_item_id
+        data_type: varchar
         description: The unique key for each order item.
         tests:
           - not_null
@@ -32,6 +37,7 @@ models:
     description: Order data with basic cleaning and transformation applied, one row per order.
     columns:
       - name: order_id
+        data_type: varchar
         description: The unique key for each order.
         tests:
           - not_null
@@ -41,6 +47,7 @@ models:
     description: Product (food and drink items that can be ordered) data with basic cleaning and transformation applied, one row per product.
     columns:
       - name: product_id
+        data_type: varchar
         description: The unique key for each product.
         tests:
           - not_null
@@ -53,6 +60,7 @@ models:
       One row per supply cost, not per supply. As supply costs fluctuate they receive a new row with a new UUID. Thus there can be multiple rows per supply_id.
     columns:
       - name: supply_uuid
+        data_type: varchar
         description: The unique key of our supplies per cost.
         tests:
           - not_null

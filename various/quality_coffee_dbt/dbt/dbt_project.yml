@@ -35,6 +35,8 @@ vars:
 # using the `{{ config(...) }}` macro.
 models:
   quality_coffee:
+    +contract:
+      enforced: true
     # Config indicated by + applies to all files under models/example/
     staging:
       +materialized: table
