@@ -1,7 +1,7 @@
 default:
-  target: cloud
+  target: coffee
   outputs:
-    cloud:
+    coffee:
       type: postgres
       host: "{{ env_var('POSTGRES_HOST', 'localhost') }}"
       port: "{{ env_var('POSTGRES_PORT', '5432') | int }}"
