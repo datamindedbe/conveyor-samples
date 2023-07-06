@@ -1,4 +1,31 @@
 checks for customers:
-- duplicate_count(customer_id) = 0
+  - duplicate_count(customer_id) = 0
+  - row_count between 500 and 10000  # if this check fails, we need to open up a new store
+  - invalid_count(customer_type) = 0:
+      valid values: [new, returning]
+  - schema:
+      fail:
+        when forbidden column present: [pii*]  # all sensitive columns start with "pii_"
+  - min(count_lifetime_orders) > 0:
+      name: Don't keep customers who haven't ordered in the database
+      filter: first_ordered_at > '2015-01-01'::timestamp  # unless they're old customers
+  - invalid_percent(customer_name) < 10 %:  # it's ok if some customers have weird names
+      valid regex: ^[A-Z][a-z]+ [A-Z][a-z]+$
+
 checks for orders:
-- duplicate_count(order_id) = 0
+  - duplicate_count(order_id) = 0
+  - row_count between 10000 and 100000
+  - avg(order_total) > 1
+  - avg(order_total) < 100  # we sell coffee, not yachts
+  - values in (order_id) must exist in stg_orders (order_id)
+  - values in (customer_id) must exist in stg_customers (customer_id)
+  - values in (location_id) must exist in stg_locations (location_id)
+  #- freshness(data_loaded_at) < 2d  # this check is disabled because we're using a static dataset
+  - schema:
+      fail:
+        when forbidden column present: [pii*]
+  - row_count same as stg_orders  # logic should not add orders
+
+
+# you can also check cross-database (if you define the connection in configuration.yml):
+#  - row_count same as dim_customer in some_other_database
