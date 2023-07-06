@@ -1,0 +1,31 @@
+name: Pull Request CI Pipeline
+
+on:
+  push:
+    branches:
+      - demo/data_quality
+  #pull_request:
+  #  types: [synchronize, opened]
+
+jobs:
+
+  build:
+    name: Continuous Integration of the endpoint
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Display something useless as a first step
+      run: |
+        echo "Hello World automated from the PR pipeline !"
+
+    - name: Setup
+      run: |
+        docker-compose up -f various/quality_coffee_dbt/infra/docker-compose.yml -d
+    #docker run -d --name db -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres:15  
+    
+    - name: Install dbt
+      run: |
+        pip install dbt
+        cd various/quality_coffee_dbt/dbt
+        dbt deps
