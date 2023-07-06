@@ -22,6 +22,9 @@ models:
       - name: location_name
         data_type: varchar
       - name: opened_at
+        data_type: timestamp
+      - name: tax_rate
+        data_type: float
 
   - name: stg_order_items
     description: Individual food and drink items that make up our orders, one row per item.
@@ -32,6 +35,10 @@ models:
         tests:
           - not_null
           - unique
+      - name: order_id
+        data_type: varchar
+      - name: product_id
+        data_type: varchar
 
   - name: stg_orders
     description: Order data with basic cleaning and transformation applied, one row per order.
@@ -42,6 +49,16 @@ models:
         tests:
           - not_null
           - unique
+      - name: customer_id
+        data_type: varchar
+      - name: location_id
+        data_type: varchar
+      - name: order_total
+        data_type: float
+      - name: ordered_at
+        data_type: timestamp
+      - name: tax_paid
+        data_type: float
 
   - name: stg_products
     description: Product (food and drink items that can be ordered) data with basic cleaning and transformation applied, one row per product.
@@ -52,6 +69,18 @@ models:
         tests:
           - not_null
           - unique
+      - name: is_drink_item
+        data_type: integer
+      - name: is_food_item
+        data_type: integer
+      - name: product_description
+        data_type: varchar
+      - name: product_name
+        data_type: varchar
+      - name: product_price
+        data_type: float
+      - name: product_type
+        data_type: varchar
 
   - name: stg_supplies
     description: >
@@ -65,3 +94,13 @@ models:
         tests:
           - not_null
           - unique
+      - name: is_perishable_supply
+        data_type: bool
+      - name: product_id
+        data_type: varchar
+      - name: supply_cost
+        data_type: float
+      - name: supply_id
+        data_type: varchar
+      - name: supply_name
+        data_type: varchar
