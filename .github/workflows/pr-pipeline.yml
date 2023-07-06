@@ -23,6 +23,11 @@ jobs:
       run: |
         ls
         cd various/quality_coffee_dbt/infra
+        echo "POSTGRES_HOST=postgres" > .env
+        echo "POSTGRES_PORT=5432" > .env
+        echo "POSTGRES_USERNAME=postgres" >> .env
+        echo "POSTGRES_PASSWORD=postgres" >> .env
+        echo "POSTGRES_DB=postgres" >> .env
         docker-compose up -d
         cd ../../.. # go back to the root of the repo
     #docker run -d --name db -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres:15  
@@ -37,5 +42,6 @@ jobs:
     - name: Run dbt tests
       working-directory: various/quality_coffee_dbt/dbt
       run: |
+        set -a; source ../infra/.env; set +a
         dbt test --select "macros.*"
         dbt test --select "unit.*"
