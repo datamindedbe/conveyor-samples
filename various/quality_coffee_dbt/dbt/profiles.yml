@@ -3,10 +3,10 @@ default:
   outputs:
     cloud:
       type: postgres
-      host: "{{ env_var('POSTGRES_HOST', '') }}"
+      host: "{{ env_var('POSTGRES_HOST', 'localhost') }}"
       port: "{{ env_var('POSTGRES_PORT', '5432') | int }}"
       user: "{{ env_var('POSTGRES_USERNAME', 'postgres') }}"
-      password: "{{ env_var('POSTGRES_PASSWORD', '') }}"
+      password: "{{ env_var('POSTGRES_PASSWORD', 'postgres') }}"
       database: "webinar"
       schema: "quality_coffee"
 
