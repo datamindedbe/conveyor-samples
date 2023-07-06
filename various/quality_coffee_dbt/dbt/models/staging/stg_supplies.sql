@@ -1,27 +1,24 @@
 with
 
-source as (
+    source as (select * from {{ dbt_unit_testing.source("coffee", "raw_supplies") }}),
 
-    select * from {{ source('coffee', 'raw_supplies') }}
+    renamed as (
 
-),
+        select
 
-renamed as (
+            -- --------  ids
+            {{ dbt_utils.generate_surrogate_key(["id", "sku"]) }} as supply_uuid,
+            id as supply_id,
+            sku as product_id,
 
-    select
+            -- -------- properties
+            name as supply_name,
+            (cost / 100.0)::float as supply_cost,
+            perishable as is_perishable_supply
 
-        ----------  ids
-        {{ dbt_utils.generate_surrogate_key(['id', 'sku']) }} as supply_uuid,
-        id as supply_id,
-        sku as product_id,
+        from source
 
-        ---------- properties
-        name as supply_name,
-        (cost / 100.0)::float as supply_cost,
-        perishable as is_perishable_supply
+    )
 
-    from source
-
-)
-
-select * from renamed
+select *
+from renamed

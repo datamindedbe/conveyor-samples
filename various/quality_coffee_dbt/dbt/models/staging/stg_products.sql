@@ -1,38 +1,28 @@
 with
 
-source as (
+    source as (select * from {{ dbt_unit_testing.source("coffee", "raw_products") }}),
 
-    select * from {{ source('coffee', 'raw_products') }}
+    renamed as (
 
-),
+        select
 
-renamed as (
+            -- --------  ids
+            sku as product_id,
 
-    select
+            -- -------- properties
+            name as product_name,
+            type as product_type,
+            description as product_description,
+            (price / 100.0)::float as product_price,
 
-        ----------  ids
-        sku as product_id,
+            -- -------- derived
+            case when type = 'food' then 1 else 0 end is_food_item,
 
-        ---------- properties
-        name as product_name,
-        type as product_type,
-        description as product_description,
-        (price / 100.0)::float as product_price,
+            case when type = 'beverage' then 1 else 0 end is_drink_item
 
+        from source
 
-        ---------- derived
-        case
-            when type = 'food' then 1
-            else 0
-        end is_food_item,
+    )
 
-        case
-            when type = 'beverage' then 1
-            else 0
-        end is_drink_item
-
-    from source
-
-)
-
-select * from renamed
+select *
+from renamed

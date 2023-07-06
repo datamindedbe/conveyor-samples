@@ -1,7 +1,7 @@
 {{ config(contract={"enabled": true}) }}
 with
 
-    source as (select * from {{ source("coffee", "raw_customers") }}),
+    source as (select * from {{ dbt_unit_testing.source("coffee", "raw_customers") }}),
 
     renamed as (
 

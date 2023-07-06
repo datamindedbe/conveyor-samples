@@ -1,24 +1,21 @@
 with
 
-source as (
+    source as (select * from {{ dbt_unit_testing.source("coffee", "raw_items") }}),
 
-    select * from {{ source('coffee', 'raw_items') }}
+    renamed as (
 
-),
+        select
 
-renamed as (
+            -- --------  ids
+            id as order_item_id,
+            order_id,
 
-    select
+            -- -------- properties
+            sku as product_id
 
-        ----------  ids
-        id as order_item_id,
-        order_id,
+        from source
 
-        ---------- properties
-        sku as product_id
+    )
 
-    from source
-
-)
-
-select * from renamed
+select *
+from renamed
