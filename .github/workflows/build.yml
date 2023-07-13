@@ -25,6 +25,7 @@ jobs:
         working-directory: 'basic/pi_spark'
   
   deploy-pi-spark:
+    if: "github.ref == 'refs/heads/main'"
     needs: ["unit-test-basic-pi-spark"]
     runs-on: ubuntu-20.04
     timeout-minutes: 15
