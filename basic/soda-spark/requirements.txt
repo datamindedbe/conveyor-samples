@@ -1,0 +1,90 @@
+backoff==1.10.0
+    # via opentelemetry-exporter-otlp-proto-http
+certifi==2023.5.7
+    # via requests
+charset-normalizer==3.2.0
+    # via requests
+click==8.1.5
+    # via soda-sql-core
+deprecated==1.2.14
+    # via
+    #   opentelemetry-api
+    #   soda-sql-core
+future==0.18.3
+    # via pyhive
+googleapis-common-protos==1.59.1
+    # via opentelemetry-exporter-otlp-proto-http
+idna==3.4
+    # via requests
+importlib-metadata==6.8.0
+    # via opentelemetry-api
+jinja2==2.11.3
+    # via soda-sql-core
+markupsafe==2.0.1
+    # via
+    #   jinja2
+    #   soda-sql-core
+opentelemetry-api==1.19.0
+    # via
+    #   opentelemetry-exporter-otlp-proto-http
+    #   opentelemetry-sdk
+opentelemetry-exporter-otlp-proto-http==1.6.2
+    # via soda-sql-core
+opentelemetry-proto==1.6.2
+    # via opentelemetry-exporter-otlp-proto-http
+opentelemetry-sdk==1.19.0
+    # via opentelemetry-exporter-otlp-proto-http
+opentelemetry-semantic-conventions==0.40b0
+    # via opentelemetry-sdk
+protobuf==4.23.4
+    # via
+    #   googleapis-common-protos
+    #   opentelemetry-proto
+pure-sasl==0.6.2
+    # via thrift-sasl
+pyhive==0.6.5
+    # via soda-sql-spark
+pyodbc==4.0.39
+    # via
+    #   -r requirements.in
+    #   soda-sql-spark
+python-dateutil==2.8.2
+    # via pyhive
+pyyaml==5.4.1
+    # via soda-sql-core
+requests==2.31.0
+    # via
+    #   opentelemetry-exporter-otlp-proto-http
+    #   soda-sql-core
+sasl==0.3.1
+    # via soda-sql-spark
+six==1.16.0
+    # via
+    #   python-dateutil
+    #   sasl
+    #   thrift
+    #   thrift-sasl
+soda-spark==0.3.3
+    # via -r requirements.in
+soda-sql-core==2.1.9
+    # via soda-sql-spark
+soda-sql-spark==2.1.9
+    # via soda-spark
+thrift==0.16.0
+    # via
+    #   soda-sql-spark
+    #   thrift-sasl
+thrift-sasl==0.4.3
+    # via soda-sql-spark
+typing-extensions==4.7.1
+    # via opentelemetry-sdk
+urllib3==2.0.3
+    # via requests
+wrapt==1.15.0
+    # via deprecated
+zipp==3.16.1
+    # via importlib-metadata
+
+# The following packages are considered to be unsafe in a requirements file:
+# py4j
+# pyspark
