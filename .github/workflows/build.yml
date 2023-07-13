@@ -36,9 +36,10 @@ jobs:
           wget https://app.conveyordata.com/api/info/cli/location/linux/amd64 -O conveyor_linux_amd64.tar.gz > /dev/null
           tar -zxvf conveyor_linux_amd64.tar.gz
           chmod +x bin/linux/amd64/conveyor
-          mkdir -p $GITHUB_WORKSPACE/bin
-          echo "$GITHUB_WORKSPACE/bin" >> $GITHUB_PATH
-          cp bin/linux/amd64/conveyor $GITHUB_WORKSPACE/bin/conveyor
+          echo "${HOME}/.local/bin"
+          mkdir -p "${HOME}/.local/bin"
+          echo "${HOME}/.local/bin" >> $GITHUB_PATH
+          cp bin/linux/amd64/conveyor ${HOME}/.local/bin/conveyor
           rm -rf bin
           rm -rf conveyor_linux_amd64.tar.gz
           $GITHUB_WORKSPACE/bin/conveyor project generate-config --name pi_spark
