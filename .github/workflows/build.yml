@@ -42,20 +42,22 @@ jobs:
           cp bin/linux/amd64/conveyor ${HOME}/.local/bin/conveyor
           rm -rf bin
           rm -rf conveyor_linux_amd64.tar.gz
-          ${HOME}/.local/bin/conveyor project generate-config --name pi_spark
         env:
           CONVEYOR_AUTH_KEY: ${{ secrets.CONVEYOR_AUTH_KEY }}
           CONVEYOR_AUTH_SECRET: ${{ secrets.CONVEYOR_AUTH_SECRET }}
       - name: deploy to dev
         run: |
+          conveuor project generate-config --name pi_spark
           conveyor build
           conveyor deploy --env dev --wait
         env:
           CONVEYOR_AUTH_KEY: ${{ secrets.CONVEYOR_AUTH_KEY }}
           CONVEYOR_AUTH_SECRET: ${{ secrets.CONVEYOR_AUTH_SECRET }}
-      - name: promoto from dev to production
+        working-directory: 'basic/pi_spark'
+      - name: promote from dev to production
         run: |
           conveyor promote --from dev --to production --wait
         env:
           CONVEYOR_AUTH_KEY: ${{ secrets.CONVEYOR_AUTH_KEY }}
           CONVEYOR_AUTH_SECRET: ${{ secrets.CONVEYOR_AUTH_SECRET }}
+        working-directory: 'basic/pi_spark'
