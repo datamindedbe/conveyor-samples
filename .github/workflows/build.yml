@@ -27,7 +27,7 @@ jobs:
   deploy-pi-spark:
     needs: ["unit-test-basic-pi-spark"]
     runs-on: ubuntu-20.04
-    timout-minutes: 15
+    timeout-minutes: 15
     steps:
       - name: checkout
         uses: actions/checkout@v3
