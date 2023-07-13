@@ -23,3 +23,48 @@ jobs:
           make install
           make test
         working-directory: 'basic/pi_spark'
+  
+  deploy-pi-spark:
+    if: "github.ref == 'refs/heads/main'"
+    needs: ["unit-test-basic-pi-spark"]
+    runs-on: ubuntu-20.04
+    timeout-minutes: 15
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: install conveyor
+        run: |
+          wget https://app.conveyordata.com/api/info/cli/location/linux/amd64 -O conveyor_linux_amd64.tar.gz > /dev/null
+          tar -zxvf conveyor_linux_amd64.tar.gz
+          chmod +x bin/linux/amd64/conveyor
+          echo "${HOME}/.local/bin"
+          mkdir -p "${HOME}/.local/bin"
+          echo "${HOME}/.local/bin" >> $GITHUB_PATH
+          cp bin/linux/amd64/conveyor ${HOME}/.local/bin/conveyor
+          rm -rf bin
+          rm -rf conveyor_linux_amd64.tar.gz
+        env:
+          CONVEYOR_AUTH_KEY: ${{ secrets.CONVEYOR_AUTH_KEY }}
+          CONVEYOR_AUTH_SECRET: ${{ secrets.CONVEYOR_AUTH_SECRET }}
+      - name: generate project config
+        run: |
+          conveyor project generate-config --name pi_spark
+        env:
+          CONVEYOR_AUTH_KEY: ${{ secrets.CONVEYOR_AUTH_KEY }}
+          CONVEYOR_AUTH_SECRET: ${{ secrets.CONVEYOR_AUTH_SECRET }}
+        working-directory: 'basic/pi_spark'
+      - name: deploy to dev
+        run: |
+          conveyor build
+          conveyor deploy --env dev --wait
+        env:
+          CONVEYOR_AUTH_KEY: ${{ secrets.CONVEYOR_AUTH_KEY }}
+          CONVEYOR_AUTH_SECRET: ${{ secrets.CONVEYOR_AUTH_SECRET }}
+        working-directory: 'basic/pi_spark'
+      - name: promote from dev to prd
+        run: |
+          conveyor promote --from dev --to prd --wait
+        env:
+          CONVEYOR_AUTH_KEY: ${{ secrets.CONVEYOR_AUTH_KEY }}
+          CONVEYOR_AUTH_SECRET: ${{ secrets.CONVEYOR_AUTH_SECRET }}
+        working-directory: 'basic/pi_spark'
