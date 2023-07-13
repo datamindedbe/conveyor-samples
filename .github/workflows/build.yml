@@ -60,9 +60,9 @@ jobs:
           CONVEYOR_AUTH_KEY: ${{ secrets.CONVEYOR_AUTH_KEY }}
           CONVEYOR_AUTH_SECRET: ${{ secrets.CONVEYOR_AUTH_SECRET }}
         working-directory: 'basic/pi_spark'
-      - name: promote from dev to production
+      - name: promote from dev to prd
         run: |
-          conveyor promote --from dev --to production --wait
+          conveyor promote --from dev --to prd --wait
         env:
           CONVEYOR_AUTH_KEY: ${{ secrets.CONVEYOR_AUTH_KEY }}
           CONVEYOR_AUTH_SECRET: ${{ secrets.CONVEYOR_AUTH_SECRET }}
