@@ -1,0 +1,26 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  unit-test-basic-pi-spark:
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    runs-on: ubuntu-20.04
+    timeout-minutes: 15
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+          architecture: x64
+      - name: Test basic pi spark
+        run: |
+          make install
+          make test
+        working-directory: 'basic/pi-spark'
