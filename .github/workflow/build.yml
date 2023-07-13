@@ -9,7 +9,6 @@ on:
 
 jobs:
   unit-test-basic-pi-spark:
-    if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-20.04
     timeout-minutes: 15
     steps:
