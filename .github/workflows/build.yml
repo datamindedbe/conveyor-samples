@@ -45,9 +45,15 @@ jobs:
         env:
           CONVEYOR_AUTH_KEY: ${{ secrets.CONVEYOR_AUTH_KEY }}
           CONVEYOR_AUTH_SECRET: ${{ secrets.CONVEYOR_AUTH_SECRET }}
+      - name: generate project config
+        run: |
+          conveyor project generate-config --name pi_spark
+        env:
+          CONVEYOR_AUTH_KEY: ${{ secrets.CONVEYOR_AUTH_KEY }}
+          CONVEYOR_AUTH_SECRET: ${{ secrets.CONVEYOR_AUTH_SECRET }}
+        working-directory: 'basic/pi_spark'
       - name: deploy to dev
         run: |
-          conveuor project generate-config --name pi_spark
           conveyor build
           conveyor deploy --env dev --wait
         env:
