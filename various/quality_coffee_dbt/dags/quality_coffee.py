@@ -60,6 +60,7 @@ def soda_task(*, task_id: str) -> ConveyorContainerOperatorV2:
         },
         cmds=["bash"],
         arguments=["soda/run_soda.sh"],
+        instance_life_cycle="spot",
     )
 
 

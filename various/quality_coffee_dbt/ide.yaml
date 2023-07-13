@@ -1,0 +1,22 @@
+vscode:
+  extensions:
+    - innoverio.vscode-dbt-power-user
+    - mtxr.sqltools
+    - mtxr.sqltools-driver-pg
+buildSteps:
+  - name: setup env
+    cmd: |
+      sudo apt install make docker-compose -y
+  - name: Install pyenv
+    cmd: |
+      curl https://pyenv.run | bash
+      
+      #Add to bashrc
+      echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+      echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+      echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+      
+      #Add to profile 
+      echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.profile
+      echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.profile
+      echo 'eval "$(pyenv init -)"' >> ~/.profile
