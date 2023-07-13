@@ -15,7 +15,8 @@ buildSteps:
       echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.profile
       echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.profile
       echo 'eval "$(pyenv init -)"' >> ~/.profile
-  - name: Install pyenv
+  - name: Install python 3.9.17
     cmd: |
+      . ~/.profile
       pyenv install 3.9.17
       pyenv global 3.9.17
