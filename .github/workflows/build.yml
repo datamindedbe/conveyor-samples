@@ -42,7 +42,7 @@ jobs:
           cp bin/linux/amd64/conveyor ${HOME}/.local/bin/conveyor
           rm -rf bin
           rm -rf conveyor_linux_amd64.tar.gz
-          $GITHUB_WORKSPACE/bin/conveyor project generate-config --name pi_spark
+          ${HOME}/.local/bin/conveyor project generate-config --name pi_spark
         env:
           CONVEYOR_AUTH_KEY: ${{ secrets.CONVEYOR_AUTH_KEY }}
           CONVEYOR_AUTH_SECRET: ${{ secrets.CONVEYOR_AUTH_SECRET }}
