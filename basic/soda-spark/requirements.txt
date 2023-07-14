@@ -1,89 +1,80 @@
-backoff==1.10.0
+annotated-types==0.5.0
+    # via pydantic
+antlr4-python3-runtime==4.11.1
+    # via soda-core
+backoff==2.2.1
     # via opentelemetry-exporter-otlp-proto-http
 certifi==2023.5.7
     # via requests
 charset-normalizer==3.2.0
     # via requests
 click==8.1.5
-    # via soda-sql-core
+    # via soda-core
 deprecated==1.2.14
-    # via
-    #   opentelemetry-api
-    #   soda-sql-core
-future==0.18.3
-    # via pyhive
+    # via opentelemetry-api
 googleapis-common-protos==1.59.1
     # via opentelemetry-exporter-otlp-proto-http
 idna==3.4
     # via requests
-importlib-metadata==6.8.0
-    # via opentelemetry-api
-jinja2==2.11.3
-    # via soda-sql-core
-markupsafe==2.0.1
+inflect==6.2.0
+    # via soda-core
+jinja2==3.1.2
+    # via soda-core
+markupsafe==2.1.1
     # via
     #   jinja2
-    #   soda-sql-core
-opentelemetry-api==1.19.0
+    #   soda-core
+opentelemetry-api==1.16.0
     # via
     #   opentelemetry-exporter-otlp-proto-http
     #   opentelemetry-sdk
-opentelemetry-exporter-otlp-proto-http==1.6.2
-    # via soda-sql-core
-opentelemetry-proto==1.6.2
+    #   soda-core
+opentelemetry-exporter-otlp-proto-http==1.16.0
+    # via soda-core
+opentelemetry-proto==1.16.0
     # via opentelemetry-exporter-otlp-proto-http
-opentelemetry-sdk==1.19.0
+opentelemetry-sdk==1.16.0
     # via opentelemetry-exporter-otlp-proto-http
-opentelemetry-semantic-conventions==0.40b0
+opentelemetry-semantic-conventions==0.37b0
     # via opentelemetry-sdk
 protobuf==4.23.4
     # via
     #   googleapis-common-protos
     #   opentelemetry-proto
-pure-sasl==0.6.2
-    # via thrift-sasl
-pyhive==0.6.5
-    # via soda-sql-spark
-pyodbc==4.0.39
-    # via
-    #   -r requirements.in
-    #   soda-sql-spark
-python-dateutil==2.8.2
-    # via pyhive
-pyyaml==5.4.1
-    # via soda-sql-core
+pydantic==2.0.2
+    # via inflect
+pydantic-core==2.1.2
+    # via pydantic
 requests==2.31.0
     # via
     #   opentelemetry-exporter-otlp-proto-http
-    #   soda-sql-core
-sasl==0.3.1
-    # via soda-sql-spark
-six==1.16.0
+    #   soda-core
+ruamel-yaml==0.17.32
+    # via soda-core
+ruamel-yaml-clib==0.2.7
+    # via ruamel-yaml
+setuptools==68.0.0
     # via
-    #   python-dateutil
-    #   sasl
-    #   thrift
-    #   thrift-sasl
-soda-spark==0.3.3
+    #   opentelemetry-api
+    #   opentelemetry-sdk
+soda-core==3.0.45
+    # via soda-core-spark
+soda-core-spark==3.0.45
+    # via soda-core-spark-df
+soda-core-spark-df==3.0.45
     # via -r requirements.in
-soda-sql-core==2.1.9
-    # via soda-sql-spark
-soda-sql-spark==2.1.9
-    # via soda-spark
-thrift==0.16.0
-    # via
-    #   soda-sql-spark
-    #   thrift-sasl
-thrift-sasl==0.4.3
-    # via soda-sql-spark
+sqlparse==0.4.4
+    # via soda-core
 typing-extensions==4.7.1
-    # via opentelemetry-sdk
+    # via
+    #   inflect
+    #   opentelemetry-sdk
+    #   pydantic
+    #   pydantic-core
 urllib3==2.0.3
     # via requests
 wrapt==1.15.0
     # via deprecated
-zipp==3.16.1
-    # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # py4j

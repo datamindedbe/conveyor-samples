@@ -45,15 +45,11 @@ pytest==7.2.1
 pytest-cov==4.0.0
     # via -r dev-requirements.in
 python-dateutil==2.8.2
-    # via
-    #   -c requirements.txt
-    #   pandas
+    # via pandas
 pytz==2022.7.1
     # via pandas
 six==1.16.0
-    # via
-    #   -c requirements.txt
-    #   python-dateutil
+    # via python-dateutil
 tomli==2.0.1
     # via
     #   black

@@ -1,0 +1,6 @@
+# Checks for users
+checks for users:
+- row_count > 0 
+- duplicate_count(id) = 0
+- invalid_percent(email) > 0%:
+      valid format: email
