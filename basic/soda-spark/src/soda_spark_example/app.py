@@ -34,7 +34,7 @@ def data(spark):
         [
             {"id": id, "name": "Paula Landry", "email": "p@gmail.com"},
             {"id": id, "name": "Kevin Crawford", "email": "l@gmail.com"},
-            {"id": "12", "name": "John Smith", "email": "noemail"},
+            {"id": "12", "name": "John Smith", "email": "email"},
         ],
         schema=types.StructType(
             [

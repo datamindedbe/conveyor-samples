@@ -23,9 +23,9 @@ dag = DAG(
     max_active_runs=1,
 )
 
-sample_task = ConveyorSparkSubmitOperatorV2(
+ConveyorSparkSubmitOperatorV2(
     dag=dag,
-    task_id="sample",
+    task_id="data-quaility-check",
     driver_instance_type="mx.small",
     mode="local",
     aws_role="soda-spark-{{ macros.conveyor.env() }}",
