@@ -1,6 +1,7 @@
 buildSteps:
   - name: setup env
     cmd: |
+      sudo mkdir -p /usr/share/man/man1
       sudo apt install make docker-compose openjdk-11-jre gcc libbz2-dev openssl libncurses5-dev libncursesw5-dev libssl-dev libreadline-dev liblzma-dev libsqlite3-dev -y
   - name: Install pyenv
     cmd: |
