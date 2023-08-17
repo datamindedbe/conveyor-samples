@@ -5,7 +5,7 @@ rel_profiles_dir:=dbt
 abs_project_dir:=$(current_dir)/$(rel_project_dir)
 abs_profiles_dir:=$(current_dir)/$(rel_profiles_dir)
 env_file:=$(current_dir)/.env
-dbt_version:=v1.4.0
+dbt_version:=v1.6.0
 os_docker_flag:=
 ifeq ($(shell uname -s),Linux)
 	os_docker_flag += --add-host host.docker.internal:host-gateway

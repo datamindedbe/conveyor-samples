@@ -1,5 +1,5 @@
-dbt-duckdb[glue]==1.4.2
-duckdb>=0.7.1
+dbt-duckdb[glue]==1.6.0
+duckdb>=0.8.1
 
 # extra features
 sqlfluff~=1.2.1
