@@ -45,7 +45,7 @@ def add_has_cabin_feature(df: pd.DataFrame):
 
 def add_categorical_fare_feature(df: pd.DataFrame):
     df['Fare'] = df['Fare']. \
-        groupby([df['SexNumerical'], df['Pclass']]). \
+        groupby([df['SexNumerical'], df['Pclass']], group_keys=False). \
         apply(lambda x: x.fillna(x.median()))
     df['CategoricalFare'] = pd.qcut(df['Fare'], 4, labels = [0, 1, 2, 3]).astype(int)
 
@@ -58,7 +58,7 @@ def add_gender_feature(df: pd.DataFrame):
 
 def add_age_feature(df: pd.DataFrame):
     df['Age'] = df['Age']. \
-        groupby([df['SexNumerical'], df['Pclass']]). \
+        groupby([df['SexNumerical'], df['Pclass']], group_keys=False). \
         apply(lambda x: x.fillna(x.median()))
 
 
