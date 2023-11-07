@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Setting up the virtual env",
+      "type": "shell",
+      "command": "echo 'installing the virtual env' && make install",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    }
+  ]
+}
