@@ -1,0 +1,13 @@
+vscode:
+  extensions:
+    - mtxr.sqltools@0.28.0
+    - mtxr.sqltools-driver-pg@0.5.1
+    - innoverio.vscode-dbt-power-user
+buildSteps:
+  - name: install venv and install all deps
+    cmd: |
+      python -m venv /home/conveyor/venv
+      . /home/conveyor/venv/bin/activate
+      pip install dbt-postgres==1.7.0
+      pip install dbt-duckdb==1.7.0
+      pip install sqlfluff~=2.3.5
