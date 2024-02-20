@@ -12,6 +12,14 @@
       "runOptions": {
         "runOn": "folderOpen"
       }
+    },
+    {
+      "label": "Configure Conveyor project",
+      "type": "shell",
+      "command": "conveyor project generate-config --name pi_spark",
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
     }
   ]
 }
