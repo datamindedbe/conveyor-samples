@@ -29,3 +29,4 @@ dags
 Dockerfile
 tests
 pytest.ini
+.idea

@@ -1,4 +1,4 @@
-FROM public.ecr.aws/dataminded/spark-k8s-glue:v3.3.1-hadoop-3.3.4-v2
+FROM public.ecr.aws/dataminded/spark-k8s-glue:v3.5.1-hadoop-3.3.6-v1
 
 ENV PYSPARK_PYTHON python3
 WORKDIR /opt/spark/work-dir
