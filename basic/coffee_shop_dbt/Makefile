@@ -1,11 +1,9 @@
 current_dir:=$(shell pwd)
 project_name:=coffee_shop_dbt
-rel_project_dir:=dbt/$(project_name)
-rel_profiles_dir:=dbt
-abs_project_dir:=$(current_dir)/$(rel_project_dir)
-abs_profiles_dir:=$(current_dir)/$(rel_profiles_dir)
+abs_project_dir:=$(current_dir)
+abs_profiles_dir:=$(current_dir)
 env_file:=$(current_dir)/.env
-dbt_version:=v1.6.0
+dbt_version:=v1.7.0
 os_docker_flag:=
 ifeq ($(shell uname -s),Linux)
 	os_docker_flag += --add-host host.docker.internal:host-gateway
@@ -26,7 +24,7 @@ deps:
 	dbt deps --profiles-dir $(abs_profiles_dir) --project-dir $(abs_project_dir) $(call args,$@)
 
 manifest: env
-	eval "$(docker_dbt_command)" ls --profiles-dir $(rel_profiles_dir) --project-dir $(rel_project_dir) $(call args,$@)
+	eval "$(docker_dbt_command)" ls --profiles-dir $(abs_profiles_dir) --project-dir $(abs_project_dir) $(call args,$@)
 	cp $(abs_project_dir)/target/manifest.json $(current_dir)/dags/manifest.json
 
 debug:
