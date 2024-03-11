@@ -1,6 +1,6 @@
 # General prerequisites
 
-In order to run the samples, you need some additional prerequisites. Some of these samples require additonal steps to get started, please consult the README in each sample.
+In order to run the samples, you need some additional prerequisites. Some of these samples require additional steps to get started, please consult the README in each sample.
 
 ## VSCode 
 

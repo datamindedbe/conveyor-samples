@@ -25,5 +25,5 @@ default:
       extensions:
         - httpfs
         - parquet
-      external_root: "./data"
+      external_root: "workspace/parquet"
   target: local
