@@ -20,7 +20,7 @@ default:
       external_root: "s3://conveyor-samples-b9a6edf0/coffee-data"
     local:
       type: duckdb
-      path: "coffee_shop.duckdb"
+      path: "workspace/coffee_shop.duckdb"
       threads: 4
       extensions:
         - httpfs
