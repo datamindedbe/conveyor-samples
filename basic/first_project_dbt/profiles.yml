@@ -1,0 +1,14 @@
+default:
+  outputs:
+    dev:
+      type: duckdb
+      path: /tmp/dbt.duckdb
+      threads: 1
+      extensions:
+        - httpfs
+        - parquet
+    local:
+      type: duckdb
+      path: 'dbt.duckdb'
+      threads: 1
+  target: local

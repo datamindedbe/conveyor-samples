@@ -25,6 +25,5 @@ default:
       extensions:
         - httpfs
         - parquet
-      use_credential_provider: aws
       external_root: "workspace/parquet"
   target: local
