@@ -10,3 +10,8 @@ In V2, the local file system will be replaced with S3 Tables.
 1. set up a small Oracle database
 2. load that Oracle database with some data
 3. Extract data using a dlt pipeline.
+
+
+## Getting started
+
+1. `uv sync` to create and populate the virtual environment containing the dependencies listed in the uv.lock file.
