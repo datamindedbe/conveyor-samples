@@ -5,7 +5,7 @@ description = "Sample project illustrating how one can extract data from Oracle 
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "dlt[duckdb,filesystem]>=1.9.0",
+    "dlt[duckdb,filesystem,sql-database]>=1.9.0",
 ]
 
 [dependency-groups]

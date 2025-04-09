@@ -1,0 +1,27 @@
+# put your configuration values here
+
+[runtime]
+log_level="WARNING"  # the system log level of dlt
+# use the dlthub_telemetry setting to enable/disable anonymous usage data reporting, see https://dlthub.com/docs/reference/telemetry
+dlthub_telemetry = true
+
+[sources.sql_database]
+table = "table" # please set me up!
+
+[sources.chess]
+config_int = 0 # please set me up!
+
+[full_load]
+pipeline_name = "chess_pipeline"
+destination = "duckdb"
+dataset_name = "chess_player_game_data"
+table_name = ["players_games", "players_profiles"]
+
+[incremental_load]
+pipeline_name = "incremental_load_chess_pipeline"
+destination = "duckdb"
+dataset_name = "chess_player_game_data"
+table_name = ["players_games"]
+primary_key = "end_time"
+
+[CDC]
