@@ -1,0 +1,26 @@
+# put your configuration values here
+
+[runtime]
+log_level="WARNING"  # the system log level of dlt
+# use the dlthub_telemetry setting to enable/disable anonymous usage data reporting, see https://dlthub.com/docs/reference/telemetry
+dlthub_telemetry = true
+
+[sources.sql_database]
+table = "table" # please set me up!
+
+[full_load]
+pipeline_name = "full_load_pipeline"
+destination = "filesystem"
+schema = "SH"
+dataset_name = "sh_full"
+table_name = ["promotions", "products", "customers"]
+
+[incremental_load]
+pipeline_name = "incremental_load_pipeline"
+destination = "filesystem"
+schema = "AUDSYS"
+dataset_name = "audsys_incremental"
+table_name = ["aud$unified"]
+incremental_column = "event_timestamp"
+
+[CDC]
