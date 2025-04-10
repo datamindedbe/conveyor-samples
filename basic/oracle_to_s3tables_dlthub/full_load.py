@@ -1,8 +1,6 @@
 import dlt
 from dlt.sources.sql_database import sql_database
-from dlt.sources.credentials import ConnectionStringCredentials
 from dlt.sources import DltSource
-from chess import source
 
 def load_full_table_resource(data_source: DltSource, pipeline_name:str, destination:str, 
                              dataset_name:str, table_name:list[str]) -> None:
@@ -27,9 +25,6 @@ if __name__ == '__main__':
     destination = dlt.config["full_load.destination"]
     dataset_name = dlt.config["full_load.dataset_name"]
     table_name = dlt.config["full_load.table_name"]
-    data_source = source(
-        ["magnuscarlsen", "vincentkeymer", "dommarajugukesh", "rpragchess"],
-        start_month="2022/11",
-        end_month="2022/12",
-    )
+    schema = dlt.config["full_load.schema"]
+    data_source = sql_database(schema=schema)
     load_full_table_resource(data_source, pipeline_name, destination, dataset_name, table_name)

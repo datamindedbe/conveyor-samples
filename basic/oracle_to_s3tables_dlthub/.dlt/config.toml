@@ -8,20 +8,19 @@ dlthub_telemetry = true
 [sources.sql_database]
 table = "table" # please set me up!
 
-[sources.chess]
-config_int = 0 # please set me up!
-
 [full_load]
-pipeline_name = "chess_pipeline"
-destination = "duckdb"
-dataset_name = "chess_player_game_data"
-table_name = ["players_games", "players_profiles"]
+pipeline_name = "full_load_pipeline"
+destination = "filesystem"
+schema = "SH"
+dataset_name = "sh_full"
+table_name = ["promotions", "products", "customers"]
 
 [incremental_load]
-pipeline_name = "incremental_load_chess_pipeline"
-destination = "duckdb"
-dataset_name = "chess_player_game_data"
-table_name = ["players_games"]
-primary_key = "end_time"
+pipeline_name = "incremental_load_pipeline"
+destination = "filesystem"
+schema = "AUDSYS"
+dataset_name = "audsys_incremental"
+table_name = ["aud$unified"]
+incremental_column = "event_timestamp"
 
 [CDC]
