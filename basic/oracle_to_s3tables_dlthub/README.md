@@ -36,26 +36,21 @@ We use [`uv`](https://github.com/astral-sh/uv) to manage Python dependencies eff
 ### 🔧 Setup
 
 1. **Install `uv`:**
+
    ```bash
    brew install uv
    ```
 
-2. **Create a virtual environment:**
-   ```bash
-   uv venv .venv --python 3.11
-   ```
+2. **Install all dependencies:**
 
-3. **Activate the virtual environment:**
-   ```bash
-   source .venv/bin/activate
-   ```
+   This will automatically create a virtual environment as well.1
 
-4. **Install all dependencies:**
    ```bash
    uv sync
    ```
 
-5. **Add new libraries during development:**
+3. **Add new libraries during development:**
+
    ```bash
    uv add <library_name>
    ```
