@@ -16,9 +16,9 @@ dataset_name = "sh_full"
 table_name = ["promotions", "products", "customers"]
 
 [incremental_load]
-pipeline_name = "incremental_load_pipeline"
-destination = "filesystem"
 schema = "AUDSYS"
-dataset_name = "audsys_incremental"
 table_name = ["aud$unified"]
 incremental_column = "event_timestamp"
+pipeline_name = "incremental_load_pipeline"
+destination = "filesystem"
+dataset_name = "audsys_incremental"
