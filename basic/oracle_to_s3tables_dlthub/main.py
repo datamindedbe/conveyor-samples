@@ -86,6 +86,33 @@ def full_load_entire_database(data_source: DltSource, pipeline_name:str, destina
     print(info)
 
 
+def incremental_load_entire_database(data_source: DltSource, pipeline_name:str, destination:str,
+                                      dataset_name:str, incremental_column:str) -> None:
+    """
+    Performs a full load of the entire database, replacing any existing data in the destination.
+
+    Args:
+        data_source (DltSource)
+        pipeline_name (str)
+        destination (str)
+        dataset_name (str): The dataset name used for loading data.
+        incremental_column (str): The column used to filter the new data for incremental loading, usually a timestamp.
+
+    """
+    pipeline = dlt.pipeline(
+        pipeline_name=pipeline_name,
+        destination=destination,
+        dataset_name=dataset_name
+    )
+
+    for table in data_source.resources:
+        data_source.resources[table].apply_hints(incremental=dlt.sources.incremental(incremental_column))
+
+    info = pipeline.run(data_source, write_disposition="merge")
+
+    print(info)
+
+
 def main():
     print("Hello from oracle-to-s3tables-dlthub!")
 

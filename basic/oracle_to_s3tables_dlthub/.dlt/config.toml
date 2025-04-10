@@ -22,5 +22,3 @@ schema = "AUDSYS"
 dataset_name = "audsys_incremental"
 table_name = ["aud$unified"]
 incremental_column = "event_timestamp"
-
-[CDC]
