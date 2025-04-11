@@ -1,7 +1,6 @@
 repos:
   # Code formatting
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    # Ruff version.
     rev: v0.11.5
     hooks:
       # Run the linter.
@@ -31,8 +30,6 @@ repos:
     - id: mixed-line-ending
       args: [--fix=lf]
     - id: pretty-format-json
-
-    # -   id: check-yaml
 
   # checks github actions files for errors
   - repo: https://github.com/rhysd/actionlint
