@@ -10,15 +10,23 @@ table = "table" # please set me up!
 
 [full_load]
 pipeline_name = "full_load_pipeline"
-destination = "filesystem"
+destination = "snowflake"
 schema = "SH"
 dataset_name = "sh_full"
 table_name = ["promotions", "products", "customers"]
 
+# [incremental_load]
+# schema = "AUDSYS"
+# table_name = ["aud$unified"]
+# incremental_column = "event_timestamp"
+# pipeline_name = "incremental_load_pipeline"
+# destination = "snowflake"
+# dataset_name = "audsys_incremental"
+
 [incremental_load]
-schema = "AUDSYS"
-table_name = ["aud$unified"]
-incremental_column = "event_timestamp"
+schema = "TPCH"
+table_name = ["orders"]   # case sensitive!
+incremental_column = "o_orderdate"
 pipeline_name = "incremental_load_pipeline"
-destination = "filesystem"
-dataset_name = "audsys_incremental"
+destination = "snowflake"
+dataset_name = "tpch_orders_incremental"

@@ -1,4 +1,5 @@
 from collections.abc import Collection
+from argparse import ArgumentParser
 
 import dlt
 from dlt.sources import DltSource
@@ -125,23 +126,36 @@ def incremental_load_entire_database(
 
 
 if __name__ == "__main__":
-    incremental_load = dlt.config["incremental_load"]
-    incremental_data_source: DltSource = sql_database(schema=incremental_load["schema"])  # type: ignore
-    incremental_load_select_tables_from_database(
-        data_source=incremental_data_source,
-        pipeline_name=incremental_load["pipeline_name"],
-        destination=incremental_load["destination"],
-        dataset_name=incremental_load["dataset_name"],
-        table_name=incremental_load["table_name"],
-        incremental_column=incremental_load["incremental_column"],
+    parser = ArgumentParser()
+    parser.add_argument(
+        "type",
+        default="all",
+        choices=("all", "inc", "full"),
+        help="type of loading: incremental, full load or both",
     )
+    args = parser.parse_args()
 
-    full_load = dlt.config["full_load"]
-    full_data_source: DltSource = sql_database(schema=full_load["schema"])  # type: ignore
-    full_load_select_tables_from_database(
-        data_source=full_data_source,
-        pipeline_name=full_load["pipeline_name"],
-        destination=full_load["destination"],
-        dataset_name=full_load["dataset_name"],
-        table_names=full_load["table_name"],
-    )
+    if args.type in ("inc", "all"):
+        incremental_load = dlt.config["incremental_load"]
+        incremental_data_source: DltSource = sql_database(
+            schema=incremental_load["schema"]
+        )  # type: ignore
+        incremental_load_select_tables_from_database(
+            data_source=incremental_data_source,
+            pipeline_name=incremental_load["pipeline_name"],
+            destination=incremental_load["destination"],
+            dataset_name=incremental_load["dataset_name"],
+            table_name=incremental_load["table_name"],
+            incremental_column=incremental_load["incremental_column"],
+        )
+
+    if args.type in ("full", "all"):
+        full_load = dlt.config["full_load"]
+        full_data_source: DltSource = sql_database(schema=full_load["schema"])  # type: ignore
+        full_load_select_tables_from_database(
+            data_source=full_data_source,
+            pipeline_name=full_load["pipeline_name"],
+            destination=full_load["destination"],
+            dataset_name=full_load["dataset_name"],
+            table_names=full_load["table_name"],
+        )
