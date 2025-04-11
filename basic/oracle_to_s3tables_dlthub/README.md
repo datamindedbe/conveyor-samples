@@ -35,19 +35,16 @@ We use [`uv`](https://github.com/astral-sh/uv) to manage Python dependencies eff
 
 ### 🔧 Setup
 
-1. **Install `uv`:**
+1. [Install `uv`](https://github.com/astral-sh/uv?tab=readme-ov-file#installation)
+2. **Install this project's dependencies:**
 
-   ```bash
-   brew install uv
-   ```
-
-2. **Install all dependencies:**
-
-   This will automatically create a virtual environment as well.1
+   This will automatically create a virtual environment as well.
 
    ```bash
    uv sync
    ```
+
+   You might need some non-Python software as well, like clang. Install those using your operating system's tooling.
 
 3. **Add new libraries during development:**
 
@@ -74,3 +71,5 @@ To inspect the available tables in a pipeline:
 ```bash
 dlt pipeline <pipeline_name> show
 ```
+
+The `pipeline_name`s are given in [.dlt/config.toml](.dlt/config.toml).
