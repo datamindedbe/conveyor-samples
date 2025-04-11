@@ -1,6 +1,8 @@
+from collections.abc import Collection
+
 import dlt
-from dlt.sources.sql_database import sql_database
 from dlt.sources import DltSource
+from dlt.sources.sql_database import sql_database
 
 
 # Incremental load: https://dlthub.com/docs/general-usage/incremental-loading
@@ -9,19 +11,19 @@ def incremental_load_select_tables_from_database(
     pipeline_name: str,
     destination: str,
     dataset_name: str,
-    table_name: list[str],
+    table_name: Collection[str],
     incremental_column: str,
 ) -> None:
     """
     Loads selected tables from the database incrementally based on the specified column (usually, a timestamp).
 
     Args:
-        data_source (DltSource)
-        pipeline_name (str)
-        destination (str)
-        dataset_name (str): The dataset name used for loading data.
-        table_name (list[str]): A list of table names to be loaded.
-        incremental_column (str): The column used to filter the new data for incremental loading, usually a timestamp.
+        data_source
+        pipeline_name
+        destination
+        dataset_name: The dataset name used for loading data.
+        table_name: A list of table names to be loaded.
+        incremental_column: The column used to filter the new data for incremental loading, usually a timestamp.
 
     """
     pipeline = dlt.pipeline(
@@ -45,30 +47,26 @@ def full_load_select_tables_from_database(
     pipeline_name: str,
     destination: str,
     dataset_name: str,
-    table_name: list[str],
+    table_names: Collection[str],
 ) -> None:
     """
     Performs a full load of selected tables from the database, replacing any existing data in the destination.
 
     Args:
-        data_source (DltSource)
-        pipeline_name (str)
-        destination (str)
-        dataset_name (str): The dataset name used for loading data.
-        table_name (list[str]): A list of table names to be loaded.
+        data_source
+        pipeline_name
+        destination
+        dataset_name: The dataset name used for loading data.
+        table_names: A list of table names to be loaded.
 
     """
     pipeline = dlt.pipeline(
         pipeline_name=pipeline_name, destination=destination, dataset_name=dataset_name
     )
+    source = data_source.with_resources(*table_names)
 
-    # Load the full table
-    source = data_source.with_resources(*table_name)
-
-    # Run the pipeline
     info = pipeline.run(source, write_disposition="replace")
 
-    # Print the info
     print(info)
 
 
@@ -79,10 +77,10 @@ def full_load_entire_database(
     Performs a full load of the entire database, replacing any existing data in the destination.
 
     Args:
-        data_source (DltSource)
-        pipeline_name (str)
-        destination (str)
-        dataset_name (str): The dataset name used for loading data.
+        data_source
+        pipeline_name
+        destination
+        dataset_name: The dataset name used for loading data.
 
     """
     pipeline = dlt.pipeline(
@@ -106,11 +104,11 @@ def incremental_load_entire_database(
     Performs a full load of the entire database, replacing any existing data in the destination.
 
     Args:
-        data_source (DltSource)
-        pipeline_name (str)
-        destination (str)
-        dataset_name (str): The dataset name used for loading data.
-        incremental_column (str): The column used to filter the new data for incremental loading, usually a timestamp.
+        data_source
+        pipeline_name
+        destination
+        dataset_name: The dataset name used for loading data.
+        incremental_column: The column used to filter the new data for incremental loading, usually a timestamp.
 
     """
     pipeline = dlt.pipeline(
@@ -134,7 +132,9 @@ def main():
 if __name__ == "__main__":
     main()
 
-    incremental_data_source = sql_database(schema=dlt.config["incremental_load.schema"])
+    incremental_data_source: DltSource = sql_database(
+        schema=dlt.config["incremental_load.schema"]
+    )
     incremental_load_select_tables_from_database(
         incremental_data_source,
         dlt.config["incremental_load.pipeline_name"],
@@ -144,7 +144,7 @@ if __name__ == "__main__":
         dlt.config["incremental_load.incremental_column"],
     )
 
-    full_data_source = sql_database(schema=dlt.config["full_load.schema"])
+    full_data_source: DltSource = sql_database(schema=dlt.config["full_load.schema"])
     full_load_select_tables_from_database(
         full_data_source,
         dlt.config["full_load.pipeline_name"],
