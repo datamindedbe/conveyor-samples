@@ -12,6 +12,9 @@ dependencies = [
 ]
 
 [dependency-groups]
+conveyor-airflow = [
+    "pendulum>=3.0.0",
+]
 dev = [
     "pre-commit>=4.2.0",
     "pytest>=8.3.5",
