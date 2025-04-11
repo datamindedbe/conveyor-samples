@@ -19,7 +19,9 @@ def load_select_tables_from_database() -> None:
     This example sources data from the public Rfam MySQL database.
     """
     # Create a pipeline
-    pipeline = dlt.pipeline(pipeline_name="rfam", destination='filesystem', dataset_name="rfam_data")
+    pipeline = dlt.pipeline(
+        pipeline_name="rfam", destination="filesystem", dataset_name="rfam_data"
+    )
 
     # Credentials for the sample database.
     # Note: It is recommended to configure credentials in `.dlt/secrets.toml` under `sources.sql_database.credentials`
@@ -56,7 +58,9 @@ def load_select_tables_from_database() -> None:
 
 def load_entire_database() -> None:
     """Use the sql_database source to completely load all tables in a database"""
-    pipeline = dlt.pipeline(pipeline_name="rfam", destination='filesystem', dataset_name="rfam_data")
+    pipeline = dlt.pipeline(
+        pipeline_name="rfam", destination="filesystem", dataset_name="rfam_data"
+    )
 
     # By default the sql_database source reflects all tables in the schema
     # The database credentials are sourced from the `.dlt/secrets.toml` configuration
@@ -64,7 +68,11 @@ def load_entire_database() -> None:
 
     # Run the pipeline. For a large db this may take a while
     info = pipeline.run(source, write_disposition="replace")
-    print(humanize.precisedelta(pipeline.last_trace.finished_at - pipeline.last_trace.started_at))
+    print(
+        humanize.precisedelta(
+            pipeline.last_trace.finished_at - pipeline.last_trace.started_at
+        )
+    )
     print(info)
 
 
@@ -73,7 +81,7 @@ def load_standalone_table_resource() -> None:
     table reflection"""
     pipeline = dlt.pipeline(
         pipeline_name="rfam_database",
-        destination='filesystem',
+        destination="filesystem",
         dataset_name="rfam_data",
         full_refresh=True,
     )
@@ -116,7 +124,7 @@ def select_columns() -> None:
     """Uses table adapter callback to modify list of columns to be selected"""
     pipeline = dlt.pipeline(
         pipeline_name="rfam_database",
-        destination='filesystem',
+        destination="filesystem",
         dataset_name="rfam_data_cols",
         full_refresh=True,
     )
@@ -149,7 +157,7 @@ def select_with_end_value_and_row_order() -> None:
     """Gets data from a table withing a specified range and sorts rows descending"""
     pipeline = dlt.pipeline(
         pipeline_name="rfam_database",
-        destination='filesystem',
+        destination="filesystem",
         dataset_name="rfam_data",
         full_refresh=True,
     )
@@ -181,7 +189,7 @@ def my_sql_via_pyarrow() -> None:
     # Create a pipeline
     pipeline = dlt.pipeline(
         pipeline_name="rfam_cx",
-        destination='filesystem',
+        destination="filesystem",
         dataset_name="rfam_data_arrow_4",
     )
 
@@ -225,7 +233,7 @@ def create_unsw_flow() -> None:
     pipeline = dlt.pipeline(
         pipeline_name="unsw_upload",
         # destination=postgres("postgres://loader:loader@localhost:5432/dlt_data"),
-        destination='filesystem',
+        destination="filesystem",
         progress="log",
     )
     pipeline.run(
@@ -257,7 +265,7 @@ def test_connectorx_speed() -> None:
 
     pipeline = dlt.pipeline(
         pipeline_name="unsw_download",
-        destination='filesystem',
+        destination="filesystem",
         # destination=filesystem(os.path.abspath("../_storage/unsw")),
         progress="log",
         full_refresh=True,
@@ -275,7 +283,7 @@ def test_connectorx_speed() -> None:
 def test_pandas_backend_verbatim_decimals() -> None:
     pipeline = dlt.pipeline(
         pipeline_name="rfam_cx",
-        destination='filesystem',
+        destination="filesystem",
         dataset_name="rfam_data_pandas_2",
     )
 
@@ -305,7 +313,7 @@ def use_type_adapter() -> None:
     """Example use of type adapter to coerce unknown data types"""
     pipeline = dlt.pipeline(
         pipeline_name="dummy",
-        destination='filesystem',
+        destination="filesystem",
         dataset_name="dummy",
     )
 
@@ -329,11 +337,13 @@ def specify_columns_to_load() -> None:
     """Run the SQL database source with a subset of table columns loaded"""
     pipeline = dlt.pipeline(
         pipeline_name="dummy",
-        destination='filesystem',
+        destination="filesystem",
     )
 
     # Columns can be specified per table in env var (json array) or in `.dlt/config.toml`
-    os.environ["SOURCES__SQL_DATABASE__FAMILY__INCLUDED_COLUMNS"] = '["rfam_acc", "description"]'
+    os.environ["SOURCES__SQL_DATABASE__FAMILY__INCLUDED_COLUMNS"] = (
+        '["rfam_acc", "description"]'
+    )
 
     sql_alchemy_source = sql_database(
         "mysql+pymysql://rfamro@mysql-rfam-public.ebi.ac.uk:4497/Rfam?&binary_prefix=true",

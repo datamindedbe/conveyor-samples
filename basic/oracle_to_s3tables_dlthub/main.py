@@ -2,9 +2,16 @@ import dlt
 from dlt.sources.sql_database import sql_database
 from dlt.sources import DltSource
 
+
 # Incremental load: https://dlthub.com/docs/general-usage/incremental-loading
-def incremental_load_select_tables_from_database(data_source: DltSource, pipeline_name:str, destination:str, 
-                                    dataset_name:str, table_name:list[str], incremental_column:str) -> None:
+def incremental_load_select_tables_from_database(
+    data_source: DltSource,
+    pipeline_name: str,
+    destination: str,
+    dataset_name: str,
+    table_name: list[str],
+    incremental_column: str,
+) -> None:
     """
     Loads selected tables from the database incrementally based on the specified column (usually, a timestamp).
 
@@ -18,23 +25,28 @@ def incremental_load_select_tables_from_database(data_source: DltSource, pipelin
 
     """
     pipeline = dlt.pipeline(
-        pipeline_name=pipeline_name,
-        destination=destination,
-        dataset_name=dataset_name
+        pipeline_name=pipeline_name, destination=destination, dataset_name=dataset_name
     )
 
     source = data_source.with_resources(*table_name)
- 
+
     for table in table_name:
-        source.resources[table].apply_hints(incremental=dlt.sources.incremental(incremental_column))
+        source.resources[table].apply_hints(
+            incremental=dlt.sources.incremental(incremental_column)
+        )
 
     info = pipeline.run(source, write_disposition="merge")
 
     print(info)
 
 
-def full_load_select_tables_from_database(data_source: DltSource, pipeline_name:str, destination:str, 
-                             dataset_name:str, table_name:list[str]) -> None:
+def full_load_select_tables_from_database(
+    data_source: DltSource,
+    pipeline_name: str,
+    destination: str,
+    dataset_name: str,
+    table_name: list[str],
+) -> None:
     """
     Performs a full load of selected tables from the database, replacing any existing data in the destination.
 
@@ -47,9 +59,7 @@ def full_load_select_tables_from_database(data_source: DltSource, pipeline_name:
 
     """
     pipeline = dlt.pipeline(
-        pipeline_name=pipeline_name,
-        destination=destination,
-        dataset_name=dataset_name
+        pipeline_name=pipeline_name, destination=destination, dataset_name=dataset_name
     )
 
     # Load the full table
@@ -62,8 +72,9 @@ def full_load_select_tables_from_database(data_source: DltSource, pipeline_name:
     print(info)
 
 
-def full_load_entire_database(data_source: DltSource, pipeline_name:str, destination:str,
-                             dataset_name:str) -> None:
+def full_load_entire_database(
+    data_source: DltSource, pipeline_name: str, destination: str, dataset_name: str
+) -> None:
     """
     Performs a full load of the entire database, replacing any existing data in the destination.
 
@@ -75,9 +86,7 @@ def full_load_entire_database(data_source: DltSource, pipeline_name:str, destina
 
     """
     pipeline = dlt.pipeline(
-        pipeline_name=pipeline_name,
-        destination=destination,
-        dataset_name=dataset_name
+        pipeline_name=pipeline_name, destination=destination, dataset_name=dataset_name
     )
 
     # Run the pipeline
@@ -86,8 +95,13 @@ def full_load_entire_database(data_source: DltSource, pipeline_name:str, destina
     print(info)
 
 
-def incremental_load_entire_database(data_source: DltSource, pipeline_name:str, destination:str,
-                                      dataset_name:str, incremental_column:str) -> None:
+def incremental_load_entire_database(
+    data_source: DltSource,
+    pipeline_name: str,
+    destination: str,
+    dataset_name: str,
+    incremental_column: str,
+) -> None:
     """
     Performs a full load of the entire database, replacing any existing data in the destination.
 
@@ -100,13 +114,13 @@ def incremental_load_entire_database(data_source: DltSource, pipeline_name:str, 
 
     """
     pipeline = dlt.pipeline(
-        pipeline_name=pipeline_name,
-        destination=destination,
-        dataset_name=dataset_name
+        pipeline_name=pipeline_name, destination=destination, dataset_name=dataset_name
     )
 
     for table in data_source.resources:
-        data_source.resources[table].apply_hints(incremental=dlt.sources.incremental(incremental_column))
+        data_source.resources[table].apply_hints(
+            incremental=dlt.sources.incremental(incremental_column)
+        )
 
     info = pipeline.run(data_source, write_disposition="merge")
 
@@ -120,13 +134,21 @@ def main():
 if __name__ == "__main__":
     main()
 
-    incremental_data_source = sql_database(schema = dlt.config["incremental_load.schema"])
-    incremental_load_select_tables_from_database(incremental_data_source, dlt.config["incremental_load.pipeline_name"], 
-                                    dlt.config["incremental_load.destination"], dlt.config["incremental_load.dataset_name"], 
-                                    dlt.config["incremental_load.table_name"], dlt.config["incremental_load.incremental_column"])
-    
+    incremental_data_source = sql_database(schema=dlt.config["incremental_load.schema"])
+    incremental_load_select_tables_from_database(
+        incremental_data_source,
+        dlt.config["incremental_load.pipeline_name"],
+        dlt.config["incremental_load.destination"],
+        dlt.config["incremental_load.dataset_name"],
+        dlt.config["incremental_load.table_name"],
+        dlt.config["incremental_load.incremental_column"],
+    )
 
     full_data_source = sql_database(schema=dlt.config["full_load.schema"])
-    full_load_select_tables_from_database(full_data_source, dlt.config["full_load.pipeline_name"], 
-                             dlt.config["full_load.destination"], dlt.config["full_load.dataset_name"], 
-                             dlt.config["full_load.table_name"])
+    full_load_select_tables_from_database(
+        full_data_source,
+        dlt.config["full_load.pipeline_name"],
+        dlt.config["full_load.destination"],
+        dlt.config["full_load.dataset_name"],
+        dlt.config["full_load.table_name"],
+    )

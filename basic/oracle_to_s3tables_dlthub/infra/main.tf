@@ -1,7 +1,7 @@
 locals {
-  region = "eu-west-1"
-  bucket = "tcph-100gb"
-  account = "299641483789"  # dm-playground
+  region  = "eu-west-1"
+  bucket  = "tcph-100gb"
+  account = "299641483789" # dm-playground
 }
 
 resource "aws_db_instance" "rds" {
@@ -13,7 +13,7 @@ resource "aws_db_instance" "rds" {
   instance_class                        = var.db_instance_class
   port                                  = var.db_port
   username                              = var.username
-  manage_master_user_password           = var.manage_master_user_password 
+  manage_master_user_password           = var.manage_master_user_password
   character_set_name                    = var.db_character_set_name
   availability_zone                     = data.aws_availability_zones.available_zones.names[0]
   db_subnet_group_name                  = aws_db_subnet_group.database_subnet_group.name
@@ -45,14 +45,14 @@ resource "aws_db_instance" "rds" {
 
 
 resource "aws_db_option_group" "s3connection" {
-  name = "load-from-s3"
+  name                     = "load-from-s3"
   option_group_description = "Allow Oracle to read from an S3 bucket"
-  engine_name = var.db_engine
-  major_engine_version = split(".", var.db_engine_version)[0]
+  engine_name              = var.db_engine
+  major_engine_version     = split(".", var.db_engine_version)[0]
 
   option {
     option_name = "S3_INTEGRATION"
-    version = "1.0"
+    version     = "1.0"
   }
 }
 
@@ -71,41 +71,41 @@ resource "aws_iam_policy" "policy" {
           "s3:PutObject",
           "s3:*"
         ]
-        Effect   = "Allow"
+        Effect = "Allow"
         Resource = [
-           "arn:aws:s3:::${local.bucket}",
-           "arn:aws:s3:::${local.bucket}/*",
+          "arn:aws:s3:::${local.bucket}",
+          "arn:aws:s3:::${local.bucket}/*",
         ]
       },
     ]
   })
 }
 
-resource aws_iam_role integration {
+resource "aws_iam_role" "integration" {
   name = "rds-s3-integration"
   assume_role_policy = jsonencode({
-   Version= "2012-10-17",
-     Statement= [
-       {
-         Action= "sts:AssumeRole"
-         Effect: "Allow"
-         Principal= {
-            Service= "rds.amazonaws.com"
-         }
-         Condition = {
-             StringEquals = {
-                 "aws:SourceAccount": "${local.account}",
-                 "aws:SourceArn": "arn:aws:rds:${local.region}:${local.account}:db:${aws_db_instance.rds.identifier}"
-             }
-         }
-       }
-     ]
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect : "Allow"
+        Principal = {
+          Service = "rds.amazonaws.com"
+        }
+        Condition = {
+          StringEquals = {
+            "aws:SourceAccount" : "${local.account}",
+            "aws:SourceArn" : "arn:aws:rds:${local.region}:${local.account}:db:${aws_db_instance.rds.identifier}"
+          }
+        }
+      }
+    ]
   })
 }
 
 # Note: you must attach this role to the RDS instance still
 
-resource aws_iam_role_policy_attachment integration {
+resource "aws_iam_role_policy_attachment" "integration" {
   policy_arn = aws_iam_policy.policy.arn
-  role = aws_iam_role.integration.name
+  role       = aws_iam_role.integration.name
 }

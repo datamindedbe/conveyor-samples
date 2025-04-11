@@ -1,6 +1,6 @@
 variable "db_identifier" {
   description = "OracleDlt"
-  default = "rds-oracle"
+  default     = "rds-oracle"
 }
 
 variable "db_engine" {
@@ -15,13 +15,13 @@ variable "db_engine_version" {
 
 variable "db_allocated_storage" {
   description = "DB storage"
-  default = "400"
+  default     = "400"
 }
 
 variable "db_backup_retention" {
   description = "DB backup retention"
   default     = "1"
-} 
+}
 
 variable "db_license_model" {
   description = "DB license model"
@@ -158,9 +158,9 @@ variable "max_allocated_storage" {
 }
 
 variable "tags" {
-  type    = any
+  type = any
   default = {
-    users = "siyan-oliver"
+    users   = "siyan-oliver"
     purpose = "experiment with dlthub and oracle as an ingestion source"
   }
 }
@@ -170,9 +170,8 @@ variable "publically_accessible" {
   default     = true
 }
 
-variable "delete_automated_backups"  {
+variable "delete_automated_backups" {
   description = "Specifies whether to remove automated backups immediately after the DB instance is deleted"
   type        = bool
   default     = "true"
 }
-

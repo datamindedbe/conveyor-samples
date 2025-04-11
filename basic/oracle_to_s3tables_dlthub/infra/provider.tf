@@ -3,8 +3,8 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Author = "Oliver"
-      Project = "DltConveyorSample"
+      Author           = "Oliver"
+      Project          = "DltConveyorSample"
       ExpectedLifetime = "2025Q2"
     }
   }
