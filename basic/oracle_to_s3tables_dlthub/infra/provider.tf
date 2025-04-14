@@ -11,9 +11,9 @@ provider "aws" {
 }
 
 provider "snowflake" {
-    role = "ACCOUNTADMIN"
-    organization_name = "iqorzws"
-    account_name = "playground"
-    user = var.snowflake_username
-    authenticator = "ExternalBrowser"
+  role              = "ACCOUNTADMIN"
+  organization_name = "iqorzws"
+  account_name      = "playground"
+  user              = var.snowflake_username
+  authenticator     = "ExternalBrowser"
 }
