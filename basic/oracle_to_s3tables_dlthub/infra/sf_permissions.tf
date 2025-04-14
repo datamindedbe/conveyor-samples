@@ -139,8 +139,3 @@ variable "loaded_schema" {
   sensitive = false
   default   = "SH_FULL"
 }
-
-variable "snowflake_username" {
-  type      = string
-  sensitive = false
-}
