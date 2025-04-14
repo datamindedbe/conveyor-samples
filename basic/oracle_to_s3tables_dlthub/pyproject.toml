@@ -3,7 +3,8 @@ name = "oracle-to-s3tables-dlthub"
 version = "0.1.0"
 description = "Sample project illustrating how one can extract data from Oracle into AWS S3 Tables"
 readme = "README.md"
-requires-python = ">=3.13"
+authors = ["oliver.willekens@dataminded.com", "siyan.luo@dataminded.com"]
+requires-python = ">=3.12,<3.13"  # snowflake-connector not supported on 3.13 yet
 dependencies = [
     "dlt[duckdb,filesystem,snowflake,sql-database]>=1.9.0",
     "faker>=37.1.0",
