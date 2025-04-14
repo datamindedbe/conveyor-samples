@@ -8,6 +8,7 @@ dependencies = [
     "dlt[duckdb,filesystem,snowflake,sql-database]>=1.9.0",
     "faker>=37.1.0",
     "oracledb>=3.1.0",
+    "pyarrow[pandas]<19",  # limitation imposed by snowflake connector, 2025-04-11
     "streamlit>=1.44.1",
 ]
 
