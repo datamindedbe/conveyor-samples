@@ -5,6 +5,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.94.1"
     }
+    snowflake = {
+      source  = "Snowflake-Labs/snowflake"
+      version = "1.0.5"
+    }
   }
 
   backend "s3" {
@@ -13,5 +17,4 @@ terraform {
     region       = "eu-west-1"
     use_lockfile = true
   }
-
 }

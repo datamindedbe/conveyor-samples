@@ -1,3 +1,4 @@
+CREATE WAREHOUSE COMPUTE_WH;
 CREATE DATABASE dlt_data;
 
 --- create the role that will be assumed by dlt
