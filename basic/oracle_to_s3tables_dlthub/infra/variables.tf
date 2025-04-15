@@ -46,17 +46,12 @@ variable "manage_master_user_password" {
 
 variable "username" {
   description = "DB port"
-  default     = "admin"
-}
-
-variable "db_password" {
-  description = "Password for the master user"
-  type        = string
+  default     = "admin" # best to change to something other than 'admin' too, since this is a very common username
 }
 
 variable "db_port" {
   description = "DB port"
-  default     = "1521"
+  default     = "11555" # Changed from default 1521 to something a little harder to find by attackers
 }
 
 variable "db_param_group" {

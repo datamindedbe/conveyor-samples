@@ -17,14 +17,14 @@ default_args = {
 dag = DAG(
     "oracle2local",
     default_args=default_args,
-    schedule_interval="@daily",
+    schedule_interval="@once",
     max_active_runs=1,
 )
 role = "conveyor-samples"
 
 sample_task = ConveyorContainerOperatorV2(
     dag=dag,
-    task_id="calculate_pi",
+    task_id="extract_then_load",
     instance_type="mx.nano",
     aws_role="",
 )

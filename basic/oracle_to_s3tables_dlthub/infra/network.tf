@@ -24,12 +24,12 @@ resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_oracle_clients" {
-  for_each          = toset(local.allowed_ips)
+  # for_each          = toset(local.allowed_ips)
   security_group_id = aws_security_group.test_security_group.id
-  cidr_ipv4         = each.key
-  from_port         = 1521
+  cidr_ipv4         = "0.0.0.0/0" # each.key
+  from_port         = var.db_port
   ip_protocol       = "tcp"
-  to_port           = 1521
+  to_port           = var.db_port
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_ping" {

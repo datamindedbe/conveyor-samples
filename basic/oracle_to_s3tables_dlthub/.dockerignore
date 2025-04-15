@@ -14,3 +14,6 @@ dags
 tests
 .pre-commit-config.yaml
 README.md
+
+.idea
+.gitignore
