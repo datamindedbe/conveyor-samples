@@ -7,7 +7,7 @@ resource "snowflake_warehouse" "wh" {
 }
 
 resource "snowflake_database" "db" {
-  name = "dlt_data"
+  name = "DLT_DATA"
 }
 
 resource "snowflake_user" "user" {
@@ -133,9 +133,7 @@ variable "snowflake_password" {
   sensitive = true
 }
 
-
-variable "loaded_schema" {
+variable "snowflake_username" {
   type      = string
   sensitive = false
-  default   = "SH_FULL"
 }
