@@ -1,6 +1,6 @@
 locals {
   vpc_id      = "vpc-0cc4cd37c991fff9c"
-  oliver_home = "176.6.128.0/15" # based on four IPs obtained. Allows 64k addresses
+  oliver_home = "176.6.128.0/20" # based on three IPs obtained. Allows 2k addresses
   siyan_home  = "91.176.58.65/32"
   dm_office   = "81.164.130.38/32"
   allowed_ips = [local.oliver_home, local.siyan_home, local.dm_office]
