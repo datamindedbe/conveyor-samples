@@ -17,8 +17,9 @@ default_args = {
 dag = DAG(
     "oracle2local",
     default_args=default_args,
-    schedule_interval="@once",
+    schedule_interval=timedelta(hours=3),
     max_active_runs=1,
+    end_date=pendulum.datetime(2025, 4, 20),
 )
 role = "conveyor-samples"
 

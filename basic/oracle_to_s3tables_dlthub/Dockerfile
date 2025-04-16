@@ -28,4 +28,4 @@ RUN --mount=type=cache,target=/root/.cache/uv \
       --compile-bytecode \
       --link-mode=copy
 
-CMD  ["uv", "run", "./src/dlt_example/app.py", "full"]
+CMD  ["uv", "run", "./src/dlt_example/app.py", "inc"]
