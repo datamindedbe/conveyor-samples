@@ -11,9 +11,9 @@ table = "table" # please set me up!
 [full_load]
 pipeline_name = "full_load_pipeline"
 destination = "snowflake"
-schema = "SH"
-dataset_name = "sh_full"
-table_name = ["promotions", "products", "customers"]
+schema = "TPCH"
+dataset_name = "all_types_full"
+table_name = ["all_data_types_demo"]
 
 # [incremental_load]
 # schema = "AUDSYS"
