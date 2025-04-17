@@ -1,5 +1,5 @@
 locals {
-  dm_users = toset(["SIYAN_LUO", "OLIVER_WILLEKENS"])
+  dm_users = toset(["SIYAN_LUO", "OLIVER_WILLEKENS", "JONNY_DAENEN"])
 }
 
 resource "snowflake_warehouse" "wh" {

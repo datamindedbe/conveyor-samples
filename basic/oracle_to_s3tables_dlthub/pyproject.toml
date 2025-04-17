@@ -6,10 +6,11 @@ readme = "README.md"
 authors = ["oliver.willekens@dataminded.com", "siyan.luo@dataminded.com"]
 requires-python = ">=3.12,<3.13"  # snowflake-connector not supported on 3.13 yet
 dependencies = [
-    "dlt[duckdb,filesystem,snowflake,sql-database]>=1.9.0",
+    "dlt[duckdb,filesystem,snowflake,sql-database,sqlalchemy]>=1.9.0",
     "faker>=37.1.0",
     "oracledb>=3.1.0",
-    "pyarrow[pandas]<19",  # limitation imposed by snowflake connector, 2025-04-11
+    "pyarrow[pandas]<19",
+    "snowflake-sqlalchemy>=1.7.3", # limitation imposed by snowflake connector, 2025-04-11
     "streamlit>=1.44.1",
 ]
 
