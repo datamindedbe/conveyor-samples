@@ -5,7 +5,7 @@ import sqlalchemy as sa
 import dlt
 from dlt.sources import DltSource
 from dlt.sources.sql_database import sql_database
-from oracletypemapper import OracleTypeMapper
+from typing import Any, Optional
 
 # Incremental load: https://dlthub.com/docs/general-usage/incremental-loading
 def incremental_load_select_tables_from_database(
@@ -126,69 +126,61 @@ def incremental_load_entire_database(
     print(info)
 
 
-def full_load_all_types(data_source: DltSource,          
-                        pipeline_name:str, 
-                        dataset_name:str) -> None:
-    
-    # engine =sa.create_engine(database_url)
-    pipeline = dlt.pipeline(
-        pipeline_name=pipeline_name,
-        destination=dlt.destinations.sqlalchemy(
-            # engine,
-            # schema_name=schema,
-            # default_schema=schema,
-            # create_schema=False,
-            # create_tables=True,
-            create_unique_indexes=True,
-            # staging_dataset_name_layout=schema,
-            type_mapper=OracleTypeMapper,  # Pass the class directly, not an instance
-        ),
-        dataset_name=dataset_name,
-    )
+def type_adapter(column_type: Any) -> Optional[Any]:
+    """
+    Adapt Oracle column types to SQLAlchemy types.
 
-    info = pipeline.run(data_source, write_disposition="replace")
-    print(info)
+    Args:
+        column_type: The Oracle column type
+
+    Returns:
+        Optional[Any]: The adapted SQLAlchemy type or None
+    """
+    type_name = str(column_type).upper()
+    if "INTERVAL YEAR TO MONTH" in type_name:
+        return sa.VARCHAR(255) 
+    if "CLOB" in type_name or "NCLOB" in type_name:
+        return sa.Text()
+    if "BLOB" in type_name or "LOB" in type_name or "BFILE" in type_name: #lob is bfile
+        return sa.LargeBinary()
+    if "UROWID" in type_name:
+        return sa.String(4000) # max UROWID length in Oracle
+
+    return None # Let dlt handle other types
+
 
 if __name__ == "__main__":
-    full_load = dlt.config["full_load"]
-    data_source: DltSource = sql_database(schema=full_load["schema"])
-    pipeline_name = full_load["pipeline_name"]
-    dataset_name = full_load["dataset_name"]
-    full_load_all_types(
-        data_source=data_source,
-        pipeline_name=pipeline_name,
-        dataset_name=dataset_name,
+
+    parser = ArgumentParser()
+    parser.add_argument(
+        "type",
+        default="all",
+        choices=("all", "inc", "full"),
+        help="type of loading: incremental, full load or both",
     )
-    # parser = ArgumentParser()
-    # parser.add_argument(
-    #     "type",
-    #     default="all",
-    #     choices=("all", "inc", "full"),
-    #     help="type of loading: incremental, full load or both",
-    # )
-    # args = parser.parse_args()
+    args = parser.parse_args()
 
-    # if args.type in ("inc", "all"):
-    #     incremental_load = dlt.config["incremental_load"]
-    #     incremental_data_source: DltSource = sql_database(
-    #         schema=incremental_load["schema"]
-    #     )  # type: ignore
-    #     incremental_load_select_tables_from_database(
-    #         data_source=incremental_data_source,
-    #         pipeline_name=incremental_load["pipeline_name"],
-    #         destination=incremental_load["destination"],
-    #         dataset_name=incremental_load["dataset_name"],
-    #         table_name=incremental_load["table_name"],
-    #         incremental_column=incremental_load["incremental_column"],
-    #     )
+    if args.type in ("inc", "all"):
+        incremental_load = dlt.config["incremental_load"]
+        incremental_data_source: DltSource = sql_database(
+            schema=incremental_load["schema"]
+        )  # type: ignore
+        incremental_load_select_tables_from_database(
+            data_source=incremental_data_source,
+            pipeline_name=incremental_load["pipeline_name"],
+            destination=incremental_load["destination"],
+            dataset_name=incremental_load["dataset_name"],
+            table_name=incremental_load["table_name"],
+            incremental_column=incremental_load["incremental_column"],
+        )
 
-    # if args.type in ("full", "all"):
-    #     full_load = dlt.config["full_load"]
-    #     full_data_source: DltSource = sql_database(schema=full_load["schema"])  # type: ignore
-    #     full_load_select_tables_from_database(
-    #         data_source=full_data_source,
-    #         pipeline_name=full_load["pipeline_name"],
-    #         destination=full_load["destination"],
-    #         dataset_name=full_load["dataset_name"],
-    #         table_names=full_load["table_name"],
-    #     )
+    if args.type in ("full", "all"):
+        full_load = dlt.config["full_load"]
+        full_data_source: DltSource = sql_database(schema=full_load["schema"], type_adapter_callback=type_adapter) 
+        full_load_select_tables_from_database(
+            data_source=full_data_source,
+            pipeline_name=full_load["pipeline_name"],
+            destination=full_load["destination"],
+            dataset_name=full_load["dataset_name"],
+            table_names=full_load["table_name"],
+        )

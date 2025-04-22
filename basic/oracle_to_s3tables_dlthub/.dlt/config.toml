@@ -12,8 +12,8 @@ table = "table" # please set me up!
 pipeline_name = "full_load_pipeline"
 destination = "snowflake"
 schema = "TPCH"
-dataset_name = "internal_ym_full"
-table_name = ["internal_ym_demo"]
+dataset_name = "all_types_full"
+table_name = ["all_data_types_demo"]
 
 # [incremental_load]
 # schema = "AUDSYS"
