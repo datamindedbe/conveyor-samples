@@ -1,0 +1,18 @@
+[project]
+name = "sqlmesh_example"
+version = "0.1.0"
+description = "Sample project using sqlmesh"
+readme = "README.md"
+authors = ["oliver.willekens@dataminded.com", "siyan.luo@dataminded.com"]
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "pendulum>=3.1.0",
+    "sqlmesh>=0.170.1",
+]
+
+[dependency-groups]
+conveyor-airflow = []
+dev = [
+    "pre-commit>=4.2.0",
+    "pytest>=8.3.5",
+]
