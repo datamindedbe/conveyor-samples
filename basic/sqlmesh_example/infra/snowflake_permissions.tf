@@ -68,3 +68,22 @@ resource "snowflake_grant_account_role" "grant_sqlmesh_role" {
     user_name = snowflake_user.user.name
 }
 
+resource "snowflake_grant_privileges_to_account_role" "grant_sample_db_privileges" {
+    account_role_name = snowflake_account_role.sqlmesh.name
+    privileges = ["IMPORTED PRIVILEGES"]
+    on_account_object {
+        object_type = "DATABASE"
+        object_name = var.source_database
+    }
+}
+
+resource "snowflake_grant_privileges_to_account_role" "grant_select_source_table" {
+  privileges        = ["IMPORTED PRIVILEGES"]
+  account_role_name = snowflake_account_role.sqlmesh.name
+  on_schema_object {
+    all {
+      object_type_plural = "TABLES"
+      in_database        = var.source_database
+    }
+  }
+}

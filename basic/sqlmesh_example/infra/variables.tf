@@ -7,3 +7,8 @@ variable "snowflake_password" {
     type = string
     sensitive = true
 }
+
+variable "source_database" {
+    type = string
+    sensitive = false
+}
