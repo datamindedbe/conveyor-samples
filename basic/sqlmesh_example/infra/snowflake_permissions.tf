@@ -3,10 +3,6 @@ resource "snowflake_user" "user" {
     password = var.snowflake_password
 }
 
-resource "snowflake_warehouse" "wh" {
-    name = "COMPUTE_WH"
-}
-
 resource "snowflake_database" "db" {
     name = "SQLMESH_DEMO_DB"
 }
@@ -20,7 +16,7 @@ resource "snowflake_grant_privileges_to_account_role" "grant_wh_usage" {
     privileges = ["USAGE"]
     on_account_object {
         object_type = "WAREHOUSE"
-        object_name = snowflake_warehouse.wh.name
+        object_name = var.warehouse
     }
 }
 

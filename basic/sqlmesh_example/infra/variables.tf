@@ -12,3 +12,8 @@ variable "source_database" {
     type = string
     sensitive = false
 }
+
+variable "warehouse" {
+    type = string
+    sensitive = false
+}
