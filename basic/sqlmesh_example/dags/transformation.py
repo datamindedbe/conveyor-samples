@@ -15,7 +15,7 @@ default_args = {
 }
 
 dag = DAG(
-    "ssample_sqlmesh",
+    "sample_sqlmesh",
     default_args=default_args,
     schedule_interval=timedelta(hours=3),
     max_active_runs=1,
