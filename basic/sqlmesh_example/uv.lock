@@ -1113,7 +1113,6 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "pendulum" },
-    { name = "pre-commit" },
     { name = "sqlmesh", extra = ["snowflake"] },
 ]
 
@@ -1126,7 +1125,6 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "pendulum", specifier = ">=3.1.0" },
-    { name = "pre-commit", specifier = ">=4.2.0" },
     { name = "sqlmesh", extras = ["snowflake"], specifier = ">=0.170.1" },
 ]
 
