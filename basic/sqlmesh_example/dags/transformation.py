@@ -15,7 +15,7 @@ default_args = {
 }
 
 dag = DAG(
-    "sample_sqlmesh",
+    "samples_sqlmesh",
     default_args=default_args,
     schedule_interval=timedelta(hours=3),
     max_active_runs=1,
@@ -24,6 +24,6 @@ dag = DAG(
 
 sample_task = ConveyorContainerOperatorV2(
     dag=dag,
-    task_id="sample_sqlmesh",
+    task_id="samples_sqlmesh",
     aws_role="conveyor-samples",
 )
