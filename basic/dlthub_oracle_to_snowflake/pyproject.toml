@@ -1,7 +1,7 @@
 [project]
 name = "oracle-to-s3tables-dlthub"
 version = "0.1.0"
-description = "Sample project illustrating how one can extract data from Oracle into AWS S3 Tables"
+description = "Sample project illustrating how one can extract data from Oracle into Snowflake"
 readme = "README.md"
 authors = [
     {name="Oliver Willekens", email="oliver.willekens@dataminded.com"},
@@ -21,7 +21,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-conveyor-airflow = []
+conveyor-airflow = []  # Was used for conveyor-types and apache-airflow, but installing these seems to make the runtime dependencies conflict.
 dev = [
     "pre-commit>=4.2.0",
     "pytest>=8.3.5",

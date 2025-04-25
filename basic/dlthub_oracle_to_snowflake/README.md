@@ -1,11 +1,11 @@
 # Context
 
-This is a sample to illustrate how one can extract data from an Oracle database and load those into S3 Tables.
+This project illustrates how one can extract data from an Oracle database and load those into Snowflake.
 
 V1 will have the extraction from Oracle to the local file system.
-In V2, the local file system will be replaced with S3 Tables.
+In V2, the local file system will be replaced with Snowflake.
 
-## V1
+## V1: Oracle to local
 
 1. Set up a small Oracle database.
 
@@ -75,7 +75,7 @@ We use [`uv`](https://github.com/astral-sh/uv) to manage Python dependencies eff
 To run a specific pipeline script:
 
 ```bash
-python <pipeline_file>.py
+uv run <pipeline_file>.py
 ```
 
 ---
