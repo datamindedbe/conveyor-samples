@@ -28,4 +28,4 @@ RUN --mount=type=cache,target=/root/.cache/uv \
       --compile-bytecode \
       --link-mode=copy
 
-CMD  ["uv", "run", "sqlmesh", "plan", "--auto-apply"]
+CMD  ["uv", "run", "sqlmesh", "plan", "--auto-apply", "--include-unmodified"]
