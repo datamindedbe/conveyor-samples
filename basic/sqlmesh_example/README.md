@@ -6,5 +6,6 @@ This sample demonstrates how to extract data from snowflake, process it in sqlme
 
 Auto-generated showcase code: extract data from csv files and load them to duckdb
 
-
 ## V1
+
+Transform data from snowflake to snowflake, using tcph sample data and query
