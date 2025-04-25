@@ -1,5 +1,7 @@
--- suggested in sqlmesh documentation 
+-- This code is used to as reference to set up the Snowflake environment for SQLMesh using terraform
+-- Suggested in sqlmesh documentation 
 -- https://sqlmesh.readthedocs.io/en/stable/integrations/engines/snowflake/#access-control-permissions
+
 USE ROLE useradmin; -- This code requires USERADMIN privileges or higher
 
 CREATE ROLE sqlmesh; -- Create role for permissions
