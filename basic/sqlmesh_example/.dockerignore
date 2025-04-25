@@ -5,13 +5,16 @@
 **/*$py.class
 .dockerignore
 Dockerfile
+infra
+docs
 .db
 *.log
 dags
 tests
 README.md
-logs/
-.cache/
+logs
+.cache
+.pre-commit-config.yaml
 
 .idea
 .gitignore
