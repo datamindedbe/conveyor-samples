@@ -8,4 +8,4 @@ Auto-generated showcase code: extract data from csv files and load them to duckd
 
 ## V1
 
-Transform data from snowflake to snowflake, using tcph sample data and query
+Transform data from snowflake to snowflake, using TPCH sample data and query
