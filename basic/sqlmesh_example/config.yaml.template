@@ -6,20 +6,15 @@ gateways:
       warehouse: COMPUTE_WH
       database: SQLMESH_DEMO_DB
       user: sqlmesh_demo_user
-      password: FILL_ME_IN
+      password: <FILL_ME_IN>
       role: SQLMESH
-
-  snowflake-app:
-    connection:
-      << : *default
-      user: sqlmesh_demo_user
 
   snowflake-interactive:
     connection:
       << : *default
       database: DLT_DATA
       authenticator: externalbrowser
-      user: oliver.willekens@dataminded.com
+      user: <USER_NAME>@dataminded.com
       role: ACCOUNTADMIN
 
 
