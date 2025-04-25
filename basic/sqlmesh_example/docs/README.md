@@ -30,7 +30,7 @@ into the main branch, on which `conveyor project deploy` would run again.
 Tobiko, the creators of SQLMesh, even provide a [CICD plugin](https://www.tobikodata.com/blog/intro-sqlmesh-cicd-bot).
 The architecture for this setup would look like this:
 
-![How Conveyor makes use of SQLMesh's virtual data environments](./ocs/static/conveyor_and_virtual_data_envs.png)
+![How Conveyor makes use of SQLMesh's virtual data environments](./static/conveyor_and_virtual_data_envs.png)
 
 Note that only a single warehouse (gateway, in SQLMesh's terms) is used. This allows people to make good use of the virtual data environments. In terms of code, one would add the following to the Airflow operator of Conveyor:
 
@@ -59,5 +59,5 @@ such cases, one cannot make good use of SQLMesh's virtual data environments and
 one would instead fall back to a conventional "publish changes in one
 environment, audit, then publish in another environment".
 
-![A setup in which Conveyor does not make use of SQLMesh's virtual environments](./docs/static/conveyor_without_virtual_data_envs.png)
+![A setup in which Conveyor does not make use of SQLMesh's virtual environments](./static/conveyor_without_virtual_data_envs.png)
 
