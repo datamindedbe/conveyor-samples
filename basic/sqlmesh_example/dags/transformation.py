@@ -19,7 +19,7 @@ dag = DAG(
     default_args=default_args,
     schedule_interval=timedelta(hours=3),
     max_active_runs=1,
-    end_date=pendulum.datetime(2025, 4, 25),
+    end_date=pendulum.datetime(2025, 4, 30),
 )
 
 sample_task = ConveyorContainerOperatorV2(
