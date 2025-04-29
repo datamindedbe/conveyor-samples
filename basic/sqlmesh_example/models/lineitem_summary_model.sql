@@ -1,13 +1,19 @@
 MODEL (
-  name lineitem_summary,
+  name sqlmesh_example.lineitem_summary,
   kind FULL,
   cron '@daily',
-  tags ['tpch', 'aggregation']
+  tags ['tpch', 'aggregation'],
+  audits (
+    UNIQUE_VALUES(columns = (unique_id)),
+    NOT_NULL(columns = (l_returnflag, l_linestatus)),
+    all_positive_values(columns = (sum_base_price))
+  )
 );
 
 SELECT
   l_returnflag,
   l_linestatus,
+  MD5(l_returnflag || l_linestatus) AS unique_id,
   SUM(l_quantity) AS sum_qty,
   SUM(l_extendedprice) AS sum_base_price,
   SUM(l_extendedprice * (1 - l_discount)) AS sum_disc_price,
