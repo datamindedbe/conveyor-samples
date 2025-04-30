@@ -3,6 +3,7 @@ MODEL (
   kind FULL,
   cron '@daily',
   tags ['tpch', 'aggregation'],
+  start '2024-10-25',
   audits (
     UNIQUE_VALUES(columns = (unique_id)),
     NOT_NULL(columns = (l_returnflag, l_linestatus)),
