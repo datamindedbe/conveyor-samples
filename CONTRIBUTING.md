@@ -68,8 +68,5 @@ Provide a more detailed, step-by-step guide through the sample.
 * Elaborate on the data flow or process being demonstrated.
 * Explain how to verify the sample ran correctly (e.g., check logs, query data).
 * **Crucially, include detailed cleanup steps here**, covering both the Conveyor deployment *and* any external infrastructure or data created in the Prerequisites section. Ensure the user can return their environment to the state it was in before running the sample.
-
-### Conclusion
-
-Provide a short summary of what the user has achieved or learned by completing this sample walkthrough. Briefly reiterate the key Conveyor concepts or integration patterns demonstrated.
+* Close with a conclusion. Provide a short summary of what the user has achieved or learned by completing this sample walkthrough. Briefly reiterate the key Conveyor concepts or integration patterns demonstrated.
 ```
