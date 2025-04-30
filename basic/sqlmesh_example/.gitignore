@@ -11,3 +11,5 @@ logs/
 .cache/
 config.yaml
 *.tfvars
+.terraform/*
+.terraform.lock.hcl
