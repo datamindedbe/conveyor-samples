@@ -1,1 +1,3 @@
 test.tfvars
+.terraform/*
+.terraform.lock.hcl
