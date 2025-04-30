@@ -1,5 +1,5 @@
 - [ ] Update the root `README.md` to include the sample
-- [ ] Update the sample `README.md` to have clear setup instructions
+- [ ] Update the sample `README.md` to have clear setup instructions (see CONTRIBUTING.md)
 - [ ] Using the `conveyor-samples` aws role
 - [ ] Airflow dags are prefixed with `samples_`
 - [ ] No `.conveyor` folder checked-in by mistake 
