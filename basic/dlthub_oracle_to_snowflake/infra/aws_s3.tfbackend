@@ -1,0 +1,8 @@
+# Specify the bucket you've already created. It should have the locking-feature
+# enabled, which may be hidden in the "advanced" section when creating a bucket.
+# Alternatively, set `use_lockfile` to false, but beware the concurrency
+# implications.
+bucket       = ""
+region       = "eu-west-1"
+key          = "dlthub-on-conveyor-demo"
+use_lockfile = true

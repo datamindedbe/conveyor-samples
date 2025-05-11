@@ -3,17 +3,15 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Author           = "Oliver"
       Project          = "DltConveyorSample"
-      ExpectedLifetime = "2025Q2"
     }
   }
 }
 
 provider "snowflake" {
-  role              = "ACCOUNTADMIN"
-  organization_name = "iqorzws"
-  account_name      = "playground"
+  role              = var.snowflake_role  # Should have sufficient privileges
+  organization_name = var.snowflake_organization_name
+  account_name      = var.snowflake_accountname
   authenticator     = "ExternalBrowser"
   user              = var.snowflake_username
 }

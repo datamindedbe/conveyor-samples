@@ -12,9 +12,9 @@ terraform {
   }
 
   backend "s3" {
-    bucket       = "terraform-states-dm" # manually created (the bootstrap problem), with versioning enabled (best practice)
-    key          = "dlthub-demo"
-    region       = "eu-west-1"
-    use_lockfile = true
+    bucket       = "" # manually created (the bootstrap problem), with versioning enabled (best practice)
+    key          = ""
+    region       = ""
+    use_lockfile = ""
   }
 }

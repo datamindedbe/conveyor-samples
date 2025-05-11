@@ -155,7 +155,7 @@ variable "max_allocated_storage" {
 variable "tags" {
   type = any
   default = {
-    users   = "siyan-oliver"
+    source   = "conveyor-sample"
     purpose = "experiment with dlthub and oracle as an ingestion source"
   }
 }
@@ -169,4 +169,34 @@ variable "delete_automated_backups" {
   description = "Specifies whether to remove automated backups immediately after the DB instance is deleted"
   type        = bool
   default     = "true"
+}
+
+variable "db_subnet" {
+  description = "Name of the subnet in which to launch the Oracle database"
+  type = string
+}
+
+variable "vpc_id" {
+  description = "Name of the VPC in which to launch"
+  type = string
+}
+
+variable "snowflake_role" {
+  description = "The Snowflake role with which to create a user for dltHub to create relations."
+  type = string
+}
+
+variable "snowflake_organization_name" {
+  description = "Name of the organization the Snowflake account belongs to."
+  type = string
+}
+
+variable "snowflake_accountname" {
+  description = "The name of the Snowflake account in which data will be transferred."
+  type = string
+}
+
+variable "snowflake_username" {
+  description = "The name of the Snowflake user through which new roles (one for dltHub to write data with, another as a read-only account) will be created."
+  type = string
 }
