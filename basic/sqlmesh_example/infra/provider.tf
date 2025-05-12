@@ -1,7 +1,7 @@
 provider "snowflake" {
   role              = "ACCOUNTADMIN"
-  organization_name = "iqorzws"
-  account_name      = "playground"
+  organization_name = var.organization_name
+  account_name      = var.account_name
   authenticator     = "ExternalBrowser"
   user              = var.snowflake_username
 }
