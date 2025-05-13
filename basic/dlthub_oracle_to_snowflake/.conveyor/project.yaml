@@ -1,0 +1,15 @@
+docker:
+    path: .
+id: 78353a86-ff1f-4505-bff1-0a1e26d20e8a
+ide:
+    filename: ide.yaml
+name: oracle_to_s3tables_dlthub
+resources:
+    path: resources
+streaming:
+    filename: streaming.yaml
+template: ""
+version: "0.3"
+workflows:
+    path: dags
+    version: "2"

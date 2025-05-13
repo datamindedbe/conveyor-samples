@@ -1,0 +1,48 @@
+# put your configuration values here
+
+[runtime]
+log_level="WARNING"  # the system log level of dlt
+# use the dlthub_telemetry setting to enable/disable anonymous usage data reporting, see https://dlthub.com/docs/reference/telemetry
+dlthub_telemetry = true
+
+[sources.sql_database]
+table = "table" # please set me up!
+
+[full_load]
+pipeline_name = "all_datatypes"
+destination = "snowflake"
+schema = "TPCH"
+dataset_name = "datatypes"
+table_name = ["all_data_types_demo"]
+
+#[full_load]
+#pipeline_name = "full_load_pipeline"
+#destination = "snowflake"
+#schema = "SH"
+#dataset_name = "sh_full"
+#table_name = ["promotions", "products", "customers"]
+
+# [incremental_load]
+# schema = "AUDSYS"
+# table_name = ["aud$unified"]
+# incremental_column = "event_timestamp"
+# pipeline_name = "incremental_load_pipeline"
+# destination = "snowflake"
+# dataset_name = "audsys_incremental"
+
+[incremental_load]
+schema = "TPCH"
+table_name = ["orders"]   # case sensitive!
+incremental_column = "o_orderdate"
+pipeline_name = "incremental_load_pipeline"
+destination = "snowflake"
+dataset_name = "tpch_orders_incremental"
+
+[incremental_with_connectorx]
+schema = "TPCH"
+table_name = "LINEITEM"  # case sensitive!
+incremental_column = "l_orderkey"
+partition_column = "l_orderkey"  # not the primary key of lineitem (which is linenumber + orderkey), but good for a test
+pipeline_name = "incremental_load_pipeline_connectorx"
+destination = "snowflake"
+dataset_name = "tpch_orders_incremental_connectorx"
