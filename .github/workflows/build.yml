@@ -8,7 +8,7 @@ on:
 
 jobs:
   unit-test-basic-pi-spark:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - name: checkout
@@ -27,7 +27,7 @@ jobs:
   deploy-pi-spark:
     if: "github.ref == 'refs/heads/main'"
     needs: ["unit-test-basic-pi-spark"]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - name: checkout
