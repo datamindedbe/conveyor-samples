@@ -15,17 +15,15 @@ default_args = {
 }
 
 dag = DAG(
-    "oracle2local",
+    "extract_then_load",
     default_args=default_args,
     schedule_interval=timedelta(hours=3),
     max_active_runs=1,
     end_date=pendulum.datetime(2025, 4, 20),
 )
-role = "conveyor-samples"
 
 sample_task = ConveyorContainerOperatorV2(
     dag=dag,
     task_id="extract_then_load",
     instance_type="mx.nano",
-    aws_role="",
 )
