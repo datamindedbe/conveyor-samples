@@ -1,0 +1,58 @@
+gateways:
+  # Default gateway using the service user created by Terraform
+  snowflake:
+    connection: &default
+      type: snowflake
+      account: YOUR_SNOWFLAKE_ACCOUNT_LOCATOR # 'organization_name-account_name' in terraform.tfvars
+      password: YOUR_SQLMESH_DEMO_USER_PASSWORD # The value you set for 'snowflake_password' in terraform.tfvars
+      warehouse: YOUR_WAREHOUSE_NAME # warehouse value in terraform.tfvars
+      database: YOUR_WAREHOUSE_NAME # source_database value in terraform.tfvars
+      user: sqlmesh_demo_user # Default service user created by Terraform
+      role: SQLMESH # Default role created by Terraform
+
+  # Optional: Interactive gateway using your personal Snowflake user via SSO
+  # Requires separate setup and potentially different permissions.
+  # Uncomment and configure if needed for interactive local development.
+  # snowflake-interactive:
+  #   connection:
+  #     << : *default 
+  #     authenticator: externalbrowser
+  #     user: YOUR_SNOWFLAKE_PERSONAL_USERNAME 
+  #     # You might need a different role with appropriate permissions
+  #     # role: ACCOUNTADMIN 
+  #     # database: YOUR_INTERACTIVE_DATABASE
+
+
+default_gateway: snowflake
+
+model_defaults:
+  dialect: snowflake
+  # Optional: Define a default start date for incremental models if not set in the model itself
+  # start: YYYY-MM-DD
+
+
+gateways:
+  snowflake:
+    connection: &default
+      type: snowflake
+      account: iqorzws-playground
+      warehouse: COMPUTE_WH
+      database: SQLMESH_DEMO_DB
+      user: sqlmesh_demo_user
+      password: <FILL_ME_IN>
+      role: SQLMESH
+
+  snowflake-interactive:
+    connection:
+      << : *default
+      database: DLT_DATA
+      authenticator: externalbrowser
+      user: <USER_NAME>@dataminded.com
+      role: ACCOUNTADMIN
+
+
+default_gateway: snowflake
+
+model_defaults:
+  dialect: snowflake
+  start: 2025-04-21

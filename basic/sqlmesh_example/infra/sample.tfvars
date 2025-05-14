@@ -1,0 +1,6 @@
+organization_name = "iqorzws"
+account_name      = "playground"
+snowflake_password = "PikachuICh00seU!"
+snowflake_username = "jesus.garciaramirez@dataminded.com"
+warehouse = "COMPUTE_WH" 
+source_database = "SNOWFLAKE_SAMPLE_DATA"
