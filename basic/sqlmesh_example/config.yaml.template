@@ -29,30 +29,3 @@ model_defaults:
   dialect: snowflake
   # Optional: Define a default start date for incremental models if not set in the model itself
   # start: YYYY-MM-DD
-
-
-gateways:
-  snowflake:
-    connection: &default
-      type: snowflake
-      account: iqorzws-playground
-      warehouse: COMPUTE_WH
-      database: SQLMESH_DEMO_DB
-      user: sqlmesh_demo_user
-      password: <FILL_ME_IN>
-      role: SQLMESH
-
-  snowflake-interactive:
-    connection:
-      << : *default
-      database: DLT_DATA
-      authenticator: externalbrowser
-      user: <USER_NAME>@dataminded.com
-      role: ACCOUNTADMIN
-
-
-default_gateway: snowflake
-
-model_defaults:
-  dialect: snowflake
-  start: 2025-04-21

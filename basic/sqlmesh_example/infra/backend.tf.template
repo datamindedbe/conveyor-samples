@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket       = "terraform-states-dm"
-    key          = "sqlmesh-demo"
-    region       = "eu-west-1"
+    bucket       = "STATE_BUCKET"
+    key          = "BACKEND_KEY"
+    region       = "BUCKET_REGION"
     use_lockfile = true
   }
 }
