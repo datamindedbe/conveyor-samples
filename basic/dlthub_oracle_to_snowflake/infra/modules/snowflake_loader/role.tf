@@ -1,24 +1,19 @@
-
-resource "snowflake_warehouse" "wh" {
-  name = "COMPUTE_WH"
-}
-
 resource "snowflake_database" "db" {
-  name = "DLT_DATA"
+  name = "DEMO_DLTHUB"
 }
 
-resource "snowflake_user" "user" {
+resource "snowflake_user" "dlthub" {
   name     = var.snowflake_username
   password = var.snowflake_password
 }
 
 resource "snowflake_account_role" "dlt_loader" {
-  name = "DLT_LOADER_ROLE"
+  name = var.loader_role
 }
 
 resource "snowflake_grant_account_role" "grant_loader_role" {
   role_name = snowflake_account_role.dlt_loader.name
-  user_name = snowflake_user.user.name
+  user_name = snowflake_user.dlthub.name
 }
 
 resource "snowflake_grant_privileges_to_account_role" "loader_use_db" {
@@ -35,7 +30,7 @@ resource "snowflake_grant_privileges_to_account_role" "loader_use_wh" {
   privileges        = ["USAGE"]
   on_account_object {
     object_type = "WAREHOUSE"
-    object_name = snowflake_warehouse.wh.name
+    object_name = var.warehouse_name
   }
 }
 

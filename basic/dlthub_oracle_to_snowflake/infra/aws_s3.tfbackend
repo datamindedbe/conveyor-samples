@@ -2,7 +2,7 @@
 # enabled, which may be hidden in the "advanced" section when creating a bucket.
 # Alternatively, set `use_lockfile` to false, but beware the concurrency
 # implications.
-bucket       = ""
+bucket       = "terraform-states-dm"
 region       = "eu-west-1"
 key          = "dlthub-on-conveyor-demo"
 use_lockfile = true

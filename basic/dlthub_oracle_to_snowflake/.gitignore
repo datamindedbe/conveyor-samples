@@ -11,3 +11,5 @@ database/
 *.duckdb
 *.wal
 infra/.terraform
+
+.conveyor

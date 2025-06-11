@@ -30,6 +30,5 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv6" {
 
 resource "aws_db_subnet_group" "database_subnet_group" {
   name        = "oracle-subnet"
-  subnet_ids  = [var.db_subnet]
-  description = "oracle-subnet"
+  subnet_ids  = var.db_subnet_ids
 }
