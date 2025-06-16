@@ -1,4 +1,9 @@
--- Used to initialize the schema required for the tpc-h dataset.
+--------------------------------------------------------------------------------
+-- Initializes the TPC-H schema, loads data from an external S3 bucket, applies the indices and constraints, and finally creates a user for dltHub.
+--------------------------------------------------------------------------------
+
+-- 1. Initialize the TPC-H schema
+---------------------------------
 
 CREATE USER tpch IDENTIFIED BY tpch;
 
@@ -166,7 +171,7 @@ ORGANIZATION EXTERNAL
 
 CREATE TABLE tpch.orders
 (
-    o_orderkey        NUMBER(10, 0) NOT NULL,
+    o_orderkey        NUMBER(11, 0) NOT NULL,
     o_custkey         NUMBER(10, 0) NOT NULL,
     o_orderstatus     CHAR(1) NOT NULL,
     o_totalprice      NUMBER NOT NULL,
@@ -275,3 +280,155 @@ CREATE TABLE tpch.region
     r_name        CHAR(25),
     r_comment     VARCHAR(152)
 );
+
+
+-- 2. Loads the data from the external tables
+---------------------------------------------
+
+TRUNCATE TABLE tpch.part;
+TRUNCATE TABLE tpch.supplier;
+TRUNCATE TABLE tpch.partsupp;
+TRUNCATE TABLE tpch.customer;
+TRUNCATE TABLE tpch.orders;
+TRUNCATE TABLE tpch.lineitem;
+TRUNCATE TABLE tpch.nation;
+TRUNCATE TABLE tpch.region;
+
+ALTER SESSION SET nls_date_format='YYYY-MM-DD';
+
+INSERT /*+ APPEND */ INTO  tpch.part     SELECT * FROM tpch.ext_part;
+INSERT /*+ APPEND */ INTO  tpch.supplier SELECT * FROM tpch.ext_supplier;
+INSERT /*+ APPEND */ INTO  tpch.partsupp SELECT * FROM tpch.ext_partsupp;
+INSERT /*+ APPEND */ INTO  tpch.customer SELECT * FROM tpch.ext_customer;
+INSERT /*+ APPEND */ INTO  tpch.orders   SELECT * FROM tpch.ext_orders;
+INSERT /*+ APPEND */ INTO  tpch.lineitem SELECT * FROM tpch.ext_lineitem;
+INSERT /*+ APPEND */ INTO  tpch.nation   SELECT * FROM tpch.ext_nation;
+INSERT /*+ APPEND */ INTO  tpch.region   SELECT * FROM tpch.ext_region;
+
+-- 3. add indices and constraints
+---------------------------------
+
+ALTER TABLE tpch.part
+    ADD CONSTRAINT pk_part PRIMARY KEY(p_partkey);
+
+ALTER TABLE tpch.supplier
+    ADD CONSTRAINT pk_supplier PRIMARY KEY(s_suppkey);
+
+ALTER TABLE tpch.partsupp
+    ADD CONSTRAINT pk_partsupp PRIMARY KEY(ps_partkey, ps_suppkey);
+
+ALTER TABLE tpch.customer
+    ADD CONSTRAINT pk_customer PRIMARY KEY(c_custkey);
+
+ALTER TABLE tpch.orders
+    ADD CONSTRAINT pk_orders PRIMARY KEY(o_orderkey);
+
+ALTER TABLE tpch.lineitem
+    ADD CONSTRAINT pk_lineitem PRIMARY KEY(l_linenumber, l_orderkey);
+
+ALTER TABLE tpch.nation
+    ADD CONSTRAINT pk_nation PRIMARY KEY(n_nationkey);
+
+ALTER TABLE tpch.region
+    ADD CONSTRAINT pk_region PRIMARY KEY(r_regionkey);
+
+-- 1.4.2.3
+
+ALTER TABLE tpch.partsupp
+    ADD CONSTRAINT fk_partsupp_part FOREIGN KEY(ps_partkey) REFERENCES tpch.part(p_partkey);
+
+ALTER TABLE tpch.partsupp
+    ADD CONSTRAINT fk_partsupp_supplier FOREIGN KEY(ps_suppkey) REFERENCES tpch.supplier(s_suppkey);
+
+ALTER TABLE tpch.customer
+    ADD CONSTRAINT fk_customer_nation FOREIGN KEY(c_nationkey) REFERENCES tpch.nation(n_nationkey);
+
+ALTER TABLE tpch.orders
+    ADD CONSTRAINT fk_orders_customer FOREIGN KEY(o_custkey) REFERENCES tpch.customer(c_custkey);
+
+ALTER TABLE tpch.lineitem
+    ADD CONSTRAINT fk_lineitem_order FOREIGN KEY(l_orderkey) REFERENCES tpch.orders(o_orderkey);
+
+ALTER TABLE tpch.lineitem
+    ADD CONSTRAINT fk_lineitem_part FOREIGN KEY(l_partkey) REFERENCES tpch.part(p_partkey);
+
+ALTER TABLE tpch.lineitem
+    ADD CONSTRAINT fk_lineitem_supplier FOREIGN KEY(l_suppkey) REFERENCES tpch.supplier(s_suppkey);
+
+ALTER TABLE tpch.lineitem
+    ADD CONSTRAINT fk_lineitem_partsupp FOREIGN KEY(l_partkey, l_suppkey)
+        REFERENCES tpch.partsupp(ps_partkey, ps_suppkey);
+
+-- 1.4.2.4 - 1
+
+ALTER TABLE tpch.part
+    ADD CONSTRAINT chk_part_partkey CHECK(p_partkey >= 0);
+
+ALTER TABLE tpch.supplier
+    ADD CONSTRAINT chk_supplier_suppkey CHECK(s_suppkey >= 0);
+
+ALTER TABLE tpch.customer
+    ADD CONSTRAINT chk_customer_custkey CHECK(c_custkey >= 0);
+
+ALTER TABLE tpch.partsupp
+    ADD CONSTRAINT chk_partsupp_partkey CHECK(ps_partkey >= 0);
+
+ALTER TABLE tpch.region
+    ADD CONSTRAINT chk_region_regionkey CHECK(r_regionkey >= 0);
+
+ALTER TABLE tpch.nation
+    ADD CONSTRAINT chk_nation_nationkey CHECK(n_nationkey >= 0);
+
+-- 1.4.2.4 - 2
+
+ALTER TABLE tpch.part
+    ADD CONSTRAINT chk_part_size CHECK(p_size >= 0);
+
+ALTER TABLE tpch.part
+    ADD CONSTRAINT chk_part_retailprice CHECK(p_retailprice >= 0);
+
+ALTER TABLE tpch.partsupp
+    ADD CONSTRAINT chk_partsupp_availqty CHECK(ps_availqty >= 0);
+
+ALTER TABLE tpch.partsupp
+    ADD CONSTRAINT chk_partsupp_supplycost CHECK(ps_supplycost >= 0);
+
+ALTER TABLE tpch.orders
+    ADD CONSTRAINT chk_orders_totalprice CHECK(o_totalprice >= 0);
+
+ALTER TABLE tpch.lineitem
+    ADD CONSTRAINT chk_lineitem_quantity CHECK(l_quantity >= 0);
+
+ALTER TABLE tpch.lineitem
+    ADD CONSTRAINT chk_lineitem_extendedprice CHECK(l_extendedprice >= 1);
+
+ALTER TABLE tpch.lineitem
+    ADD CONSTRAINT chk_lineitem_tax CHECK(l_tax >= 0);
+
+-- 1.4.2.4 - 3
+
+ALTER TABLE tpch.lineitem
+    ADD CONSTRAINT chk_lineitem_discount CHECK(l_discount >= 0.00 AND l_discount <= 1.00);
+
+-- 1.4.2.4 - 4
+
+ALTER TABLE tpch.lineitem
+    ADD CONSTRAINT chk_lineitem_ship_rcpt CHECK(l_shipdate <= l_receiptdate);
+
+-- 4. create the role that dltHub will use.
+-------------------------------------------
+
+CREATE ROLE read_only_role;
+
+BEGIN
+  FOR x IN (SELECT table_name FROM dba_tables WHERE owner='TPCH' AND tablespace_name = 'USERS')
+  LOOP
+    EXECUTE IMMEDIATE 'GRANT SELECT ON TPCH.' || x.table_name ||
+                                  ' TO read_only_role';
+  END LOOP;
+END;
+
+
+CREATE USER dlthub IDENTIFIED BY dltpass;
+GRANT CREATE SESSION TO dlthub;
+GRANT read_only_role TO dlthub;
