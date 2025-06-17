@@ -16,6 +16,7 @@ This repository contains a number of sample projects for Conveyor
 
 ### Basic
 
+- dlthub_oracle_to_snowflake: use [dlthub](https://dlthub.com/) to migrate database tables from Oracle to Snowflake.
 - pi_spark: use [Apache Spark](https://github.com/apache/spark) to calculate pi.
 - first_project_dbt: use [dbt](https://github.com/dbt-labs/dbt-core) and [DuckDB](https://github.com/duckdb/duckdb) for the first time. Using this project is described in the Conveyor [getting started guide](https://docs.conveyordata.com/get-started/dbt).
 - coffee_shop_dbt: use [dbt](https://github.com/dbt-labs/dbt-core) and [DuckDB](https://github.com/duckdb/duckdb) 

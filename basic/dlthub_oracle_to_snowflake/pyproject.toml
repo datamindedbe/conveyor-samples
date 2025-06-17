@@ -1,0 +1,31 @@
+[project]
+name = "oracle-to-s3tables-dlthub"
+version = "0.1.0"
+description = "Sample project illustrating how one can extract data from Oracle into Snowflake"
+readme = "README.md"
+authors = [
+    {name="Oliver Willekens", email="oliver.willekens@dataminded.com"},
+    {name="Siyan Luo", email="siyan.luo@dataminded.com"},
+]
+requires-python = ">=3.12,<3.13"  # snowflake-connector not supported on 3.13 yet
+dependencies = [
+    "dlt[duckdb,filesystem,snowflake,sql-database,sqlalchemy]>=1.9.0",
+    "connectorx>=0.4.3",
+    "dlt[duckdb,filesystem,snowflake,sql-database]>=1.9.0",
+    "faker>=37.1.0",
+    "oracledb>=3.1.0",  # with Connector-X, this will run in "thick mode", see https://python-oracledb.readthedocs.io/en/latest/user_guide/introduction.html#python-oracledb-thick-mode-architecture
+    "pyarrow[pandas]",
+    "snowflake-sqlalchemy>=1.7.3", # limitation imposed by snowflake connector, 2025-04-11
+    "streamlit>=1.44.1",
+    "sqlalchemy>=2.0.40",
+]
+
+[dependency-groups]
+conveyor-airflow = []  # Was used for conveyor-types and apache-airflow, but installing these seems to make the runtime dependencies conflict.
+dev = [
+    "pre-commit>=4.2.0",
+    "pytest>=8.3.5",
+]
+
+[tool.uv]
+package = true
