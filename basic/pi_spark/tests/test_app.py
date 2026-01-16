@@ -8,5 +8,5 @@ spark = get_test_spark_session()
 
 def test_pi_demo_runs():
     date_string = "2020-01-01"    
-    result = run(spark, "dev", date_string, 2)
+    run(spark, "dev", date_string, 2, 10)
     

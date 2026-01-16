@@ -72,7 +72,6 @@ class ClosableSparkSession:
         spark_builder.config("spark.sql.hive.metastorePartitionPruning", "false")
         spark_builder.config("spark.sql.hive.convertMetastoreParquet", "false")
 
-        
         # add other config params
         for key, val in self._spark_config.items():
             spark_builder.config(key, val)
