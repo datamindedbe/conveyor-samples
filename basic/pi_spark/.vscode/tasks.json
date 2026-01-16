@@ -16,7 +16,7 @@
     {
       "label": "Configure Conveyor project",
       "type": "shell",
-      "command": "conveyor project generate-config --name pi_spark",
+      "command": "if [ ! -d .conveyor ]; then conveyor project generate-config --name pi_spark; fi",
       "runOptions": {
         "runOn": "folderOpen"
       }
