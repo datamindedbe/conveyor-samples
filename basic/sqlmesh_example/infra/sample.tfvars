@@ -1,0 +1,6 @@
+organization_name = "YOUR_ORG_NAME"
+account_name      = "YOUR_ACCOUNT_NAME"
+snowflake_password = "YOUR_SNOWFLAKE_PASSWORD"
+snowflake_username = "YOUR_SNOWFLAKE_USERNAME"
+warehouse = "YOUR_WAREHOUSE_NAME" 
+source_database = "SNOWFLAKE_SAMPLE_DATA"

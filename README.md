@@ -20,6 +20,7 @@ This repository contains a number of sample projects for Conveyor
 - first_project_dbt: use [dbt](https://github.com/dbt-labs/dbt-core) and [DuckDB](https://github.com/duckdb/duckdb) for the first time. Using this project is described in the Conveyor [getting started guide](https://docs.conveyordata.com/get-started/dbt).
 - coffee_shop_dbt: use [dbt](https://github.com/dbt-labs/dbt-core) and [DuckDB](https://github.com/duckdb/duckdb) 
   for cleaning and transforming the coffee shop input data and writing the results to S3.
+- sqlmesh_example: use [SQLMesh](https://github.com/TobikoData/sqlmesh) to tranform TPCH sample data in [Snowflake](https://docs.snowflake.com).
 
 ### MLOps
 
